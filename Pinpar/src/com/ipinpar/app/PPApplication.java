@@ -3,6 +3,7 @@ package com.ipinpar.app;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
@@ -19,11 +20,12 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class PPApplication extends Application implements UncaughtExceptionHandler{
 	public static final String TAG = PPApplication.class.getSimpleName();
-
+	private static Context applicationContext;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		applicationContext = this;
 		initImageLoader();
 		DeviceUtil.init(this);
 	}
@@ -45,6 +47,10 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 								new HashCodeFileNameGenerator()))
 				.defaultDisplayImageOptions(defaultOptions).build();
 		ImageLoader.getInstance().init(config);
+	}
+	
+	public static Context getContext() {
+		return applicationContext;
 	}
 
 	@Override

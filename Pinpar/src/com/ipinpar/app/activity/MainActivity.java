@@ -8,6 +8,7 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.network.api.LoginRequest;
 
 public class MainActivity extends PPBaseActivity {
@@ -23,7 +24,13 @@ public class MainActivity extends PPBaseActivity {
 			public void onResponse(JSONObject response) {
 				// TODO Auto-generated method stub
 				Gson gson = new Gson();
-				gson.fromJson(response.toString(), LoginRequest.class);
+				UserEntity user = gson.fromJson(response.toString(), UserEntity.class);
+				if (user != null && user.getResult() == 1) {
+					//登录成功
+				}
+				else {
+					//登录失败
+				}
 			}
 		});
 		request.setTag(TAG);

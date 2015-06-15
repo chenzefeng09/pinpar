@@ -2,15 +2,14 @@ package com.ipinpar.app.network.api;
 
 import org.json.JSONObject;
 
-import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.util.DeviceUtil;
 import com.ipinpar.app.util.MD5Util;
 
-public class LoginRequest extends BaseJsonRequest {
+public class LoginRequest extends BaseJsonRequest{
 	private static final String PROTOCOL ="10001";
 	
-	private int result;
 
 	public LoginRequest(String phone,String passWord,
 			Listener<JSONObject> listener) {
@@ -24,7 +23,5 @@ public class LoginRequest extends BaseJsonRequest {
 						),
 				null, listener);
 	}
-	
-	
 
 }
