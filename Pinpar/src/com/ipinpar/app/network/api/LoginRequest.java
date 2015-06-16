@@ -14,7 +14,7 @@ public class LoginRequest extends BaseJsonRequest{
 	public LoginRequest(String phone,String passWord,
 			Listener<JSONObject> listener) {
 		super(Method.GET,
-				String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&d=%s&e=%s",
+				String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&d=%s",
 						PROTOCOL,
 						phone,
 						passWord,
