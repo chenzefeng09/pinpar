@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout 
+        android:id="@+id/RL_activity_description"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:background="@color/title_theme">
+        <ImageView 
+            android:id="@+id/iv_activity_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"/>
+        
+        <LinearLayout 
+            android:id="@+id/LL_text_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView 
+                android:id="@+id/tv_first_text_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_text_desc"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+            <TextView 
+                android:id="@+id/tv_second_text_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/second_text_desc"
+                android:textColor="@color/black"
+                android:textSize="24sp"/>
+        </LinearLayout>
+        
+        <ImageView 
+            android:id="@+id/iv_decoration_bottom_bar"
+            android:layout_width="80dp"
+            android:layout_height="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/decoration_bottom_bar"
+            android:layout_alignParentBottom="true"/>
+        
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/LL_activity_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/RL_activity_description"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout 
+            android:id="@+id/RL_address_and_date"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="4">
+            <LinearLayout 
+                android:id="@+id/LL_activity_address"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+                <ImageView 
+                    android:id="@+id/iv_activity_address"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/activity_address"/>
+                
+                <TextView 
+                    android:id="@+id/tv_activity_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/acticity_address"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                
+                <TextView 
+                    android:id="@+id/tv_activity_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/acticity_distance"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:id="@+id/LL_activity_date"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/LL_activity_address"
+                android:orientation="horizontal">
+                <ImageView 
+                    android:id="@+id/iv_activity_date"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/activity_date"/>
+                <TextView 
+                    android:id="@+id/tv_activity_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/acticity_date"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/RL_acticity_praise"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical">
+            <ImageView 
+                android:id="@+id/iv_acticity_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/acticity_praise"/>
+            
+            <TextView 
+                android:id="@+id/tv_praise_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_acticity_praise"
+                android:layout_centerInParent="true"
+                android:text="@string/acticity_praise_num"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+        
+    </LinearLayout>
+    
+
+</RelativeLayout>

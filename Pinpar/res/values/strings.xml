@@ -4,5 +4,50 @@
     <string name="app_name">品趴</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    
+    <!-- 主界面导航栏文字 -->
+	<string name="main_tab_home">首页</string>
+	<string name="main_tab_message">消息</string>
+	<string name="main_tab_me">我</string>
+	    
+    <!-- 下拉刷新相关字符资源 -->
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_release_label">松开刷新</string>
+    <string name="pull_to_refresh_refreshing_label">加载中...</string>
+    <string name="pull_to_refresh_tap_label">点击刷新</string>
+    <string name="pull_to_refresh_on_refreshing">加载中...</string>
+    <string name="pull_to_refresh_lastest">最新更新:</string>
+    <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
+    <string name="pull_to_refresh_footer_release_label">释放加载更多</string>
+    <string name="pull_to_refresh_footer_refreshing_label">加载中...</string>
+    
+    
+    <!-- alert窗口相关字符资源 -->
+    <string name="alert_title">提示</string>
+    <string name="alert_exit_content">正在下载中，确定退出应用？</string>
+    <string name="alert_buy_content">确定要购买么</string>
+    <string name="alert_recharge_content">您的爱语币余额不足支付，是否充值？</string>
+    <string name="alert_net_content">网络未连接</string>
+    <string name="alert_btn_net">连接</string>
+    <string name="alert_btn_recharge">充值</string>
+    <string name="alert_btn_exit">退出</string>
+    <string name="alert_btn_buy">购买</string>
+    <string name="alert_btn_cancel">取消</string>
+    <string name="alert_press">再按一次退出程序</string>
+    <string name="alert_btn_set">设置</string>
+     <string name="alert_btn_ok">确定</string>
+     
+     <!-- 活动界面字符资源 -->
+     <string name="ongoing">进行中</string>
+	 <string name="past_activities">往期活动</string>    
+	 <string name="first_text_desc">微薄之盐</string>
+	 <string name="second_text_desc">调酒师体验</string>
+	 <string name="acticity_address">北京－海淀区</string>
+	 <string name="acticity_distance">(3.6km)</string>
+	 <string name="acticity_date_desc">活动时间:</string>
+	 <string name="acticity_date">2015.05.06  19:00~21:00</string>
+	 <string name="acticity_praise_num">123</string>
+	 
+	 
+    
 </resources>

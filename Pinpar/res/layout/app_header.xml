@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="@color/title_theme" >
     
     <ImageButton 
         android:id="@+id/ib_back"
@@ -15,6 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:text="品趴"
         android:gravity="center"
         android:singleLine="true"
