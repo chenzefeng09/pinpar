@@ -104,7 +104,10 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 	}
 
 	@Override

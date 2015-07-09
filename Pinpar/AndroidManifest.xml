@@ -18,7 +18,11 @@
     
     <application
         android:allowBackup="true"
+<<<<<<< HEAD
         android:icon="@drawable/ic_launcher"
+=======
+        android:icon="@drawable/app_icon"
+>>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
         android:name="com.ipinpar.app.PPApplication">
@@ -38,6 +42,13 @@
             android:name="com.ipinpar.app.activity.OngoingAcDetail"
             android:label="@string/app_name">
         </activity>
+<<<<<<< HEAD
+=======
+        
+        <activity 
+            android:name="com.ipinpar.app.activity.UserInfoEditActivity"
+            android:screenOrientation="portrait"></activity>
+>>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
     </application>
 
 </manifest>

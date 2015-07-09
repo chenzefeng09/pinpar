@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
+<<<<<<< HEAD
     android:orientation="horizontal" >
+=======
+    android:orientation="horizontal"
+    android:background="@color/title_theme" >
+>>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
     
     <ImageButton 
         android:id="@+id/ib_back"
@@ -15,6 +20,10 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:textSize="18sp"
+<<<<<<< HEAD
+=======
+        android:textColor="@color/white"
+>>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
         android:text="品趴"
         android:gravity="center"
         android:singleLine="true"
