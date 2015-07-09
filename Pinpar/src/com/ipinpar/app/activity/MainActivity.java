@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -20,7 +19,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -185,7 +183,6 @@ public class MainActivity extends PPBaseActivity {
 					break;
 				}
 			}
-			
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
@@ -253,9 +250,6 @@ public class MainActivity extends PPBaseActivity {
 	}
 	
 	Handler mHandler = new Handler()	{
-		
-		@Override
-		
 		public void handleMessage(Message msg)	{
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);

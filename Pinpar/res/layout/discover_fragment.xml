@@ -58,7 +58,7 @@
         android:layout_below="@id/discover_title"
         android:background="@color/background_theme">
         
-        <com.ipinpar.app.widget.pulltorefresh.PullToRefreshListView
+        <com.ipinpar.app.widget.PullToRefreshListView
             android:id="@+id/ongoing_activities_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -77,7 +77,7 @@
             app:only_animate_fling="false"
             app:max_velocity="0">
             
-        </com.ipinpar.app.widget.pulltorefresh.PullToRefreshListView>
+        </com.ipinpar.app.widget.PullToRefreshListView>
     </RelativeLayout>
     
 

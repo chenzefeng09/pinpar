@@ -10,5 +10,10 @@ public class AcImageEntity {
 	public void setImg(String img) {
 		this.img = img;
 	}
+
+	@Override
+	public String toString() {
+		return "AcImageEntity [img=" + img + "]";
+	}
 	
 }

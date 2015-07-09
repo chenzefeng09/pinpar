@@ -11,6 +11,7 @@
         android:id="@+id/pull_to_refresh_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background_theme"
         android:paddingLeft="30dp" >
 
         <!-- 箭头图像、进度条 -->
@@ -57,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pull_to_refresh_pull_label"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
             <!-- 最近更新 -->
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pull_to_refresh_lastest"
-                android:textColor="@color/text_highlight"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>

@@ -150,9 +150,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="30dp"
-            android:src="@color/grey" 
-            app:border_width="2dp"
-            app:border_color="@color/white"/>
+            android:src="@drawable/app_icon" 
+            app:border_thickness="2dp"
+            app:border_outside_color="@color/white"/>
     </RelativeLayout>
 
     <RelativeLayout

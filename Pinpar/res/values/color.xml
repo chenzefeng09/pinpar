@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+	<!-- 应用背景主题色以及其他颜色 -->
     <color name="title_theme">#8f72e6</color>
     <color name="background_theme">#7b5dd7</color>
+    
     <color name="white">#ffffff</color>
     <color name="secondaryTitleWhite">#fefefe</color>
+    
+    <color name="activity_detail_tip">#3d3c3c</color>
+    <color name="activity_detail">#818181</color>
+    <color name="activity_contact_bg">#cac9cb</color>
     
     <!-- 文字选中高亮颜色 本颜色为淡蓝色 -->
     <color name="text_highlight">#2983c1</color>
