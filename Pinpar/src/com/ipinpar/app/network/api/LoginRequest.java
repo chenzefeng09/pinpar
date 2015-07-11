@@ -17,8 +17,8 @@ public class LoginRequest extends BaseJsonRequest{
 				String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&d=%s",
 						PROTOCOL,
 						phone,
-						passWord,
-						MD5Util.MD5(PROTOCOL+phone+passWord+"pinpa"),
+						MD5Util.MD5(passWord),
+						MD5Util.MD5(PROTOCOL+phone+MD5Util.MD5(passWord)+"pinpa"),
 						DeviceUtil.getDeviceId()
 						),
 				null, listener);

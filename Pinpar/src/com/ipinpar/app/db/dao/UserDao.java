@@ -38,7 +38,7 @@ public class UserDao extends PPDBService {
 		values.put(COLUMN_UNAME, user.getUsername());
 		values.put(COLUMN_MOBILE, user.getMobile());
 		values.put(COLUMN_UID, user.getUid());
-		values.put(COLUMN_IMGSRC, user.getImgSrc());
+		values.put(COLUMN_IMGSRC, user.getImgsrc());
 		sqLiteDatabase.insert(TABLE_NAME, null, values);
 		closeDB();
 	}
@@ -59,7 +59,7 @@ public class UserDao extends PPDBService {
 		// TODO Auto-generated method stub
 		UserEntity entity = new UserEntity();
 		entity.setEmail(cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL)));
-		entity.setImgSrc(cursor.getString(cursor.getColumnIndex(COLUMN_IMGSRC)));
+		entity.setImgsrc(cursor.getString(cursor.getColumnIndex(COLUMN_IMGSRC)));
 		entity.setMobile(cursor.getString(cursor.getColumnIndex(COLUMN_MOBILE)));
 		entity.setUid(cursor.getInt(cursor.getColumnIndex(COLUMN_UID)));
 		entity.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_UNAME)));

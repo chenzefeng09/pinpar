@@ -25,7 +25,7 @@
         <activity
             android:name="com.ipinpar.app.activity.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,6 +41,21 @@
         
         <activity 
             android:name="com.ipinpar.app.activity.UserInfoEditActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity 
+            android:name="com.ipinpar.app.activity.SettingActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity 
+            android:name="com.ipinpar.app.activity.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity 
+            android:name="com.ipinpar.app.activity.RegistActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity 
+            android:name="com.ipinpar.app.activity.RegistActivityStep2"
+            android:screenOrientation="portrait"></activity>
+        <activity 
+            android:name="com.ipinpar.app.activity.RegistStep3Activity"
             android:screenOrientation="portrait"></activity>
     </application>
 

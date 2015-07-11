@@ -44,7 +44,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/et_user_phone"
+                android:id="@+id/tv_change_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="12dp"
@@ -61,7 +61,7 @@
                 android:src="#dcdcdc" />
 
             <TextView
-                android:id="@+id/et_pwd"
+                android:id="@+id/et_sugest"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="12dp"
@@ -120,14 +120,5 @@
             android:text="退出当前账号"
             android:textColor="@color/white" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_regist"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:background="#cac9cb"
-        android:text="注册"
-        android:textColor="@color/white" />
 
 </RelativeLayout>
