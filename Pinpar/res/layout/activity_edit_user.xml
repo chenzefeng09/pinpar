@@ -177,12 +177,28 @@
             android:layout_marginRight="8dp"
             android:src="@drawable/add" />
     </RelativeLayout>
-    
-    <com.ipinpar.app.view.FlowLayout 
-        android:id="@+id/fl_intrest"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="12dp"/>
+        android:layout_marginRight="20dp"
+        android:layout_weight="1" >
+
+        <com.ipinpar.app.view.FlowLayout
+            android:id="@+id/fl_intrest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/title_theme"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 </LinearLayout>

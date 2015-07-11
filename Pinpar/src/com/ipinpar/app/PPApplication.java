@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import com.easemob.chat.EMChat;
+import com.easemob.chat.EMChatManager;
 import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.util.DeviceUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -29,8 +31,22 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 		applicationContext = this;
 		initImageLoader();
 		DeviceUtil.init(this);
+		initChat();
 	}
 	
+	private void initChat() {
+		// TODO Auto-generated method stub
+		EMChat.getInstance().init(applicationContext);
+
+		/**
+		 * debugMode == true 时为打开，sdk 会在log里输入调试信息
+		 * @param debugMode
+		 * 在做代码混淆的时候需要设置成false
+		 */
+		EMChat.getInstance().setDebugMode(true);//在做打包混淆时，要关闭debug模式，如果未被关闭，则会出现程序无法运行问题
+	
+	}
+
 	public void initImageLoader() {
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
 				.cacheOnDisk(true)

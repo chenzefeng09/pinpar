@@ -31,6 +31,7 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.adapter.MainPagerAdapter;
 import com.ipinpar.app.fragment.DiscoverFragment;
 import com.ipinpar.app.fragment.MeFragment;
+import com.ipinpar.app.fragment.MessageFragment;
 import com.ipinpar.app.util.NetWorkState;
 
 public class MainActivity extends PPBaseActivity {
@@ -43,6 +44,7 @@ public class MainActivity extends PPBaseActivity {
 	private RadioButton  rdBtnDiscover,rdBtnMessage,rdBtnMe;
 	
 	private DiscoverFragment discoverFragment;
+	private MessageFragment messageFragment;
 	private MeFragment meFragment;
 	
 	private List<PPBaseFragment> fragments;
@@ -155,8 +157,10 @@ public class MainActivity extends PPBaseActivity {
 		discoverFragment = new DiscoverFragment();
 //		
 //		
+		messageFragment  = new MessageFragment();
 		meFragment = new MeFragment();
 		fragments.add(discoverFragment);
+		fragments.add(messageFragment);
 		fragments.add(meFragment);
 		
 		fm = getSupportFragmentManager();

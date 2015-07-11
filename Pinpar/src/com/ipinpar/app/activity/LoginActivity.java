@@ -17,9 +17,11 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.db.dao.UserDao;
 import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.LoginRequest;
+import com.ipinpar.app.util.MD5Util;
 
 public class LoginActivity extends PPBaseActivity implements OnClickListener{
 	
@@ -66,17 +68,21 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 			startActivity(new Intent(mContext, RegistActivity.class));
 			break;
 		case R.id.btn_login:
+			showProgressDialog();
 			String phone = et_user_phone.getText().toString().trim();
-			String pwd = et_pwd.getText().toString().trim();
+			final String pwd = et_pwd.getText().toString().trim();
 			if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(pwd)) {
-				request = new LoginRequest(phone, pwd, new Listener<JSONObject>() {
+				request = new LoginRequest(phone, MD5Util.MD5(pwd), new Listener<JSONObject>() {
 								@Override
 								public void onResponse(JSONObject response) {
+									dissmissProgressDialog();
 									// TODO Auto-generated method stub
 									Gson gson = new Gson();
 									UserEntity user = gson.fromJson(response.toString(), UserEntity.class);
 									if (user != null && user.getResult() == 1) {
 										//登录成功
+										user.setPassword(MD5Util.MD5(pwd));
+										UserDao.getInstance().insertUser(user);
 										UserManager.getInstance().setUserInfo(user);
 										Toast.makeText(mContext, "登录成功", 1000).show();
 										setResult(RESULT_OK);

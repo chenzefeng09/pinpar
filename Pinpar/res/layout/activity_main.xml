@@ -32,7 +32,7 @@
              android:textColor="@drawable/main_tab_selector"
 	         android:gravity="center_horizontal"
 	         android:layout_weight="1"
-	         android:background="#efefef"/>
+	         android:background="#efefef" />
 	     
 	      <RadioButton
 	         android:id="@+id/btn_message"
