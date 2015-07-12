@@ -80,6 +80,10 @@
         <activity 
             android:name="com.ipinpar.app.activity.RegistStep3Activity"
             android:screenOrientation="portrait"></activity>
+        <activity 
+            android:name="com.ipinpar.app.activity.FriendActivity"
+            android:screenOrientation="portrait"></activity>
+        
     </application>
 
 </manifest>

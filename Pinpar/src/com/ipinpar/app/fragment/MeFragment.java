@@ -1,5 +1,8 @@
 package com.ipinpar.app.fragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +13,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response.Listener;
 import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
+import com.ipinpar.app.activity.FriendActivity;
 import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.activity.SettingActivity;
 import com.ipinpar.app.activity.UserInfoEditActivity;
+import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.GetUserInfoRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -28,6 +37,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	private TextView tv_header_title,tv_uname,tv_qianming,tv_my_activity,tv_my_invited_activity,tv_my_faverite_activity,tv_my_friend,tv_edit;
 	private ImageView ib_right,iv_icon,iv_blur_icon,iv_sex;
 	private DisplayImageOptions options;
+	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
@@ -64,6 +74,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
 		iv_blur_icon = (ImageView) view.findViewById(R.id.iv_blur_icon);
 		iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
+		
 		tv_edit.setOnClickListener(this);
 		tv_my_activity.setOnClickListener(this);
 		tv_my_invited_activity.setOnClickListener(this);
@@ -77,36 +88,60 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if (!UserManager.getInstance().isLogin()) {
-			iv_icon.setImageResource(R.drawable.defaultavatarmale);
-			iv_sex.setImageResource(R.drawable.log_maleselected);
-			tv_qianming.setText("没有留下任何文字");
-			tv_edit.setText("登录");
-		}
-		else {
-			ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon,options);
-			if (UserManager.getInstance().getUserInfo().getSex() == 1) {
-				iv_sex.setImageResource(R.drawable.log_maleselected);
-				if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {
-					iv_icon.setImageResource(R.drawable.defaultavatarmale);
-				}
-			}
-			else {
-				iv_sex.setImageResource(R.drawable.log_femailselected);
-				if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {
-					iv_icon.setImageResource(R.drawable.defaultavatarfemail);
-				}
-			}
-			if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getSignature())) {
-				tv_qianming.setText("没有留下任何文字");
-			}
-			else {
-				tv_qianming.setText(UserManager.getInstance().getUserInfo().getSignature());
-			}
-			tv_uname.setText(UserManager.getInstance().getUserInfo().getUsername());
-			tv_edit.setText("编辑");
-		}
+		
+		GetUserInfoRequest request = new GetUserInfoRequest(UserManager.getInstance().getUserInfo().getUid()+"", new Listener<JSONObject>() {
 
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				dissmissProgressDialog();
+				try {
+					if (response != null && response.getInt("result") == 1) {
+						UserEntity userEntity = UserManager.getInstance().getUserInfo();
+						userEntity.setUsername(response.getString("username"));
+						userEntity.setSex(response.getInt("sex"));
+						userEntity.setSignature(response.getString("signature"));
+						userEntity.setImgsrc(response.getString("imgsrc"));
+						ImageLoader.getInstance().displayImage(response.getString("imgsrc"), iv_icon,options);
+						UserManager.getInstance().setUserInfo(userEntity);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if (!UserManager.getInstance().isLogin()) {
+					iv_icon.setImageResource(R.drawable.defaultavatarmale);
+					iv_sex.setImageResource(R.drawable.log_maleselected);
+					tv_qianming.setText("没有留下任何文字");
+					tv_edit.setText("登录");
+				}
+				else {
+					ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon,options);
+					if (UserManager.getInstance().getUserInfo().getSex() == 1) {
+						iv_sex.setImageResource(R.drawable.log_maleselected);
+						if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {
+							iv_icon.setImageResource(R.drawable.defaultavatarmale);
+						}
+					}
+					else {
+						iv_sex.setImageResource(R.drawable.log_femailselected);
+						if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {
+							iv_icon.setImageResource(R.drawable.defaultavatarfemail);
+						}
+					}
+					if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getSignature())) {
+						tv_qianming.setText("没有留下任何文字");
+					}
+					else {
+						tv_qianming.setText(UserManager.getInstance().getUserInfo().getSignature());
+					}
+					tv_uname.setText(UserManager.getInstance().getUserInfo().getUsername());
+					tv_edit.setText("编辑");
+				}
+			}
+		});
+		apiQueue.add(request);
 	}
 
 
@@ -114,6 +149,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
+
 		case R.id.tv_my_activity:
 			
 			break;
@@ -124,7 +160,12 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 			
 			break;
 		case R.id.tv_my_friend:
-			
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, FriendActivity.class));
+			}
+			else {
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+			}
 			break;
 		case R.id.iv_icon:
 			if (UserManager.getInstance().isLogin()) {
