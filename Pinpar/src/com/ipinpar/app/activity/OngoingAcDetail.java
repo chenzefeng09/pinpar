@@ -15,15 +15,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.adapter.StatementListAdapter;
 import com.ipinpar.app.entity.AcImageEntity;
+import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
-import com.ipinpar.app.network.api.OngoingActivityDetailRequest;
+import com.ipinpar.app.entity.ActivityStatementListEntity;
+import com.ipinpar.app.network.api.ActivityDetailRequest;
+import com.ipinpar.app.network.api.ActivityStatementListRequest;
 import com.ipinpar.app.view.RollViewPager;
 
 public class OngoingAcDetail extends PPBaseActivity {
@@ -41,12 +46,19 @@ public class OngoingAcDetail extends PPBaseActivity {
 	
 	private ProgressDialog wattingDialog;
 	
+	private StatementListAdapter statementListAdapter;
+	
 	//活动ID
 	private int acid;
 	
 	//根据活动ID请求进行中的活动的详细信息
-	private OngoingActivityDetailRequest ongoingAcDetailRequest;
+	private ActivityDetailRequest ongoingAcDetailRequest;
+	//根据uid和acid获取最强宣言列表
+	private ActivityStatementListRequest ongoingAcStatementListRequest;
+	
 	private ArrayList<AcImageEntity> acImageList = new ArrayList<AcImageEntity>();
+	
+	private ArrayList<AcStatementEntity> acStatementList = new ArrayList<AcStatementEntity>();
 	
 	private Button btnBack;
 	private Button btnShare;
@@ -66,7 +78,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private TextView tvAcInterestedNum;
 	private TextView tvAcRegistedNum;
 	
-	
+	private ListView statementListView;
 	
 
 	@Override
@@ -82,6 +94,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		setView();
 		
 		handlerOngoingAcsRequest.sendEmptyMessage(0);
+		handlerOngoingAcStatementListRequest.sendEmptyMessage(0);
 		
 	}
 
@@ -116,6 +129,8 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcContact = (TextView) findViewById(R.id.tv_acContact);
 		tvAcInterestedNum = (TextView) findViewById(R.id.tv_interested_detail_num);
 		tvAcRegistedNum = (TextView) findViewById(R.id.tv_regist_detail_num);
+		
+		statementListView = (ListView) findViewById(R.id.lv_detail_the_statement);
 		
 	}
 	
@@ -221,20 +236,6 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcRegistedNum.setText(acticityEntity.getIncount()+"");
 	}
 	
-//	@Override
-//	public void onClick(View v) {
-//		// TODO Auto-generated method stub
-//		switch (v.getId()) {
-//		case R.id.btn_back:
-//			Log.d("onClick", "");
-//			onBackPressed();
-//			break;
-//
-//		default:
-//			break;
-//		}
-//	}
-	
 	Handler acticityDetailInfoHandler = new Handler(){
 
 		ActivityEntity acEntity = new ActivityEntity();
@@ -267,7 +268,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 				wattingDialog.show();
-				ongoingAcDetailRequest = new OngoingActivityDetailRequest(acid+"", new Listener<JSONObject>() {
+				ongoingAcDetailRequest = new ActivityDetailRequest(acid+"", new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {
@@ -300,6 +301,55 @@ public class OngoingAcDetail extends PPBaseActivity {
 				ongoingAcDetailRequest.setTag(TAG);
 				apiQueue.add(ongoingAcDetailRequest);
 			break;
+			
+			default:
+				
+				break;
+			}
+		}
+		
+	};
+	
+	
+	Handler handlerOngoingAcStatementListRequest = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what){
+			case 0:
+
+				ongoingAcStatementListRequest = new ActivityStatementListRequest("",acid+"", new Listener<JSONObject>() {
+					
+					@Override
+					public void onResponse(JSONObject response) {
+						// TODO Auto-generated method stub
+						
+						Gson gson = new Gson();
+						
+						//获取返回的活动
+						ActivityStatementListEntity acStatementListEntity = gson.fromJson(response.toString(), ActivityStatementListEntity.class);
+						
+						if(acStatementListEntity.getResult().equals("1")){
+							acStatementList.clear();
+							acStatementList.addAll(acStatementListEntity.getDeclarations());
+							
+							handlerOngoingAcStatementListRequest.sendEmptyMessage(1);
+						}
+					}
+					
+				});
+				ongoingAcStatementListRequest.setTag(TAG);
+				apiQueue.add(ongoingAcStatementListRequest);
+			break;
+			
+			case 1:
+				
+				statementListAdapter = new StatementListAdapter(mContext,acStatementList);
+				statementListView.setAdapter(statementListAdapter);
+				
+				break;
 			
 			default:
 				

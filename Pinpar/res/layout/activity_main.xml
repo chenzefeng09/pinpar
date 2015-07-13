@@ -29,11 +29,7 @@
 	         android:drawableTop="@drawable/tab_discovery_selector"
 	         android:text="@string/main_tab_home"
              android:textSize="12sp"
-<<<<<<< HEAD
-             android:textColor="@color/gray"
-=======
              android:textColor="@drawable/main_tab_selector"
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 	         android:gravity="center_horizontal"
 	         android:layout_weight="1"
 	         android:background="#efefef"/>
@@ -46,11 +42,7 @@
 	         android:drawableTop="@drawable/tab_message_selector"
 	         android:text="@string/main_tab_message"
              android:textSize="12sp"
-<<<<<<< HEAD
-             android:textColor="@color/gray"
-=======
              android:textColor="@drawable/main_tab_selector"
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 	         android:gravity="center_horizontal"
 	         android:layout_weight="1"
 	         android:background="#efefef"/>
@@ -63,11 +55,7 @@
 	         android:drawableTop="@drawable/tab_me_selector"
 	         android:text="@string/main_tab_me"
              android:textSize="12sp"
-<<<<<<< HEAD
-             android:textColor="@color/gray"
-=======
              android:textColor="@drawable/main_tab_selector"
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 	         android:gravity="center_horizontal"
 	         android:layout_weight="1"
 	         android:background="#efefef"/>

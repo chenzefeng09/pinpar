@@ -39,6 +39,7 @@
      
      <!-- 活动界面字符资源 -->
      <string name="ongoing">进行中</string>
+     <string name="ongoing_activities">正在进行</string>
 	 <string name="past_activities">往期活动</string>    
 	 <string name="first_text_desc">微薄之盐</string>
 	 <string name="second_text_desc">调酒师体验</string>
@@ -73,5 +74,20 @@
 	 <string name="activity_user_name">用户名</string> 
 	 <string name="activity_support_tip">支持</string> 
 	 <string name="activity_comment_tip">评论</string> 
+	 
+	 <!-- 体验说明界面字符资源 -->
+	 <string name="activity_experience_flow">体验流程</string>
+	 
+	 <string name="activity_experience_step1">选择活动进入活动详情页，点击我要报名，即可参加活动。</string>
+	 <string name="activity_experience_step2">说说选择你的原因，喊出自己的宣言，让趴友们为你助威，获得的支持将是选择你的重要参考哦。</string>
+	 <string name="activity_experience_step3">报名信息一定要真实有效哦，方便我们联系您，及获得我们送出的体验礼包。</string>
+	 <string name="activity_experience_step4">报名截止后我们开始筛选趴友，这个过程需要一段时间，请耐心等待哦。</string>
+	 <string name="activity_experience_step5">我们将和获得资格的趴友沟通，以确保活动顺利进行。确认参加的趴友后发现无法按时参加，请确保提前一天通知我们，以方便我们把名额给予其他趴友。</string>
+	 <string name="activity_experience_step6">尽情的享受体验日的乐趣吧，但是体验结束别忘了和趴友们分享今天的收获哦！</string>
+	 <string name="activity_experience_step7">最终完成，还可以分享到其他平台，也向自己到好友炫耀一下吧！</string>
+	
+	 <!-- 往期活动界面字符资源 -->
+	 <string name="past_dynamic_title">动态标题</string>
+	 <string name="past_dynamic_description">动态描述</string>
 	 
 </resources>

@@ -27,10 +27,10 @@ import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.OngoingAcDetail;
-import com.ipinpar.app.adapter.ActivityListAdapter;
+import com.ipinpar.app.adapter.OngoingActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
-import com.ipinpar.app.network.api.OngoingActivitiesRequest;
+import com.ipinpar.app.network.api.ActivityListRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
@@ -45,13 +45,13 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 	private ProgressDialog wattingDialog;
 	
 	//请求进行中的活动
-	private OngoingActivitiesRequest ongoingAcsRequest;
+	private ActivityListRequest ongoingAcsRequest;
 	
 	//保存服务器返回的正在进行中的活动
 	private ArrayList<ActivityEntity> activityList = new ArrayList<ActivityEntity>();
 	
 	private PullToRefreshListView ongoingActicitiesListView;
-	private ActivityListAdapter activityListAdapter;
+	private OngoingActivityListAdapter activityListAdapter;
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -89,7 +89,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		
 		wattingDialog = new ProgressDialog(mContext, SCROLL_STATE_TOUCH_SCROLL);
 		
-		activityListAdapter = new ActivityListAdapter(mContext,activityList);
+		activityListAdapter = new OngoingActivityListAdapter(mContext,activityList);
 		
 		ongoingActicitiesListView = (PullToRefreshListView) view.findViewById(R.id.ongoing_activities_list);
 		ongoingActicitiesListView.setOnScrollListener(onScrollListener);
@@ -104,10 +104,6 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 	}
 
 	@Override
@@ -198,7 +194,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 			switch(msg.what){
 			case 0:
 				wattingDialog.show();
-				ongoingAcsRequest = new OngoingActivitiesRequest("1","","100","1","5", new Listener<JSONObject>() {
+				ongoingAcsRequest = new ActivityListRequest("1","","100","1","5", new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

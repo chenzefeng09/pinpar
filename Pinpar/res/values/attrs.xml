@@ -5,16 +5,6 @@
         <attr name="cornerRadius" format="dimension" />
         <attr name="desaturateOnPress" format="boolean" />
     </declare-styleable>
-<<<<<<< HEAD
-
-    <!-- 
-    <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-        <attr name="border_overlay" format="boolean" />
-    </declare-styleable>
-     -->
-=======
     <declare-styleable name="FlowLayout">
         <attr name="horizontalSpacing" format="dimension" />
         <attr name="verticalSpacing" format="dimension" />
@@ -30,7 +20,6 @@
         <attr name="layout_horizontalSpacing" format="dimension" />
         <attr name="layout_verticalSpacing" format="dimension" />
         </declare-styleable>
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
     
     <declare-styleable name="CircularImageView">
         <attr name="border_thickness" format="dimension" />

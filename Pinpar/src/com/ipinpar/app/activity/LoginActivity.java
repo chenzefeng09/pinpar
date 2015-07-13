@@ -2,6 +2,7 @@ package com.ipinpar.app.activity;
 
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.UserEntity;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.LoginRequest;
 
 public class LoginActivity extends PPBaseActivity implements OnClickListener{
@@ -56,10 +58,12 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 			
 			break;
 		case R.id.ib_left:
+			setResult(RESULT_CANCELED);
 			finish();
 			break;
 		case R.id.btn_regist:
 			//
+			startActivity(new Intent(mContext, RegistActivity.class));
 			break;
 		case R.id.btn_login:
 			String phone = et_user_phone.getText().toString().trim();
@@ -73,10 +77,15 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 									UserEntity user = gson.fromJson(response.toString(), UserEntity.class);
 									if (user != null && user.getResult() == 1) {
 										//登录成功
+										UserManager.getInstance().setUserInfo(user);
 										Toast.makeText(mContext, "登录成功", 1000).show();
+										setResult(RESULT_OK);
+										finish();
 									}
 									else {
 										//登录失败
+										Toast.makeText(mContext, "登录失败", 1000).show();
+
 									}
 								}
 							});
@@ -92,6 +101,13 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		setResult(RESULT_CANCELED);
 	}
 	
 	@Override

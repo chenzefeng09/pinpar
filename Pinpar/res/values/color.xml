@@ -12,6 +12,10 @@
     <color name="activity_detail">#818181</color>
     <color name="activity_contact_bg">#cac9cb</color>
     
+    <color name="activity_statement_username">#3d3c3c</color>
+    <color name="activity_statement_content">#8c8c8c</color>
+    <color name="activity_statement_time">#c4c4c4</color>
+    
     <!-- 文字选中高亮颜色 本颜色为淡蓝色 -->
     <color name="text_highlight">#2983c1</color>
     <color name="transparent">#00000000</color>

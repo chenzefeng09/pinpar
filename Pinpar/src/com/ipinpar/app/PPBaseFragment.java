@@ -17,16 +17,24 @@ public class PPBaseFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
+		mContext = (Context)activity;
 	}
 
 	@Override
 	public void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
-		mContext = getActivity().getApplicationContext();
 		apiQueue = Volley.newRequestQueue(mContext);
 		apiQueue.start();
 	}
+	
+	public void showProgressDialog(){
+		((PPBaseActivity)mContext).showProgressDialog();
+	}
+	public void dissmissProgressDialog(){
+		((PPBaseActivity)mContext).dissmissProgressDialog();
+
+	} 
 	
 	@Override
 	public void onDestroy() {

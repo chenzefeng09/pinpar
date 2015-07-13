@@ -12,10 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-<<<<<<< HEAD
-import android.support.v4.app.Fragment;
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -23,10 +19,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-<<<<<<< HEAD
-import android.widget.CompoundButton;
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -38,10 +30,8 @@ import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.adapter.MainPagerAdapter;
 import com.ipinpar.app.fragment.DiscoverFragment;
-<<<<<<< HEAD
-=======
 import com.ipinpar.app.fragment.MeFragment;
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
+import com.ipinpar.app.fragment.PastFragment;
 import com.ipinpar.app.util.NetWorkState;
 
 public class MainActivity extends PPBaseActivity {
@@ -54,10 +44,9 @@ public class MainActivity extends PPBaseActivity {
 	private RadioButton  rdBtnDiscover,rdBtnMessage,rdBtnMe;
 	
 	private DiscoverFragment discoverFragment;
-<<<<<<< HEAD
-=======
 	private MeFragment meFragment;
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
+	
+	private PastFragment pastFragment;
 	
 	private List<PPBaseFragment> fragments;
 	private View backView;
@@ -124,22 +113,6 @@ public class MainActivity extends PPBaseActivity {
 	
 	private void initWidgets(){
 		
-<<<<<<< HEAD
-		android.widget.CompoundButton.OnCheckedChangeListener occl = 
-				new android.widget.CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					buttonView.setTextColor(0xff8f72e6);
-				}
-				else {
-					buttonView.setTextColor(Color.GRAY);
-				}
-			}
-		};
-		
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 		container = (ViewPager) findViewById(R.id.containerBody);
 		try {
 			 Field mScroller;
@@ -165,13 +138,6 @@ public class MainActivity extends PPBaseActivity {
 		rdBtnMessage = (RadioButton) findViewById(R.id.btn_message);
 		rdBtnMe = (RadioButton) findViewById(R.id.btn_me);
 		
-<<<<<<< HEAD
-		rdBtnDiscover.setOnCheckedChangeListener(occl);
-		rdBtnMessage.setOnCheckedChangeListener(occl);
-		rdBtnMe.setOnCheckedChangeListener(occl);
-		
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 		tabRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -192,13 +158,16 @@ public class MainActivity extends PPBaseActivity {
 		discoverFragment = new DiscoverFragment();
 //		
 //		
-<<<<<<< HEAD
-		fragments.add(discoverFragment);
-=======
 		meFragment = new MeFragment();
+		
+		pastFragment = new PastFragment();
+		
+		
+		
 		fragments.add(discoverFragment);
 		fragments.add(meFragment);
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
+		
+		fragments.add(pastFragment);
 		
 		fm = getSupportFragmentManager();
 		mPagerAdapter = new MainPagerAdapter(fm, fragments);
@@ -224,10 +193,6 @@ public class MainActivity extends PPBaseActivity {
 					break;
 				}
 			}
-<<<<<<< HEAD
-			
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
@@ -295,12 +260,6 @@ public class MainActivity extends PPBaseActivity {
 	}
 	
 	Handler mHandler = new Handler()	{
-<<<<<<< HEAD
-		
-		@Override
-		
-=======
->>>>>>> 6587a2e762a8432710f3d46e78f66b828d6a244b
 		public void handleMessage(Message msg)	{
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);

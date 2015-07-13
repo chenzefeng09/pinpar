@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="78dp"
                 android:layout_marginTop="8dp"
-                android:text="呵呵" />
+                android:text="快登陆吧" />
             
             <ImageView 
                 android:id="@+id/iv_sex"
@@ -145,7 +145,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <com.ipinpar.app.view.CircleImageView
+        <com.ipinpar.app.view.CircularImageView
             android:id="@+id/iv_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
