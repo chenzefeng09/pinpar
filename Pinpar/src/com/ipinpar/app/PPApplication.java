@@ -52,7 +52,6 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 				.cacheOnDisk(true)
 				.cacheInMemory(true)
 				.displayer(new FadeInBitmapDisplayer(50))
-				.displayer(new RoundedBitmapDisplayer(15))
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.imageScaleType(ImageScaleType.EXACTLY) // default
 				.build();

@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -14,6 +17,7 @@ public class PPBaseActivity extends FragmentActivity {
 	public RequestQueue apiQueue;
 	public Context mContext;
 	private ProgressDialog wattingDialog;
+	private ImageView backview;
 
 	
 	@Override
@@ -22,6 +26,17 @@ public class PPBaseActivity extends FragmentActivity {
 		super.onCreate(arg0);
 		mContext = this;
 		wattingDialog = new ProgressDialog(mContext);
+		backview = (ImageView) findViewById(R.id.ib_left);
+		if (backview != null) {
+			backview.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					finish();
+				}
+			});
+		}
 		apiQueue = Volley.newRequestQueue(this);
 		apiQueue.start();
 	}

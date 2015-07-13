@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
+import com.easemob.chat.EMChatManager;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
@@ -24,6 +25,7 @@ import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.LoginRequest;
 import com.ipinpar.app.network.api.RegistRequest;
+import com.ipinpar.app.util.MD5Util;
 
 public class RegistStep3Activity extends PPBaseActivity implements OnClickListener{
 	
@@ -109,6 +111,13 @@ public class RegistStep3Activity extends PPBaseActivity implements OnClickListen
 						UserEntity userEntity = gson.fromJson(response.toString(), UserEntity.class);
 						if (userEntity != null && userEntity.getResult() == 1) {
 							Toast.makeText(mContext, "注册成功，欢迎来到品趴！", 1000).show();
+						      try {
+						         // 调用sdk注册方法
+						         EMChatManager.getInstance().createAccountOnServer(userEntity.getUid()+"", MD5Util.MD5(userEntity.getUid()+"pinpa"));
+						      } catch (final Exception e) {
+									e.printStackTrace();
+
+						      }
 							UserManager.getInstance().setUserInfo(userEntity);
 							startActivity(new Intent(mContext, MainActivity.class));
 							finish();

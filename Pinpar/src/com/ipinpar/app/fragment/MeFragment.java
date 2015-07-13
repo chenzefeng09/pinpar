@@ -88,7 +88,8 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+		if (UserManager.getInstance().isLogin()) {
+			
 		GetUserInfoRequest request = new GetUserInfoRequest(UserManager.getInstance().getUserInfo().getUid()+"", new Listener<JSONObject>() {
 
 			@Override
@@ -110,13 +111,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 					e.printStackTrace();
 				}
 				
-				if (!UserManager.getInstance().isLogin()) {
-					iv_icon.setImageResource(R.drawable.defaultavatarmale);
-					iv_sex.setImageResource(R.drawable.log_maleselected);
-					tv_qianming.setText("没有留下任何文字");
-					tv_edit.setText("登录");
-				}
-				else {
+				
 					ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon,options);
 					if (UserManager.getInstance().getUserInfo().getSex() == 1) {
 						iv_sex.setImageResource(R.drawable.log_maleselected);
@@ -138,10 +133,17 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 					}
 					tv_uname.setText(UserManager.getInstance().getUserInfo().getUsername());
 					tv_edit.setText("编辑");
-				}
 			}
 		});
 		apiQueue.add(request);
+		}
+		else {
+				iv_icon.setImageResource(R.drawable.defaultavatarmale);
+				iv_sex.setImageResource(R.drawable.log_maleselected);
+				tv_qianming.setText("没有留下任何文字");
+				tv_edit.setText("登录");
+		}
+		
 	}
 
 

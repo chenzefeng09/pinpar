@@ -19,6 +19,7 @@ import com.ipinpar.app.db.dao.UserDao;
 import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.LoginRequest;
+import com.ipinpar.app.util.MD5Util;
 
 public class SplashActivity extends PPBaseActivity {
 	
@@ -28,8 +29,9 @@ public class SplashActivity extends PPBaseActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_splash);
 		final UserEntity entity = UserDao.getInstance().getLogedUser();
-		UserManager.getInstance().setUserInfo(entity);
+	
 		if (entity != null) {
+			
 			LoginRequest request = new LoginRequest(entity.getMobile(), entity.getPassword(), new Listener<JSONObject>() {
 
 				@Override
@@ -51,7 +53,15 @@ public class SplashActivity extends PPBaseActivity {
 			apiQueue.add(request);
 		}
 		if (UserManager.getInstance().isLogin()) {
-			EMChatManager.getInstance().login(entity.getUsername(),entity.getPassword(),new EMCallBack() {//回调
+			UserManager.getInstance().setUserInfo(entity);
+		      try {
+		         // 调用sdk注册方法
+		         EMChatManager.getInstance().createAccountOnServer(entity.getUid()+"", MD5Util.MD5(entity.getUid()+"pinpa"));
+		      } catch (final Exception e) {
+					e.printStackTrace();
+
+		      }
+			EMChatManager.getInstance().login(entity.getUid()+"",MD5Util.MD5(entity.getUid()+"pinpa"),new EMCallBack() {//回调
 				@Override
 				public void onSuccess() {
 					runOnUiThread(new Runnable() {

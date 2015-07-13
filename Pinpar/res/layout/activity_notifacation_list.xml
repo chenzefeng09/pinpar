@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -15,7 +15,7 @@
             android:layout_height="fill_parent"
             android:gravity="center"
             android:singleLine="true"
-            android:text="我的好友"
+            android:text="评论"
             android:textColor="@color/white"
             android:textSize="18sp" />
         
@@ -38,5 +38,7 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         ></ListView>
+    
+    
 
 </LinearLayout>
