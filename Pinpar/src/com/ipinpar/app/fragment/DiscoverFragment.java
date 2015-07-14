@@ -12,20 +12,25 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
+import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.activity.OngoingAcDetail;
 import com.ipinpar.app.adapter.OngoingActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
@@ -42,6 +47,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 	private View backView;
 	private View view;
 	
+	private LinearLayout llPastActivities;
 	private ProgressDialog wattingDialog;
 	
 	//请求进行中的活动
@@ -70,6 +76,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		view = inflater.inflate(R.layout.discover_fragment, null);
 		
 		initView(view);
+		setView();
 		
 		return view;
 	}
@@ -87,18 +94,26 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		backView = view.findViewById(R.id.backlayout);
 		backView.setBackgroundColor(Color.WHITE);
 		
-		wattingDialog = new ProgressDialog(mContext, SCROLL_STATE_TOUCH_SCROLL);
-		
 		activityListAdapter = new OngoingActivityListAdapter(mContext,activityList);
 		
+		wattingDialog = new ProgressDialog(mContext, SCROLL_STATE_TOUCH_SCROLL);
+		llPastActivities= (LinearLayout) view.findViewById(R.id.LL_title_past);
+		
 		ongoingActicitiesListView = (PullToRefreshListView) view.findViewById(R.id.ongoing_activities_list);
-		ongoingActicitiesListView.setOnScrollListener(onScrollListener);
-		ongoingActicitiesListView.setOnRefreshListener(onRefreshListener);
-		ongoingActicitiesListView.setOnItemClickListener(onItemClickListener);
 		
 		if(activityListAdapter!=null){
 			ongoingActicitiesListView.setAdapter(activityListAdapter);
 		}
+	}
+	
+	public void setView(){
+		ongoingActicitiesListView.setOnScrollListener(onScrollListener);
+		ongoingActicitiesListView.setOnRefreshListener(onRefreshListener);
+		ongoingActicitiesListView.setOnItemClickListener(onItemClickListener);
+		
+		llPastActivities.setOnClickListener(onPastActivityClickListener);
+		
+		
 	}
 
 	@Override
@@ -112,6 +127,17 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		// TODO Auto-generated method stub
 
 	}
+	
+	private OnClickListener onPastActivityClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			MainActivity activity = (MainActivity) getActivity();
+			FragmentManager fm = activity.getSupportFragmentManager();
+			activity.container.setCurrentItem(3, false);
+		}
+	};
 	
 	private OnScrollListener onScrollListener = new OnScrollListener() {
 		

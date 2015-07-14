@@ -39,14 +39,15 @@ public class MainActivity extends PPBaseActivity {
 	// 一个网络请求的例子
 //	private LoginRequest request ;
 	private Context mContext;
-	private ViewPager container = null;
+	public ViewPager container = null;
 	private RadioGroup tabRadioGroup;
 	private RadioButton  rdBtnDiscover,rdBtnMessage,rdBtnMe;
 	
 	private DiscoverFragment discoverFragment;
-	private MeFragment meFragment;
+	public MeFragment meFragment;
 	
-	private PastFragment pastFragment;
+	public PastFragment pastFragment;
+	public PastFragment pastFragment2;
 	
 	private List<PPBaseFragment> fragments;
 	private View backView;
@@ -161,13 +162,12 @@ public class MainActivity extends PPBaseActivity {
 		meFragment = new MeFragment();
 		
 		pastFragment = new PastFragment();
-		
-		
+		pastFragment2 = new PastFragment();
 		
 		fragments.add(discoverFragment);
 		fragments.add(meFragment);
-		
 		fragments.add(pastFragment);
+		fragments.add(pastFragment2);
 		
 		fm = getSupportFragmentManager();
 		mPagerAdapter = new MainPagerAdapter(fm, fragments);

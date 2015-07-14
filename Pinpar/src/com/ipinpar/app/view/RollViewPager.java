@@ -174,7 +174,7 @@ public class RollViewPager extends ViewPager {
 		@Override
 		public Object instantiateItem(ViewGroup container, final int position) {
 			//给viewpager添加view(ImageView)的操作
-			View view = View.inflate(getContext(), R.layout.ongoing_ac_detail_slide, null);
+			View view = View.inflate(getContext(), R.layout.ac_detail_slide, null);
 			ImageView imageView = (ImageView) view.findViewById(R.id.iv_ac_detail_slide);		
 			//下载后图片放置的控件，下载图片的链接地址	            
 //			GitHubImageLoader.Instace(context).setPic(imgUrlList.get(position), 

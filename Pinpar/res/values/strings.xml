@@ -90,4 +90,6 @@
 	 <string name="past_dynamic_title">动态标题</string>
 	 <string name="past_dynamic_description">动态描述</string>
 	 
+	 <string name="past_activity_regist_end">报名截止</string>
+	 
 </resources>
