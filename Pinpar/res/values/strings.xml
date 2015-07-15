@@ -4,12 +4,12 @@
     <string name="app_name">品趴</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    
+
     <!-- 主界面导航栏文字 -->
-	<string name="main_tab_home">首页</string>
-	<string name="main_tab_message">消息</string>
-	<string name="main_tab_me">我</string>
-	    
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_message">消息</string>
+    <string name="main_tab_me">我</string>
+
     <!-- 下拉刷新相关字符资源 -->
     <string name="pull_to_refresh_pull_label">下拉刷新</string>
     <string name="pull_to_refresh_release_label">松开刷新</string>
@@ -20,8 +20,7 @@
     <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
     <string name="pull_to_refresh_footer_release_label">释放加载更多</string>
     <string name="pull_to_refresh_footer_refreshing_label">加载中...</string>
-    
-    
+
     <!-- alert窗口相关字符资源 -->
     <string name="alert_title">提示</string>
     <string name="alert_exit_content">正在下载中，确定退出应用？</string>
@@ -35,80 +34,90 @@
     <string name="alert_btn_cancel">取消</string>
     <string name="alert_press">再按一次退出程序</string>
     <string name="alert_btn_set">设置</string>
-     <string name="alert_btn_ok">确定</string>
-     
-     <!-- 活动界面字符资源 -->
-     <string name="ongoing">进行中</string>
-     <string name="ongoing_activities">正在进行</string>
-	 <string name="past_activities">往期活动</string>    
-	 <string name="first_text_desc">微薄之盐</string>
-	 <string name="second_text_desc">调酒师体验</string>
-	 <string name="activity_default_address">北京－海淀区</string>
-	 <string name="activity_distance">(3.6km)</string>
-	 <string name="activity_date_desc">活动时间:</string>
-	 <string name="activity_time_begin">2015.05.06  19:00</string>
-	 <string name="activity_time_end">21:00</string>
-	 <string name="activity_praise_num">123</string>
-	 
-	 <!-- 活动详细界面字符资源 -->
-	 <string name="activity_fill_string">填充字符串</string>
-	 <string name="activity_item_name">活动项目:</string>
-	 <string name="activity_shop">活动店铺:</string> 
-	 <string name="activity_address">活动地点:</string>
-	 <string name="activity_time">活动时间:</string> 
-	 <string name="activity_time_split">~</string> 
-	 <string name="activity_regist_end">报名截止:</string>
-	 <string name="activity_allowed_num">体验名额:</string> 
-	 <string name="activity_form">活动方式:</string>
-	 <string name="activity_detail">活动详情:</string> 
-	 <string name="activity_contact">如有疑问请联系:</string> 
-	 
-	 <string name="activity_interested_num">132</string> 
-	 <string name="activity_interested">感兴趣</string> 
-	 <string name="activity_interested_people">人感兴趣</string> 
-	 <string name="activity_regist">我要报名</string> 
-	 <string name="activity_regist_already">已有</string> 
-	 <string name="activity_regist_num">12</string> 
-	 <string name="activity_regist_people">人报名</string> 
-	 
-	 <string name="activity_user_name">用户名</string> 
-	 <string name="activity_support_tip">支持</string> 
-	 <string name="activity_comment_tip">评论</string> 
-	 
-	 	 <!-- 邀请信界面字符资源 -->
-	 	 <string name="activity_invite_letter_name"><![CDATA[亲爱的 <font color="#f47857"> %1$s：</font>]]></string> 
-	 	 	 	 <string name="activity_invite_letter_tips"><![CDATA[活动说明<br/>
+    <string name="alert_btn_ok">确定</string>
+
+    <!-- 活动界面字符资源 -->
+    <string name="ongoing">进行中</string>
+    <string name="ongoing_activities">正在进行</string>
+    <string name="past_activities">往期活动</string>
+    <string name="first_text_desc">微薄之盐</string>
+    <string name="second_text_desc">调酒师体验</string>
+    <string name="activity_default_address">北京－海淀区</string>
+    <string name="activity_distance">(3.6km)</string>
+    <string name="activity_date_desc">活动时间:</string>
+    <string name="activity_time_begin">2015.05.06  19:00</string>
+    <string name="activity_time_end">21:00</string>
+    <string name="activity_praise_num">123</string>
+
+    <!-- 活动详细界面字符资源 -->
+    <string name="activity_fill_string">填充字符串</string>
+    <string name="activity_item_name">活动项目:</string>
+    <string name="activity_shop">活动店铺:</string>
+    <string name="activity_address">活动地点:</string>
+    <string name="activity_time">活动时间:</string>
+    <string name="activity_time_split">~</string>
+    <string name="activity_regist_end">报名截止:</string>
+    <string name="activity_allowed_num">体验名额:</string>
+    <string name="activity_form">活动方式:</string>
+    <string name="activity_detail">活动详情:</string>
+    <string name="activity_contact">如有疑问请联系:</string>
+    <string name="activity_interested_num">132</string>
+    <string name="activity_interested">感兴趣</string>
+    <string name="activity_interested_people">人感兴趣</string>
+    <string name="activity_regist">我要报名</string>
+    <string name="activity_regist_already">已有</string>
+    <string name="activity_regist_num">12</string>
+    <string name="activity_regist_people">人报名</string>
+    <string name="activity_user_name">用户名</string>
+    <string name="activity_support_tip">支持</string>
+    <string name="activity_comment_tip">评论</string>
+
+    <!-- 邀请信界面字符资源 -->
+
+    <string name="experience_list_name">作者 BY %1$s</string>
+    <string name="experience_list_like"><![CDATA[喜欢 %1$s]]></string>
+    <string name="experience_list_comment"><![CDATA[评论 %1$s]]></string>
+    <string name="activity_invite_letter_name"><![CDATA[亲爱的 <font color="#f47857"> %1$s：</font>]]></string>
+    <string name="activity_invite_letter_tips">
+<![CDATA[活动说明<br/>
 	 	 	 	     1、请您在收到邀请信的48小时内选择接受，否则视为放弃此次的体验机会。<br/>2、如果在确认后另有安排，请至少在活动体验日的前一天联系我们告知原因，电话：<font color="#f47857"> 150 1150 5625 <font>。
-	 	 	 	     <br/>3、如果确认后另有安培，并且没有及时联系我们，我们会在一定时间内忽略该用户的体验申请；如果相同情况达到两次以上，我们将永久剥夺该用户的体验资格。]]></string> 
-	 	 <string name="activity_invite_letter_chance"><![CDATA[&#160;&#160;恭喜您获得 <font color="#f47857"> %1$s </font> 的体验机会！]]></string> 
-	 	 
-	 
-	 <string name="ongoing_activity_comment_time">评论时间</string>
-	 <string name="ongoing_activity_comment_content">这是评论的内容！</string>
-	 <string name="ongoing_activity_luck_reason">幸运理由：成全你了</string>
-	 
-	 <!-- 体验说明界面字符资源 -->
-	 <string name="activity_experience_flow">体验流程</string>
-	 
-	 <string name="activity_experience_step1">选择活动进入活动详情页，点击我要报名，即可参加活动。</string>
-	 <string name="activity_experience_step2">说说选择你的原因，喊出自己的宣言，让趴友们为你助威，获得的支持将是选择你的重要参考哦。</string>
-	 <string name="activity_experience_step3">报名信息一定要真实有效哦，方便我们联系您，及获得我们送出的体验礼包。</string>
-	 <string name="activity_experience_step4">报名截止后我们开始筛选趴友，这个过程需要一段时间，请耐心等待哦。</string>
-	 <string name="activity_experience_step5">我们将和获得资格的趴友沟通，以确保活动顺利进行。确认参加的趴友后发现无法按时参加，请确保提前一天通知我们，以方便我们把名额给予其他趴友。</string>
-	 <string name="activity_experience_step6">尽情的享受体验日的乐趣吧，但是体验结束别忘了和趴友们分享今天的收获哦！</string>
-	 <string name="activity_experience_step7">最终完成，还可以分享到其他平台，也向自己到好友炫耀一下吧！</string>
-	
-	 <!-- 往期活动界面字符资源 -->
-	 <string name="past_dynamic_title">动态标题</string>
-	 <string name="past_dynamic_description">动态描述</string>
-	 
-	 <string name="past_activity_regist_end">报名截止</string>
-	 <string name="past_activity_view_member_experience">查看趴友体验</string>
-	 <string name="past_activity_view_more_statement">查看更多宣言 >></string>
-	 
-	 <string name="past_activity_comment_time">评论时间</string>
-	 <string name="past_activity_comment_content">这是评论的内容！</string>
-	 <string name="past_activity_luck_reason_tip">幸运理由:</string>
-	  <string name="past_activity_luck_reason">成全你了！</string>
-	 
+	 	 	 	     <br/>3、如果确认后另有安培，并且没有及时联系我们，我们会在一定时间内忽略该用户的体验申请；如果相同情况达到两次以上，我们将永久剥夺该用户的体验资格。]]>
+    </string>
+    <string name="activity_invite_letter_chance"><![CDATA[&#160;&#160;恭喜您获得 <font color="#f47857"> %1$s </font> 的体验机会！]]></string>
+    <string name="ongoing_activity_comment_time">评论时间</string>
+    <string name="ongoing_activity_comment_content">这是评论的内容！</string>
+    <string name="ongoing_activity_luck_reason">幸运理由：成全你了</string>
+
+    <!-- 体验说明界面字符资源 -->
+    <string name="activity_experience_flow">体验流程</string>
+    <string name="activity_experience_step1">选择活动进入活动详情页，点击我要报名，即可参加活动。</string>
+    <string name="activity_experience_step2">说说选择你的原因，喊出自己的宣言，让趴友们为你助威，获得的支持将是选择你的重要参考哦。</string>
+    <string name="activity_experience_step3">报名信息一定要真实有效哦，方便我们联系您，及获得我们送出的体验礼包。</string>
+    <string name="activity_experience_step4">报名截止后我们开始筛选趴友，这个过程需要一段时间，请耐心等待哦。</string>
+    <string name="activity_experience_step5">我们将和获得资格的趴友沟通，以确保活动顺利进行。确认参加的趴友后发现无法按时参加，请确保提前一天通知我们，以方便我们把名额给予其他趴友。</string>
+    <string name="activity_experience_step6">尽情的享受体验日的乐趣吧，但是体验结束别忘了和趴友们分享今天的收获哦！</string>
+    <string name="activity_experience_step7">最终完成，还可以分享到其他平台，也向自己到好友炫耀一下吧！</string>
+
+    <!-- 往期活动界面字符资源 -->
+    <string name="past_dynamic_title">动态标题</string>
+    <string name="past_dynamic_description">动态描述</string>
+    <string name="past_activity_regist_end">报名截止</string>
+    <string name="past_activity_view_member_experience">查看趴友体验</string>
+    <string name="past_activity_view_more_statement">查看更多宣言 >></string>
+    <string name="past_activity_comment_time">评论时间</string>
+    <string name="past_activity_comment_content">这是评论的内容！</string>
+    <string name="past_activity_luck_reason_tip">幸运理由:</string>
+    <string name="past_activity_luck_reason">成全你了！</string>
+    <string name="button_pushtotalk">按住说话</string>
+    <string name="button_send">发送</string>
+    <string name="attach_take_pic">拍照</string>
+    <string name="attach_picture">图片</string>
+    <string name="attach_location">位置</string>
+    <string name="attach_video">视频</string>
+    <string name="attach_file">文件</string>
+    <string name="attach_voice_call">语音电话</string>
+    <string name="attach_video_call">视频通话</string>
+    <string name="move_up_to_cancel">手指上滑，取消发送</string>
+    <string name="release_to_cancel">松开手指，取消发送</string>
+
 </resources>

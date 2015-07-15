@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/RL_activity_description"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:background="@color/transparent" >
+
+        <RelativeLayout
+            android:id="@+id/RL_iv_activity_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/activity_list_item_image_corner_round" >
+
+            <ImageView
+                android:id="@+id/iv_activity_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical" >
+
+                <com.ipinpar.app.view.CircularImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:scaleType="centerCrop" 
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#f0f0f0"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#f0f0f0" 
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#f0f0f0"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/LL_activity_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/RL_activity_description"
+        android:background="@drawable/activity_list_item_bottom_corner_round"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/view_like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/experience_diary_like"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="喜欢"
+                android:textColor="#8f72e6" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/view_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/ac_comment"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="评论"
+                android:textColor="#8f72e6" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

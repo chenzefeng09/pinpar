@@ -138,6 +138,18 @@
             android:name="com.ipinpar.app.activity.InviteLetterActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.CheckDiaryListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.ExperienceDiaryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.AddStoryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
