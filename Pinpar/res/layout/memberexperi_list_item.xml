@@ -5,19 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <com.ipinpar.app.view.CircularImageView
+    <com.ipinpar.app.view.CircleImageView
        android:id="@+id/memberexperi_image"
        android:layout_width="@dimen/memberexperi_imagesize"
        android:layout_height="@dimen/memberexperi_imagesize"
-       app:border_thickness="2dp"
-       app:border_outside_color="#dcdcdc"
-       app:border_inside_color="#ffffff"
+       app:border_width="2dp"
+       app:border_color="#dcdcdc"
        android:src="@drawable/friend"
        android:scaleType="centerCrop"
        android:layout_marginLeft="10dp"
        android:layout_marginBottom="5dp"
        android:layout_marginTop="5dp">
-   	</com.ipinpar.app.view.CircularImageView>
+   	</com.ipinpar.app.view.CircleImageView>
     
     <TextView
         android:id="@+id/memberexperi_user_name"

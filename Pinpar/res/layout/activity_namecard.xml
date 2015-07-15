@@ -54,20 +54,11 @@
                 android:src="@drawable/female" />
 
 
-            <TextView
-                android:id="@+id/tv_qianming"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_uname"
-                android:layout_marginLeft="78dp"
-                android:text="个性签名"
-                android:textColor="#818181"
-                android:textSize="12sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/tv_qianming" >
+                android:layout_below="@id/tv_uname" >
 
                 <ImageView
                     android:id="@+id/iv_namecard_signature"
@@ -136,14 +127,14 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <com.ipinpar.app.view.CircularImageView
+        <com.ipinpar.app.view.CircleImageView
             android:id="@+id/iv_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="30dp"
             android:src="@drawable/app_icon"
-            app:border_outside_color="@color/white"
-            app:border_thickness="2dp" />
+            app:border_color="@color/white"
+            app:border_width="2dp" />
     </RelativeLayout>
     
     <Button 
@@ -172,6 +163,17 @@
             android:text="名片"
             android:textColor="@color/white"
             android:textSize="18sp" />
+        
+         <ImageView
+                android:id="@+id/ib_left"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/return1" />
 
     </RelativeLayout>
 

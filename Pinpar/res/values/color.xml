@@ -322,6 +322,13 @@
     <!-- 黑色 -->
     
         <color name="gray_normal">#666667</color>
+            <color name="top_bar_normal_bg">#00acff</color>
+                <color name="btn_gray_normal">#c0c0c0</color>
+                    <color name="grid_state_pressed">#1Affffff</color>
+                    <color name="grid_state_focused">#80000000</color>
+                    
+            
+        
     
     
 </resources>

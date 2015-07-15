@@ -48,11 +48,12 @@
                 android:id="@+id/tv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#f88787"
-                android:paddingLeft="5dp"
+                android:background="@drawable/roundedbutton_lightpink"
                 android:layout_alignTop="@id/tv_uname"
                 android:layout_alignBottom="@id/tv_uname"
                 android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:text="编辑"
                 android:textColor="@color/white"
@@ -145,14 +146,14 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <com.ipinpar.app.view.CircularImageView
+        <com.ipinpar.app.view.CircleImageView
             android:id="@+id/iv_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="30dp"
             android:src="@drawable/app_icon" 
-            app:border_thickness="2dp"
-            app:border_outside_color="@color/white"/>
+            app:border_width="2dp"
+            app:border_color="@color/white"/>
     </RelativeLayout>
 
     <RelativeLayout

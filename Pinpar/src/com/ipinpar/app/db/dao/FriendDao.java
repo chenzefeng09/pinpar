@@ -1,5 +1,7 @@
 package com.ipinpar.app.db.dao;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -49,6 +51,7 @@ private static FriendDao instance;
 				COLUMN_UID+"=?",
 				new String[]{uid+""},
 				null, null, null);
+		cursor.moveToFirst();
 		FriendEntity userEntity = fillCursor(cursor);
 		closeDB();
 		return userEntity;
@@ -61,6 +64,22 @@ private static FriendDao instance;
 		entity.setUid(cursor.getInt(cursor.getColumnIndex(COLUMN_UID)));
 		entity.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_UNAME)));
 		return entity;
+	}
+
+	public void insertUsers(ArrayList<FriendEntity> friends) {
+		// TODO Auto-generated method stub
+		openDB();
+		sqLiteDatabase.beginTransaction();
+		for(FriendEntity entity :friends){
+			ContentValues values = new ContentValues();
+			values.put(COLUMN_UID, entity.getUid());
+			values.put(COLUMN_UNAME, entity.getUsername());
+			values.put(COLUMN_IMGSRC, entity.getImgsrc());
+			sqLiteDatabase.replace(TABLE_NAME, null, values);
+		}
+		sqLiteDatabase.setTransactionSuccessful();
+		sqLiteDatabase.endTransaction();
+		closeDB();
 	}
 
 }

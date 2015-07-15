@@ -150,6 +150,18 @@
             android:name="com.ipinpar.app.activity.AddStoryActivity"
             android:screenOrientation="portrait" >
         </activity>
+                <activity
+            android:name="com.ipinpar.app.activity.ChatActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+                <activity
+            android:name="com.ipinpar.app.activity.ShowBigImage"
+            android:screenOrientation="portrait" >
+        </activity>
+                <activity
+            android:name="com.ipinpar.app.activity.ImageGridActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

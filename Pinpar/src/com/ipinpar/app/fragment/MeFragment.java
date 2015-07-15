@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,8 +26,11 @@ import com.ipinpar.app.activity.UserInfoEditActivity;
 import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.GetUserInfoRequest;
+import com.ipinpar.app.util.ImageBlurUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class MeFragment extends PPBaseFragment implements OnClickListener{
 	
@@ -107,10 +111,36 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
-					ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon,options);
-					ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_blur_icon,options);
+				ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon,options);
+
+				ImageLoader.getInstance().loadImage(UserManager.getInstance().getUserInfo().getImgsrc(),options, new ImageLoadingListener() {
+					
+					@Override
+					public void onLoadingStarted(String imageUri, View view) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onLoadingFailed(String imageUri, View view,
+							FailReason failReason) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+						// TODO Auto-generated method stub
+						Bitmap bluredBitmap = ImageBlurUtil.doBlur(loadedImage, 20, false);
+						iv_blur_icon.setImageBitmap(bluredBitmap);
+					}
+					
+					@Override
+					public void onLoadingCancelled(String imageUri, View view) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 					if (UserManager.getInstance().getUserInfo().getSex() == 1) {
 						iv_sex.setImageResource(R.drawable.log_maleselected);
 						if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {

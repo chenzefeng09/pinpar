@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,19 +30,21 @@ import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.AddFriendRequest;
 import com.ipinpar.app.network.api.GetUserInfoRequest;
+import com.ipinpar.app.util.ImageBlurUtil;
 import com.ipinpar.app.view.FlowLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class NameCardActivity extends PPBaseActivity implements OnClickListener{
-	private TextView tv_uname,tv_qianming,tv_signatur_content;
-	private ImageView iv_sex,iv_icon;
+	private TextView tv_uname,tv_signatur_content;
+	private ImageView iv_sex,iv_icon,iv_blur_icon;
 	private FlowLayout fl_intrest;
 	private Button btn_add_friend;
 	private FriendEntity friendEntity;
 	private UserEntity currUser;
 	private ArrayList<String> hobbys;
 	private int peer_uid;
-	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -53,11 +56,11 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 		}
 		setContentView(R.layout.activity_namecard);
 		tv_uname = (TextView) findViewById(R.id.tv_uname);
-		tv_qianming = (TextView) findViewById(R.id.tv_qianming);
 		tv_signatur_content = (TextView) findViewById(R.id.tv_signatur_content);
 		btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
 		iv_sex = (ImageView) findViewById(R.id.iv_sex);
 		iv_icon = (ImageView) findViewById(R.id.iv_icon);
+		iv_blur_icon = (ImageView) findViewById(R.id.iv_blur_icon);
 		fl_intrest = (FlowLayout) findViewById(R.id.fl_intrest);
 		btn_add_friend.setOnClickListener(this);
 		hobbys = new ArrayList<String>();
@@ -69,7 +72,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 		super.onResume();
 		if (UserManager.getInstance().isLogin()) {
 			
-			GetUserInfoRequest request = new GetUserInfoRequest(UserManager.getInstance().getUserInfo().getUid()+"", new Listener<JSONObject>() {
+			GetUserInfoRequest request = new GetUserInfoRequest(peer_uid+"", new Listener<JSONObject>() {
 
 				@Override
 				public void onResponse(JSONObject response) {
@@ -106,26 +109,54 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-						ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon);
-						if (UserManager.getInstance().getUserInfo().getSex() == 1) {
+						ImageLoader.getInstance().displayImage(currUser.getImgsrc(), iv_icon);
+						ImageLoader.getInstance().loadImage(currUser.getImgsrc(), new ImageLoadingListener() {
+							
+							@Override
+							public void onLoadingStarted(String imageUri, View view) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void onLoadingFailed(String imageUri, View view,
+									FailReason failReason) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+								// TODO Auto-generated method stub
+								Bitmap bluredBitmap = ImageBlurUtil.doBlur(loadedImage, 20, false);
+								iv_blur_icon.setImageBitmap(bluredBitmap);
+							}
+							
+							@Override
+							public void onLoadingCancelled(String imageUri, View view) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+						if (currUser.getSex() == 1) {
 							iv_sex.setImageResource(R.drawable.log_maleselected);
-							if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {
+							if (TextUtils.isEmpty(currUser.getImgsrc())) {
 								iv_icon.setImageResource(R.drawable.defaultavatarmale);
 							}
 						}
 						else {
 							iv_sex.setImageResource(R.drawable.log_femailselected);
-							if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {
+							if (TextUtils.isEmpty(currUser.getImgsrc())) {
 								iv_icon.setImageResource(R.drawable.defaultavatarfemail);
 							}
 						}
-						if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getSignature())) {
-							tv_qianming.setText("没有留下任何文字");
+						if (TextUtils.isEmpty(currUser.getSignature())) {
+							tv_signatur_content.setText("没有留下任何文字");
 						}
 						else {
-							tv_qianming.setText(UserManager.getInstance().getUserInfo().getSignature());
+							tv_signatur_content.setText(currUser.getSignature());
 						}
-						tv_uname.setText(UserManager.getInstance().getUserInfo().getUsername());
+						tv_uname.setText(currUser.getUsername());
 						friendEntity = FriendDao.getInstance().queryUser(peer_uid);
 						if (friendEntity == null) {
 							btn_add_friend.setText("添加好友");
@@ -155,7 +186,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 //								textView.setText(editText.getText().toString().trim());
 //								hobbys.add(editText.getText().toString().trim());
 //								fl_intrest.addView(textView);
-								AddFriendRequest request = new AddFriendRequest(UserManager.getInstance().getUserInfo().getUid(),
+								AddFriendRequest request = new AddFriendRequest(currUser.getUid(),
 										peer_uid, "", editText.getText().toString().trim(), new Listener<JSONObject>() {
 
 											@Override
@@ -188,7 +219,10 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 				
 			}
 			else {
-				
+				Intent intent = new Intent(mContext, ChatActivity.class);
+				intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+				intent.putExtra("userId", friendEntity.getUid()+"");
+				startActivity(intent);
 			}
 			break;
 
