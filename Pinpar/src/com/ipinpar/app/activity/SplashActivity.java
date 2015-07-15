@@ -31,7 +31,7 @@ public class SplashActivity extends PPBaseActivity {
 		final UserEntity entity = UserDao.getInstance().getLogedUser();
 	
 		if (entity != null) {
-			
+			UserManager.getInstance().setUserInfo(entity);
 			LoginRequest request = new LoginRequest(entity.getMobile(), entity.getPassword(), new Listener<JSONObject>() {
 
 				@Override
@@ -51,16 +51,21 @@ public class SplashActivity extends PPBaseActivity {
 				}
 			});
 			apiQueue.add(request);
-		}
-		if (UserManager.getInstance().isLogin()) {
-			UserManager.getInstance().setUserInfo(entity);
-		      try {
-		         // 调用sdk注册方法
-		         EMChatManager.getInstance().createAccountOnServer(entity.getUid()+"", MD5Util.MD5(entity.getUid()+"pinpa"));
-		      } catch (final Exception e) {
-					e.printStackTrace();
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try {
+				         // 调用sdk注册方法
+				         EMChatManager.getInstance().createAccountOnServer(entity.getUid()+"", MD5Util.MD5(entity.getUid()+"pinpa"));
+				      } catch (final Exception e) {
+							e.printStackTrace();
 
-		      }
+				      }
+				}
+			}).start();;
+			 
 			EMChatManager.getInstance().login(entity.getUid()+"",MD5Util.MD5(entity.getUid()+"pinpa"),new EMCallBack() {//回调
 				@Override
 				public void onSuccess() {
@@ -84,6 +89,7 @@ public class SplashActivity extends PPBaseActivity {
 				}
 			});
 		}
+		     
 		final Timer timer = new Timer();
 
 		TimerTask timerTask = new TimerTask() {

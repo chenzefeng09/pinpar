@@ -1,6 +1,6 @@
 package com.ipinpar.app.entity;
 
-public class FriendENtity {
+public class FriendEntity {
 	private int uid;
 	private String imgsrc;
 	private String username;

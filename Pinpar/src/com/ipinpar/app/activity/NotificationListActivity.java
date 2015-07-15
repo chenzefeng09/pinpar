@@ -10,23 +10,27 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.NotificationEntity;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.HandleAddFriendRequest;
 import com.ipinpar.app.network.api.NotificationRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class CommentsListActivity extends PPBaseActivity {
+public class NotificationListActivity extends PPBaseActivity {
 	private ListView lv_friends;
 	private NewCommentsAdapter adapter;
 	private ArrayList<NotificationEntity> comments = new ArrayList<NotificationEntity>();
@@ -35,6 +39,8 @@ public class CommentsListActivity extends PPBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_notifacation_list);
+		setTitleText("通知");
+
 		lv_friends = (ListView) findViewById(R.id.lv_friends);
 		lv_friends.setOnItemClickListener(new OnItemClickListener() {
 
@@ -43,8 +49,6 @@ public class CommentsListActivity extends PPBaseActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				NotificationEntity entity = comments.get(position);
-				
-				
 			}
 		});
 	}
@@ -83,7 +87,8 @@ public class CommentsListActivity extends PPBaseActivity {
 										notificationEntity.setType(jsonObject.getString("type"));
 										notificationEntity.setUid(jsonObject.getInt("uid"));
 										notificationEntity.setNote(jsonObject.getString("note"));
-										if ("comment".equals(notificationEntity.getType())) {
+										if ("friend".equals(notificationEntity.getType())
+												|| "invite".equals(notificationEntity.getType())) {
 											comments.add(notificationEntity);
 										}
 									}
@@ -146,6 +151,9 @@ public class CommentsListActivity extends PPBaseActivity {
 				viewHoler.tv_comment_action = (TextView) convertView.findViewById(R.id.tv_comment_action);
 				viewHoler.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 				viewHoler.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+				viewHoler.btn_accept = (Button) convertView.findViewById(R.id.btn_accept);
+				viewHoler.btn_refuse = (Button) convertView.findViewById(R.id.btn_refuse);
+
 				convertView.setTag(viewHoler);
 			}
 			else {
@@ -154,7 +162,98 @@ public class CommentsListActivity extends PPBaseActivity {
 			viewHoler.tv_comment_action.setText(commentEntity.getNote());
 			viewHoler.tv_name.setText(commentEntity.getAuthor());
 			ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+commentEntity.getAuthorid(), viewHoler.iv_icon);
-			viewHoler.tv_time.setText(formatTime(commentEntity.getDateline()));
+			
+			if ("friend".equals(commentEntity.getType())) {
+				switch (commentEntity.getStatus()) {
+				case 0:
+					viewHoler.tv_time.setVisibility(View.GONE);
+					viewHoler.btn_accept.setVisibility(View.VISIBLE);
+					viewHoler.btn_refuse.setVisibility(View.VISIBLE);
+					viewHoler.btn_accept.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							HandleAddFriendRequest request = new HandleAddFriendRequest(
+									commentEntity.getAuthorid(), 
+									UserManager.getInstance().getUserInfo().getUid(),
+									"agree", "", new Listener<JSONObject>() {
+
+										@Override
+										public void onResponse(
+												JSONObject response) {
+											// TODO Auto-generated method stub
+											try {
+												if (response != null && response.getInt("result") == 1) {
+													commentEntity.setStatus(1);
+													notifyDataSetChanged();
+													Toast.makeText(mContext, "已添加好友", 1000).show();
+												}
+												else {
+													Toast.makeText(mContext, "接受请求失败，请重试", 1000).show();
+												}
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									});
+							apiQueue.add(request);
+						}
+					});
+					viewHoler.btn_refuse.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							HandleAddFriendRequest request = new HandleAddFriendRequest(
+									commentEntity.getAuthorid(), 
+									UserManager.getInstance().getUserInfo().getUid(),
+									"disagree", "", new Listener<JSONObject>() {
+
+										@Override
+										public void onResponse(
+												JSONObject response) {
+											// TODO Auto-generated method stub
+											try {
+												if (response != null && response.getInt("result") == 1) {
+													commentEntity.setStatus(2);
+													notifyDataSetChanged();
+													Toast.makeText(mContext, "已拒绝好友请求", 1000).show();
+												}
+												else {
+													Toast.makeText(mContext, "拒绝请求失败，请重试", 1000).show();
+												}
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									});
+							apiQueue.add(request);
+						}
+					});
+					break;
+				case 1:
+					viewHoler.tv_time.setVisibility(View.VISIBLE);
+					viewHoler.btn_accept.setVisibility(View.GONE);
+					viewHoler.btn_refuse.setVisibility(View.GONE);
+
+					viewHoler.tv_time.setText("已接受");
+					break;
+					
+				case 2:
+					viewHoler.tv_time.setVisibility(View.VISIBLE);
+					viewHoler.btn_accept.setVisibility(View.GONE);
+					viewHoler.btn_refuse.setVisibility(View.GONE);
+
+					viewHoler.tv_time.setText("已拒绝");
+					break;
+				default:
+					break;
+				}
+			}
+			else {
+				viewHoler.tv_time.setText(formatTime(commentEntity.getDateline()));
+			}
 			return convertView;
 		}
 		
@@ -184,6 +283,7 @@ public class CommentsListActivity extends PPBaseActivity {
 			public TextView tv_name;
 			public TextView tv_comment_action;
 			public TextView tv_time;
+			public Button btn_accept,btn_refuse;
 		}
 		
 	}

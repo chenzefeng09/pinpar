@@ -26,7 +26,7 @@ import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.NotificationRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class CommentsListActivity extends PPBaseActivity {
+public class SupportListActivity extends PPBaseActivity {
 	private ListView lv_friends;
 	private NewCommentsAdapter adapter;
 	private ArrayList<NotificationEntity> comments = new ArrayList<NotificationEntity>();
@@ -35,6 +35,7 @@ public class CommentsListActivity extends PPBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_notifacation_list);
+		setTitleText("支持");
 		lv_friends = (ListView) findViewById(R.id.lv_friends);
 		lv_friends.setOnItemClickListener(new OnItemClickListener() {
 
@@ -83,7 +84,7 @@ public class CommentsListActivity extends PPBaseActivity {
 										notificationEntity.setType(jsonObject.getString("type"));
 										notificationEntity.setUid(jsonObject.getInt("uid"));
 										notificationEntity.setNote(jsonObject.getString("note"));
-										if ("comment".equals(notificationEntity.getType())) {
+										if ("agree".equals(notificationEntity.getType())) {
 											comments.add(notificationEntity);
 										}
 									}
@@ -151,7 +152,7 @@ public class CommentsListActivity extends PPBaseActivity {
 			else {
 				viewHoler = (ViewHoler) convertView.getTag();
 			}
-			viewHoler.tv_comment_action.setText(commentEntity.getNote());
+				viewHoler.tv_comment_action.setText(commentEntity.getNote());
 			viewHoler.tv_name.setText(commentEntity.getAuthor());
 			ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+commentEntity.getAuthorid(), viewHoler.iv_icon);
 			viewHoler.tv_time.setText(formatTime(commentEntity.getDateline()));

@@ -86,6 +86,19 @@
         <activity 
             android:name="com.ipinpar.app.activity.CommentsListActivity"
             android:screenOrientation="portrait"></activity>
+         <activity 
+            android:name="com.ipinpar.app.activity.NotificationListActivity"
+            android:screenOrientation="portrait"></activity>
+          <activity 
+            android:name="com.ipinpar.app.activity.SupportListActivity"
+            android:screenOrientation="portrait"></activity>
+          
+           <activity 
+            android:name="com.ipinpar.app.activity.NameCardActivity"
+            android:screenOrientation="portrait"></activity>
+           <activity 
+            android:name="com.ipinpar.app.activity.InviteLetterActivity"
+            android:screenOrientation="portrait"></activity>
         
         
     </application>

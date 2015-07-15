@@ -89,7 +89,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/iv_arrow1"
             android:layout_marginRight="8dp"
-            android:text="1个新评论"
+            android:text=""
             android:textColor="@color/goldenrod"/>
         
     </RelativeLayout>
@@ -144,7 +144,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/iv_arrow2"
             android:layout_marginRight="8dp"
-            android:text="1个新支持"
+            android:text=""
             android:textColor="@color/goldenrod"/>
         
     </RelativeLayout>
@@ -178,7 +178,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:layout_marginTop="8dp"
-            android:text="1分钟前"
+            android:text=""
             android:textSize="12sp"
             android:textColor="@color/lightgrey"/>
         

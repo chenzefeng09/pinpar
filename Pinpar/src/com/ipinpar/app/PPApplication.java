@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 
 import com.easemob.chat.EMChat;
-import com.easemob.chat.EMChatManager;
 import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.util.DeviceUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -19,19 +18,24 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class PPApplication extends Application implements UncaughtExceptionHandler{
 	public static final String TAG = PPApplication.class.getSimpleName();
 	private static Context applicationContext;
+	private static PPApplication instance;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		instance = this;
 		applicationContext = this;
 		initImageLoader();
 		DeviceUtil.init(this);
 		initChat();
+	}
+	
+	public static PPApplication getInstance(){
+		return instance;
 	}
 	
 	private void initChat() {
@@ -68,6 +72,13 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 	
 	public static Context getContext() {
 		return applicationContext;
+	}
+	
+	public String getFormatString(int resId, Object... formatArgs){
+		String result = getString(resId);
+		result = result
+				.replace("\\n", System.getProperty("line.separator"));
+		return String.format(result, formatArgs);
 	}
 
 	@Override

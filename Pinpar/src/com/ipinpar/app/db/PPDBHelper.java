@@ -35,6 +35,10 @@ public class PPDBHelper extends SQLiteOpenHelper {
 				+ "signature text,"
 				+ "weixin text"
 				+ ")");
+		db.execSQL("CREATE TABLE IF NOT exists friend(uid integer PRIMARY KEY ,"
+				+ "imgsrc text,"
+				+ "username text"
+				+ ")");
 	}
 
 	@Override

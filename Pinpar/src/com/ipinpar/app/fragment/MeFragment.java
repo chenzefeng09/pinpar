@@ -113,6 +113,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 				
 				
 					ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_icon,options);
+					ImageLoader.getInstance().displayImage(UserManager.getInstance().getUserInfo().getImgsrc(), iv_blur_icon,options);
 					if (UserManager.getInstance().getUserInfo().getSex() == 1) {
 						iv_sex.setImageResource(R.drawable.log_maleselected);
 						if (TextUtils.isEmpty(UserManager.getInstance().getUserInfo().getImgsrc())) {

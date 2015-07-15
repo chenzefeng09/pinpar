@@ -24,6 +24,8 @@ import com.google.gson.reflect.TypeToken;
 import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.CommentsListActivity;
+import com.ipinpar.app.activity.NotificationListActivity;
+import com.ipinpar.app.activity.SupportListActivity;
 import com.ipinpar.app.entity.NotificationEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.NotificationRequest;
@@ -51,6 +53,8 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener{
 		tv_newsupport = (TextView) view.findViewById(R.id.tv_newsupport);
 		tv_newsup = (TextView) view.findViewById(R.id.tv_newsup);
 		rl_comment.setOnClickListener(this);
+		rl_notification.setOnClickListener(this);
+		rl_support.setOnClickListener(this);
 	}
 	
 	@Override
@@ -68,6 +72,7 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener{
 								// TODO Auto-generated method stub
 								try {
 									if (response != null && response.getInt("result") == 1) {
+										notifications.clear();
 										int new_total = Integer.parseInt(response.getString("newtotal"));
 										int total = Integer.parseInt(response.getString("total"));
 										JSONArray jsonArray = response.getJSONArray("data");
@@ -113,8 +118,8 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener{
 												}											}
 										}
 										
-										tv_newcomment.setText("有"+commentcount+"个新评论");
-										tv_newsupport.setText("有"+supportcount+"个新支持");
+										tv_newcomment.setText(commentcount+"个新评论");
+										tv_newsupport.setText(supportcount+"个新支持");
 										if (supportcount == 0) {
 											tv_newsupport.setVisibility(View.GONE);
 										}
@@ -132,22 +137,16 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener{
 			}
 		}
 	}
-	
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-
-	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.rl_notification:
+			startActivity(new Intent(mContext, NotificationListActivity.class));
 			break;
 		case R.id.rl_support:
-			
+			startActivity(new Intent(mContext, SupportListActivity.class));
 			break;
 		case R.id.rl_comment:
 			startActivity(new Intent(mContext, CommentsListActivity.class));

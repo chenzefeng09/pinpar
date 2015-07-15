@@ -1,8 +1,9 @@
 package com.ipinpar.app.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ActivityEntity {
+public class ActivityEntity implements Serializable{
 	private int acid;							//活动项目ID
 	private String acname;						//活动项目名称
 	private String activebegintime;				//活动开始时间

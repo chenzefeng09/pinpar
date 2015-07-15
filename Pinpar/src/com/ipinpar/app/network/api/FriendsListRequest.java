@@ -5,7 +5,7 @@ import com.android.volley.Response.Listener;
 import com.ipinpar.app.util.MD5Util;
 
 public class FriendsListRequest extends BaseJsonRequest {
-	private static final String PROTOCOL ="10007";
+	private static final String PROTOCOL ="20001";
 
 	public FriendsListRequest(String uid,
 			Listener<JSONObject> listener) {

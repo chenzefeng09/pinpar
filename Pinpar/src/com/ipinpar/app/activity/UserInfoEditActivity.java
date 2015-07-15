@@ -294,8 +294,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements OnClickListe
 			break;
 		case R.id.iv_add_intrest:
 			final EditText editText = new EditText(this);
-			new AlertDialog.Builder(this).setTitle("请输入兴趣").setIcon(
-				    android.R.drawable.ic_dialog_info).setView(
+			new AlertDialog.Builder(this).setTitle("请输入兴趣").setView(
 				    		editText).setPositiveButton("确定", new AlertDialog.OnClickListener() {
 						
 						@Override

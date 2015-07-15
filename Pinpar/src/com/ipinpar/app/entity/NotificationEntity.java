@@ -15,6 +15,13 @@ public class NotificationEntity {
 	private int status;
 	private String type;
 	private int uid;
+	private String note;
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public String getAuthor() {
 		return author;
 	}

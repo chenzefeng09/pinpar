@@ -52,6 +52,36 @@
         android:textColor="#ababab"
         />
     
+       <Button 
+        android:id="@+id/btn_refuse"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:text="拒绝"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:background="@drawable/list_item_notification_bkg"
+        android:visibility="gone"/>
+    
+    <Button 
+        android:id="@+id/btn_accept"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:text="接受"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/btn_refuse"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:background="@drawable/list_item_notification_bkg"
+        android:visibility="gone"/>
+    
+     
+    
     <ImageView 
         android:layout_width="match_parent"
         android:layout_height="1dp"

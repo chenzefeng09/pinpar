@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
-import com.ipinpar.app.entity.FriendENtity;
+import com.ipinpar.app.entity.FriendEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.FriendsListRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -32,7 +32,7 @@ public class FriendActivity extends PPBaseActivity {
 	
 	private ListView lv_friends;
 	private MyFriendsAdapter adapter;
-	private ArrayList<FriendENtity> friends;
+	private ArrayList<FriendEntity> friends;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -56,7 +56,7 @@ public class FriendActivity extends PPBaseActivity {
 								if (size != 0) {
 									JSONObject jsonObject = response.getJSONObject("data");
 									Gson gson = new Gson();
-									Type listType=new TypeToken<ArrayList<FriendENtity>>(){}.getType();
+									Type listType=new TypeToken<ArrayList<FriendEntity>>(){}.getType();
 									friends = gson.fromJson(jsonObject.toString(), listType);
 									if (adapter == null) {
 										adapter = new MyFriendsAdapter(friends);
@@ -80,10 +80,10 @@ public class FriendActivity extends PPBaseActivity {
 	}
 	
 	private class MyFriendsAdapter extends BaseAdapter{
-		private ArrayList<FriendENtity> friendENtities;
+		private ArrayList<FriendEntity> friendENtities;
 		private ViewHolder holder;
 		private DisplayImageOptions options;
-		public MyFriendsAdapter(ArrayList<FriendENtity> friendENtities) {
+		public MyFriendsAdapter(ArrayList<FriendEntity> friendENtities) {
 			// TODO Auto-generated constructor stub
 			this.friendENtities = friendENtities;
 			options = new DisplayImageOptions.Builder().cacheOnDisk(false).
@@ -111,7 +111,7 @@ public class FriendActivity extends PPBaseActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
-			final FriendENtity friendENtity = friendENtities.get(position);
+			final FriendEntity friendENtity = friendENtities.get(position);
 			if (convertView == null) {
 				convertView = getLayoutInflater().inflate(R.layout.list_item_friend, null);
 				holder = new ViewHolder();

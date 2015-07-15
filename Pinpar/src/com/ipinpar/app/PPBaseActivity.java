@@ -7,18 +7,20 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 
-public class PPBaseActivity extends FragmentActivity {
+public class PPBaseActivity extends FragmentActivity{
 	public final String TAG = this.getClass().getSimpleName();
 	public RequestQueue apiQueue;
 	public Context mContext;
 	private ProgressDialog wattingDialog;
 	private ImageView backview;
-
+	private TextView tv_header_title;
+	private OnClickListener clickBack;
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -26,19 +28,37 @@ public class PPBaseActivity extends FragmentActivity {
 		super.onCreate(arg0);
 		mContext = this;
 		wattingDialog = new ProgressDialog(mContext);
-		backview = (ImageView) findViewById(R.id.ib_left);
-		if (backview != null) {
-			backview.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					finish();
-				}
-			});
-		}
 		apiQueue = Volley.newRequestQueue(this);
 		apiQueue.start();
+		clickBack = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		};
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (backview == null) {
+			backview = (ImageView) findViewById(R.id.ib_left);
+		}
+		if (backview != null) {
+			backview.setOnClickListener(clickBack);
+		}
+	}
+	
+	public void setTitleText(String title){
+		if (tv_header_title == null) {
+			tv_header_title = (TextView) findViewById(R.id.tv_header_title);
+		}
+		if (tv_header_title != null) {
+			tv_header_title.setText(title);
+		}
 	}
 	
 	public void showProgressDialog(){
