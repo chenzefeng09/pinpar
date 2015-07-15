@@ -45,7 +45,7 @@
                 android:layout_height="20dp"
 				android:layout_gravity="center_vertical"
                 android:text="@string/past_activities"
-            	android:textColor="@color/white"
+            	android:textColor="@color/secondaryTitleWhite"
             	android:textSize="16sp"/>
         </LinearLayout>
         

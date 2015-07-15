@@ -8,9 +8,25 @@
     <color name="white">#ffffff</color>
     <color name="secondaryTitleWhite">#fefefe</color>
     
+    <!-- 活动详情页面中用到的颜色 -->
     <color name="activity_detail_tip">#3d3c3c</color>
     <color name="activity_detail">#818181</color>
     <color name="activity_contact_bg">#cac9cb</color>
+    
+    <!-- 宣言列表中用到的颜色 -->
+    <color name="activity_statement_username">#3d3c3c</color>
+    <color name="activity_statement_content">#8c8c8c</color>
+    <color name="activity_statement_time">#c4c4c4</color>
+    
+     <color name="activity_regist_end">#ababab</color>
+     
+    <!-- 趴友体验中用到的颜色 -->
+    <color name="activity_memberexperi_username">#3d3c3c</color>
+    <color name="activity_memberexperi_content">#8c8c8c</color>
+    <color name="activity_memberexperi_time">#c4c4c4</color>
+    <color name="activity_luck_reason_bg">#cac9cb</color>
+    
+   
     
     <!-- 文字选中高亮颜色 本颜色为淡蓝色 -->
     <color name="text_highlight">#2983c1</color>

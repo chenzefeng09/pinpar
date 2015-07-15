@@ -32,6 +32,7 @@ import com.ipinpar.app.adapter.MainPagerAdapter;
 import com.ipinpar.app.fragment.DiscoverFragment;
 import com.ipinpar.app.fragment.MeFragment;
 import com.ipinpar.app.fragment.MessageFragment;
+import com.ipinpar.app.fragment.PastFragment;
 import com.ipinpar.app.util.NetWorkState;
 
 public class MainActivity extends PPBaseActivity {
@@ -39,13 +40,15 @@ public class MainActivity extends PPBaseActivity {
 	// 一个网络请求的例子
 //	private LoginRequest request ;
 	private Context mContext;
-	private ViewPager container = null;
+	public ViewPager container = null;
 	private RadioGroup tabRadioGroup;
 	private RadioButton  rdBtnDiscover,rdBtnMessage,rdBtnMe;
 	
 	private DiscoverFragment discoverFragment;
+	public MeFragment meFragment;
 	private MessageFragment messageFragment;
-	private MeFragment meFragment;
+	public PastFragment pastFragment;
+	public PastFragment pastFragment2;
 	
 	private List<PPBaseFragment> fragments;
 	private View backView;
@@ -159,9 +162,15 @@ public class MainActivity extends PPBaseActivity {
 //		
 		messageFragment  = new MessageFragment();
 		meFragment = new MeFragment();
+		
+		pastFragment = new PastFragment();
+		pastFragment2 = new PastFragment();
+		
 		fragments.add(discoverFragment);
 		fragments.add(messageFragment);
 		fragments.add(meFragment);
+		fragments.add(pastFragment);
+		fragments.add(pastFragment2);
 		
 		fm = getSupportFragmentManager();
 		mPagerAdapter = new MainPagerAdapter(fm, fragments);

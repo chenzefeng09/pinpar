@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.ipinpar.app.PPBaseFragment;
@@ -37,7 +35,6 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	private TextView tv_header_title,tv_uname,tv_qianming,tv_my_activity,tv_my_invited_activity,tv_my_faverite_activity,tv_my_friend,tv_edit;
 	private ImageView ib_right,iv_icon,iv_blur_icon,iv_sex;
 	private DisplayImageOptions options;
-	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
