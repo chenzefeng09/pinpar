@@ -6,4 +6,6 @@
 
     <dimen name="statement_imagesize">50dp</dimen>
     
+    <dimen name="memberexperi_imagesize">50dp</dimen>
+    
 </resources>

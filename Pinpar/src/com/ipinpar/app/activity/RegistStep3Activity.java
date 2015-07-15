@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,7 +22,6 @@ import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
-import com.ipinpar.app.network.api.LoginRequest;
 import com.ipinpar.app.network.api.RegistRequest;
 import com.ipinpar.app.util.MD5Util;
 

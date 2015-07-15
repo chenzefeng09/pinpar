@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout 
+        android:id="@+id/RL_activity_description"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:background="@color/transparent">
+        
+        <RelativeLayout 
+            android:id="@+id/RL_iv_activity_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+             android:background="@drawable/activity_list_item_image_corner_round">
+            <ImageView 
+	            android:id="@+id/iv_activity_desc"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:scaleType="fitXY"/>
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/RL_iv_activity_desc_cover"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/activity_list_item_image_corner_round">
+            <ImageView 
+	            android:id="@+id/iv_activity_desc_cover"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:scaleType="fitXY"/>
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/RL_iv_activity_state_inviting"
+            android:layout_width="50dp"
+            android:layout_height="26dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp">
+            <ImageView 
+                android:id="@+id/iv_activity_state_inviting"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/past_activity_inviting"/>
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/RL_iv_activity_state_complete"
+            android:layout_width="50dp"
+            android:layout_height="26dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp">
+            <ImageView 
+                android:id="@+id/iv_activity_state_complete"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/past_activity_complete"/>
+        </RelativeLayout>
+        
+        <LinearLayout 
+            android:id="@+id/LL_text_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView 
+                android:id="@+id/tv_first_text_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_text_desc"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+            <TextView 
+                android:id="@+id/tv_second_text_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/second_text_desc"
+                android:textColor="@color/white"
+                android:textSize="24sp"/>
+        </LinearLayout>
+        
+        <ImageView 
+            android:id="@+id/iv_decoration_bottom_bar"
+            android:layout_width="80dp"
+            android:layout_height="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/decoration_bottom_bar"
+            android:layout_alignParentBottom="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/RL_activity_essential_statement"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/RL_activity_description"
+        android:background="@drawable/activity_list_item_bottom_corner_round">
+        
+        <com.ipinpar.app.view.CircularImageView
+	       android:id="@+id/statement_image"
+	       android:layout_width="@dimen/statement_imagesize"
+	       android:layout_height="@dimen/statement_imagesize"
+	       app:border_thickness="2dp"
+	       app:border_outside_color="#dcdcdc"
+	       app:border_inside_color="#ffffff"
+	       android:src="@drawable/friend"
+	       android:scaleType="centerCrop"
+	       android:layout_marginLeft="10dp"
+	       android:layout_marginBottom="5dp"
+	       android:layout_marginTop="5dp">
+	   	</com.ipinpar.app.view.CircularImageView>
+	    
+	    <TextView
+	        android:id="@+id/tv_dynamic_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_toRightOf="@id/statement_image"
+	        android:ellipsize="end"
+	        android:singleLine="true"
+	        android:text="@string/past_dynamic_title"
+	        android:textColor="@color/black"
+	        android:textSize="18sp"/>
+	    
+	    <ImageView 
+	        android:id="@+id/iv_essential_statement"
+	        android:layout_width="50dp"
+	        android:layout_height="18dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginLeft="3dp"
+	        android:layout_toRightOf="@id/tv_dynamic_title"
+	        android:background="@drawable/essential_statement"/>
+	    
+	    
+	    <TextView 
+	        android:id="@+id/tv_dynamic_description"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/tv_dynamic_title"
+	        android:layout_toRightOf="@id/statement_image"
+	        android:maxLines="2"
+	        android:ellipsize="end"
+	        android:layout_marginLeft="8dp"
+	        android:layout_marginTop="4dp"
+	        android:text="@string/past_dynamic_description"
+	        android:textSize="14sp"
+	        android:textColor="@color/black"/>
+    </RelativeLayout>
+    
+
+</RelativeLayout>

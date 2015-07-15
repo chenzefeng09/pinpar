@@ -31,11 +31,8 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.adapter.MainPagerAdapter;
 import com.ipinpar.app.fragment.DiscoverFragment;
 import com.ipinpar.app.fragment.MeFragment;
-<<<<<<< HEAD
 import com.ipinpar.app.fragment.MessageFragment;
-=======
 import com.ipinpar.app.fragment.PastFragment;
->>>>>>> 0a84fae454259b4198485d9f31bee1a8429a1e66
 import com.ipinpar.app.util.NetWorkState;
 
 public class MainActivity extends PPBaseActivity {
@@ -49,7 +46,7 @@ public class MainActivity extends PPBaseActivity {
 	
 	private DiscoverFragment discoverFragment;
 	public MeFragment meFragment;
-	
+	private MessageFragment messageFragment;
 	public PastFragment pastFragment;
 	public PastFragment pastFragment2;
 	

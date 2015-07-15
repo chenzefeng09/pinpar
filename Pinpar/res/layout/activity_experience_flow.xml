@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout 
+        android:id="@+id/RL_experi_flow_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/title_theme">
+        <Button 
+            android:id="@+id/btn_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_back"/>
+        <TextView 
+            android:id="@+id/tv_title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+			android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:text="@string/activity_experience_flow"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+    
+    <ScrollView 
+        android:id="@+id/sv_experience_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RL_experi_flow_title">
+        
+        <RelativeLayout
+            android:id="@+id/RL_all_setp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout 
+                android:id="@+id/RL_setp1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp">
+                <ImageView 
+		            android:id="@+id/iv_step1_title"
+		            android:layout_width="280dp"
+		            android:layout_height="17dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step1_title"/>
+                
+                <TextView 
+                    android:id="@+id/tv_step1_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@id/iv_step1_title"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step1"
+		            android:layout_width="280dp"
+		            android:layout_height="180dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step1_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step1"/>
+            </RelativeLayout>
+            
+            <RelativeLayout 
+                android:id="@+id/RL_setp2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/RL_setp1">
+                <ImageView 
+		            android:id="@+id/iv_step2_title"
+		            android:layout_width="280dp"
+		            android:layout_height="17dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step2_title"/>
+                
+                <TextView 
+                    android:id="@+id/tv_step2_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@id/iv_step2_title"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step2"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step2"
+		            android:layout_width="320dp"
+		            android:layout_height="145dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step2_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step2"/>
+            </RelativeLayout>
+            
+            <RelativeLayout 
+                android:id="@+id/RL_setp3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/RL_setp2">
+                <ImageView 
+		            android:id="@+id/iv_step3_title"
+		            android:layout_width="280dp"
+		            android:layout_height="17dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step3_title"/>
+                
+                <TextView 
+                    android:id="@+id/tv_step3_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@id/iv_step3_title"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step3"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step3"
+		            android:layout_width="280dp"
+		            android:layout_height="180dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step3_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step3"/>
+            </RelativeLayout>
+            
+              
+            <RelativeLayout 
+                android:id="@+id/RL_setp4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/RL_setp3">
+                <ImageView 
+		            android:id="@+id/iv_step4_title"
+		            android:layout_width="280dp"
+		            android:layout_height="17dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step4_title"/>
+                
+                <TextView 
+                    android:id="@+id/tv_step4_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@id/iv_step4_title"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step4"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step4"
+		            android:layout_width="300dp"
+		            android:layout_height="225dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step4_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step4"/>
+            </RelativeLayout>
+            
+            
+            <RelativeLayout 
+                android:id="@+id/RL_setp5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/RL_setp4">
+                <ImageView 
+		            android:id="@+id/iv_step5_title"
+		            android:layout_width="280dp"
+		            android:layout_height="17dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step5_title"/>
+                
+                <TextView 
+                    android:id="@+id/tv_step5_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@id/iv_step5_title"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step5"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step5"
+		            android:layout_width="280dp"
+		            android:layout_height="180dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step5_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step5"/>
+            </RelativeLayout>
+            
+            
+            <RelativeLayout 
+                android:id="@+id/RL_setp6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/RL_setp5">
+                <ImageView 
+		            android:id="@+id/iv_step6_title"
+		            android:layout_width="280dp"
+		            android:layout_height="17dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step6_title"/>
+                
+                <TextView 
+                    android:id="@+id/tv_step6_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@id/iv_step6_title"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step6"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step6"
+		            android:layout_width="350dp"
+		            android:layout_height="123dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step6_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step6"/>
+            </RelativeLayout>
+            
+            
+            <RelativeLayout 
+                android:id="@+id/RL_setp7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingBottom="120dp"
+                android:layout_below="@id/RL_setp6">
+                
+                <TextView 
+                    android:id="@+id/tv_step7_specification"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/activity_experience_step7"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                
+		        <ImageView 
+		            android:id="@+id/iv_step7"
+		            android:layout_width="320dp"
+		            android:layout_height="300dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/tv_step7_specification"
+		            android:scaleType="centerInside"
+		            android:background="@drawable/step7"/>
+            </RelativeLayout>
+            
+        </RelativeLayout>
+        
+        
+    </ScrollView>
+
+</RelativeLayout>

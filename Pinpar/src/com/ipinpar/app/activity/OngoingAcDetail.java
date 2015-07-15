@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,8 +23,13 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.adapter.StatementListAdapter;
 import com.ipinpar.app.entity.AcImageEntity;
+import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
+import com.ipinpar.app.entity.ActivityStatementListEntity;
+import com.ipinpar.app.network.api.ActivityDetailRequest;
+import com.ipinpar.app.network.api.StatementListRequest;
 import com.ipinpar.app.view.RollViewPager;
 
 public class OngoingAcDetail extends PPBaseActivity {
@@ -49,7 +55,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 	//根据活动ID请求进行中的活动的详细信息
 	private ActivityDetailRequest ongoingAcDetailRequest;
 	//根据uid和acid获取最强宣言列表
-	private ActivityStatementListRequest ongoingAcStatementListRequest;
+	private StatementListRequest ongoingAcStatementListRequest;
 	
 	private ArrayList<AcImageEntity> acImageList = new ArrayList<AcImageEntity>();
 	
@@ -59,6 +65,8 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private Button btnShare;
 	
 	private LinearLayout llActicityMap;
+	private String latitude;
+	private String longitude;
 	
 	private TextView tvAcName;
 	private TextView tvAcShop;
@@ -88,7 +96,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		initView();
 		setView();
 		
-		handlerOngoingAcsRequest.sendEmptyMessage(0);
+		handlerOngoingAcDetailRequest.sendEmptyMessage(0);
 		handlerOngoingAcStatementListRequest.sendEmptyMessage(0);
 		
 	}
@@ -135,7 +143,11 @@ public class OngoingAcDetail extends PPBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d("llActicityMap:", "调用地图功能");
+				Intent intent = new Intent();
+				intent.putExtra("latitude", latitude);
+				intent.putExtra("longitude", longitude);
+				intent.setClass(mContext, MarkerActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -254,7 +266,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 	};
 	
 	
-	Handler handlerOngoingAcsRequest = new Handler(){
+	Handler handlerOngoingAcDetailRequest = new Handler(){
 
 		@Override
 		public void handleMessage(Message msg) {
@@ -273,6 +285,9 @@ public class OngoingAcDetail extends PPBaseActivity {
 						
 						//获取返回的活动
 						ActivityEntity activity = gson.fromJson(response.toString(), ActivityEntity.class);
+						
+						latitude = activity.getLatitude();
+						longitude = activity.getLongitude();
 						
 						//获取活动中的图片集合
 						acImageList.clear();
@@ -315,7 +330,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 
-				ongoingAcStatementListRequest = new ActivityStatementListRequest("",acid+"", new Listener<JSONObject>() {
+				ongoingAcStatementListRequest = new StatementListRequest("",acid+"", new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

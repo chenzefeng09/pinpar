@@ -83,6 +83,9 @@
 	 	 <string name="activity_invite_letter_chance"><![CDATA[&#160;&#160;恭喜您获得 <font color="#f47857"> %1$s </font> 的体验机会！]]></string> 
 	 	 
 	 
+	 <string name="ongoing_activity_comment_time">评论时间</string>
+	 <string name="ongoing_activity_comment_content">这是评论的内容！</string>
+	 <string name="ongoing_activity_luck_reason">幸运理由：成全你了</string>
 	 
 	 <!-- 体验说明界面字符资源 -->
 	 <string name="activity_experience_flow">体验流程</string>
@@ -100,5 +103,12 @@
 	 <string name="past_dynamic_description">动态描述</string>
 	 
 	 <string name="past_activity_regist_end">报名截止</string>
+	 <string name="past_activity_view_member_experience">查看趴友体验</string>
+	 <string name="past_activity_view_more_statement">查看更多宣言 >></string>
+	 
+	 <string name="past_activity_comment_time">评论时间</string>
+	 <string name="past_activity_comment_content">这是评论的内容！</string>
+	 <string name="past_activity_luck_reason_tip">幸运理由:</string>
+	  <string name="past_activity_luck_reason">成全你了！</string>
 	 
 </resources>

@@ -18,7 +18,15 @@
     <color name="activity_statement_content">#8c8c8c</color>
     <color name="activity_statement_time">#c4c4c4</color>
     
-    <color name="activity_regist_end">#ababab</color>
+     <color name="activity_regist_end">#ababab</color>
+     
+    <!-- 趴友体验中用到的颜色 -->
+    <color name="activity_memberexperi_username">#3d3c3c</color>
+    <color name="activity_memberexperi_content">#8c8c8c</color>
+    <color name="activity_memberexperi_time">#c4c4c4</color>
+    <color name="activity_luck_reason_bg">#cac9cb</color>
+    
+   
     
     <!-- 文字选中高亮颜色 本颜色为淡蓝色 -->
     <color name="text_highlight">#2983c1</color>

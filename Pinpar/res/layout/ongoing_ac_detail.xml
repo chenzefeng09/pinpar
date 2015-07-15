@@ -505,7 +505,7 @@
 	        android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_marginTop="3dp"
-            android:background="@drawable/ac_statement_bottom_bar"/>
+            android:background="@drawable/ac_drawer_bottom_bar"/>
         <ImageView 
 	        android:id="@+id/iv_ac_the_statement"
 	        android:layout_width="fill_parent"
