@@ -79,6 +79,7 @@ public class UserDao extends PPDBService {
 		values.put(COLUMN_EMAIL, user.getEmail());
 		values.put(COLUMN_UNAME, user.getUsername());
 		values.put(COLUMN_MOBILE, user.getMobile());
+<<<<<<< HEAD
 		values.put(COLUMN_IMGSRC, user.getImgsrc());
 		values.put(COLUMN_LLONGIN_IP, user.getLastloginip());
 		values.put(COLUMN_LATITUDE, user.getLatitude());
@@ -93,6 +94,11 @@ public class UserDao extends PPDBService {
 		values.put(COLUMN_SIGNATURE, user.getSignature());
 		values.put(COLUMN_WEIXIN, user.getWeixin());
 		sqLiteDatabase.replace(TABLE_NAME, null, values);
+=======
+		values.put(COLUMN_UID, user.getUid());
+		values.put(COLUMN_IMGSRC, user.getImgsrc());
+		sqLiteDatabase.insert(TABLE_NAME, null, values);
+>>>>>>> 0a84fae454259b4198485d9f31bee1a8429a1e66
 		closeDB();
 	}
 	

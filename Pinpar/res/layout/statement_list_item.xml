@@ -30,7 +30,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="@string/activity_user_name"
-        android:textColor="@color/black"
+        android:textColor="@color/activity_statement_username"
         android:textSize="18sp"/>
     
     <TextView
@@ -43,9 +43,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="6dp"
         android:text="评论时间"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
-        android:textColor="@color/black" />
+        android:textSize="14sp"
+		android:textColor="@color/activity_statement_time"
+        android:gravity="center_vertical"/>
     
     <TextView 
         android:id="@+id/statement_content"
@@ -56,14 +56,16 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:text="这是评论的内容！"
-        android:textSize="14sp"
-        android:textColor="@color/black"/>
+        android:textSize="16sp"
+        android:textColor="@color/activity_statement_content"/>
     
     <LinearLayout 
         android:id="@+id/LL_support_and_comment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/statement_content"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="3dp"
         android:orientation="horizontal">
         <RelativeLayout
             android:id="@+id/RL_support"
@@ -78,7 +80,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="@string/activity_support_tip"
                 android:layout_centerInParent="true"
-                android:textColor="@color/black"/>
+                android:textColor="@color/title_theme"/>
             
             <ImageView 
                 android:id="@+id/iv_statement_support"
@@ -96,7 +98,8 @@
                 android:layout_toRightOf="@id/tv_support_tip"
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
-                android:text="@string/activity_regist_num"/>
+                android:text="@string/activity_regist_num"
+                android:textColor="@color/title_theme"/>
             
         </RelativeLayout>
         
@@ -112,7 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_centerInParent="true"
-                android:text="@string/activity_comment_tip"/> 
+                android:text="@string/activity_comment_tip"
+                android:textColor="@color/title_theme"/> 
            
             <ImageView 
                 android:id="@+id/iv_statement_comment"
@@ -130,7 +134,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/tv_comment_tip"
                 android:layout_centerVertical="true"
-                android:text="@string/activity_regist_num"/>
+                android:text="@string/activity_regist_num"
+                android:textColor="@color/title_theme"/>
             
         </RelativeLayout>
     </LinearLayout>

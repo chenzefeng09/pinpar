@@ -71,7 +71,6 @@ public class PPBaseActivity extends FragmentActivity{
 			wattingDialog.dismiss();
 		}
 	}
-	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
