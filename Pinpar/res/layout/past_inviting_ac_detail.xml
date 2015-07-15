@@ -125,7 +125,7 @@
 	                 android:textSize="14sp"
 			        android:textColor="@color/activity_detail"/>
 	             <ImageView 
-	                 android:id="@+id/iv_ac_detail_ongoing"
+	                 android:id="@+id/iv_ac_detail_inviting"
 	                 android:layout_width="40dp"
 	                 android:layout_height="fill_parent"
 	                 android:layout_marginLeft="3dp"
@@ -407,7 +407,7 @@
 	        android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_marginTop="3dp"
-            android:background="@drawable/ac_statement_bottom_bar"/>
+            android:background="@drawable/ac_drawer_bottom_bar"/>
         <ImageView 
 	        android:id="@+id/iv_ac_the_statement"
 	        android:layout_width="fill_parent"
@@ -418,7 +418,7 @@
         
         
         <ListView 
-            android:id="@+id/lv_detail_the_statement"
+            android:id="@+id/lv_inviting_detail_the_statement"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/RL_regist_end"

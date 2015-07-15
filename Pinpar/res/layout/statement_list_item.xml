@@ -20,7 +20,7 @@
    	</com.ipinpar.app.view.CircularImageView>
     
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/statement_user_name"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -37,12 +37,12 @@
         android:id="@+id/statement_time"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_toRightOf="@id/user_name"
+        android:layout_toRightOf="@id/statement_user_name"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="6dp"
-        android:text="评论时间"
+        android:text="@string/ongoing_activity_comment_time"
         android:textSize="14sp"
 		android:textColor="@color/activity_statement_time"
         android:gravity="center_vertical"/>
@@ -51,11 +51,11 @@
         android:id="@+id/statement_content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_name"
+        android:layout_below="@id/statement_user_name"
         android:layout_toRightOf="@id/statement_image"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        android:text="这是评论的内容！"
+        android:text="@string/ongoing_activity_comment_content"
         android:textSize="16sp"
         android:textColor="@color/activity_statement_content"/>
     
@@ -63,6 +63,7 @@
         android:id="@+id/LL_support_and_comment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:layout_below="@id/statement_content"
         android:paddingBottom="5dp"
         android:layout_marginBottom="3dp"
