@@ -90,6 +90,7 @@ public class AddStoryActivity extends PPBaseActivity {
 				data.putExtra("img", uploadUrl);
 				data.putExtra("text", et_add_text.getText().toString());
 				setResult(RESULT_OK, data);
+				finish();
 			}
 		});
 	}
@@ -121,7 +122,7 @@ public class AddStoryActivity extends PPBaseActivity {
 								dissmissProgressDialog();
 								try {
 									if (response.getInt("result") == 1) {
-										ImageLoader.getInstance().displayImage("fill://"+imgFile.getAbsolutePath(), iv_add_img);
+										ImageLoader.getInstance().displayImage("file://"+imgFile.getAbsolutePath(), iv_add_img);
 										uploadUrl = response.getString("imgsrc");
 									}
 									else {
@@ -177,7 +178,7 @@ public class AddStoryActivity extends PPBaseActivity {
 									dissmissProgressDialog();
 									try {
 										if (response.getInt("result") == 1) {
-											ImageLoader.getInstance().displayImage("fill://"+imgFile.getAbsolutePath(), iv_add_img);
+											ImageLoader.getInstance().displayImage("file://"+imgFile.getAbsolutePath(), iv_add_img);
 											uploadUrl = response.getString("imgsrc");
 
 										}

@@ -162,6 +162,10 @@
             android:name="com.ipinpar.app.activity.ImageGridActivity"
             android:screenOrientation="portrait" >
         </activity>
+         <activity
+            android:name="com.ipinpar.app.activity.ExperienceDiaryEditActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

@@ -128,8 +128,11 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 							@Override
 							public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 								// TODO Auto-generated method stub
-								Bitmap bluredBitmap = ImageBlurUtil.doBlur(loadedImage, 20, false);
-								iv_blur_icon.setImageBitmap(bluredBitmap);
+								if (loadedImage != null) {
+									Bitmap bluredBitmap = ImageBlurUtil.doBlur(loadedImage, 20, false);
+									iv_blur_icon.setImageBitmap(bluredBitmap);
+								}
+								
 							}
 							
 							@Override

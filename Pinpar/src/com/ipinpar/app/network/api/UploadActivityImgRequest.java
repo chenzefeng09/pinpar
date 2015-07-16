@@ -62,7 +62,7 @@ public class UploadActivityImgRequest{
         //String pathToOurFile = path.getPath()+File.separator+"ak.txt"; //uploadfile
         //String urlServer = "http://192.168.1.88/test/upload.php"; 
          
-        HttpPost httppost = new HttpPost("http://api.ipinpar.com/pinpaV2/activity/uploadImage.jsp");
+        HttpPost httppost = new HttpPost("http://api.ipinpar.com/pinpaV2/active/uploadImage.jsp");
         File file = new File(pathToOurFile);
      
         MultipartEntity mpEntity = new MultipartEntity(); //文件传输
