@@ -125,4 +125,30 @@
             <string name="Send_voice_need_sdcard_support">发送语音需要sdcard支持</string>
             
 
+    
+    <!-- 报名界面字符资源 -->
+ 	<string name="enroll_statement">最强宣言</string>
+    <string name="enroll_statement_tip">说明你的体验理由，不论深情的或奇葩的，只要你的理由够有说服力，比如收到趴友的赞和评论越多，你获得资格的机会越大哦！</string>
+    <string name="enroll_statement_hint">向大家喊出选你的理由！</string>
+    <string name="enroll_statement_length_limit">限0-140字</string>
+    <string name="enroll_statement_next">下一步</string>
+    
+    <string name="enroll_userinfo">报名信息</string>
+    <string name="enroll_userinfo_tip">信息度的完善也是您获得机会的重要指标哦！</string>
+    <string name="enroll_userinfo_name">真实姓名</string>
+    <string name="enroll_userinfo_phone">手机号</string>
+    <string name="enroll_userinfo_sex">性别</string>
+    <string name="enroll_userinfo_school_company">学校/公司</string>
+    <string name="enroll_userinfo_id">身份证号</string>
+    <string name="enroll_userinfo_address">详细地址</string>
+    <string name="enroll_userinfo_address_city">市</string>
+    <string name="enroll_userinfo_address_area">区</string>
+    <string name="enroll_userinfo_address_tip">我们将会有邀请函和纪念品寄给您，确保信息正确哦！</string>
+    <string name="enroll_userinfo_agree">我同意</string>
+    <string name="enroll_userinfo_protocol">用户协议</string>
+    <string name="enroll_userinfo_submit">提交</string>
+    
+    <string name="enroll_success_message">我们将在报名日期截止后1-2个工作日筛选出幸运的趴友，确认名单后将为您寄出邀请函，请您耐心等待哦！</string>
+    <string name="enroll_success_ok">确认</string>
+    <string name="enroll_success_ok_time">5s</string>
 </resources>

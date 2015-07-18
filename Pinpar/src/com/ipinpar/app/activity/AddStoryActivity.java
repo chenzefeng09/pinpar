@@ -1,7 +1,6 @@
 package com.ipinpar.app.activity;
 
 import java.io.File;
-import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +24,6 @@ import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.UploadActivityImgRequest;
-import com.ipinpar.app.network.api.UploadIconRequest;
 import com.ipinpar.app.service.ForegroundService;
 import com.ipinpar.app.util.BitmapUtil;
 import com.ipinpar.app.util.TakePictureUtil;

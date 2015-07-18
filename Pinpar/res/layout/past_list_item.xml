@@ -93,7 +93,7 @@
             android:layout_width="80dp"
             android:layout_height="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/decoration_bottom_bar"
+            android:background="@drawable/top_sliding_drawer"
             android:layout_alignParentBottom="true"/>
         
     </RelativeLayout>
