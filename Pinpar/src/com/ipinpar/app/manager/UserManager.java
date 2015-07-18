@@ -1,5 +1,6 @@
 package com.ipinpar.app.manager;
 
+import com.ipinpar.app.db.dao.UserDao;
 import com.ipinpar.app.entity.UserEntity;
 
 public class UserManager {
@@ -44,5 +45,6 @@ public class UserManager {
 	public void logOut(){
 		userInfo = null;
 		isLogin = false;
+		UserDao.getInstance().clearUsers();
 	}
 }

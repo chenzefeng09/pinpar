@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Scroller;
 import android.widget.Toast;
+import cn.sharesdk.framework.ShareSDK;
 
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.PPBaseFragment;
@@ -31,6 +32,7 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.adapter.MainPagerAdapter;
 import com.ipinpar.app.fragment.DiscoverFragment;
 import com.ipinpar.app.fragment.MeFragment;
+import com.ipinpar.app.fragment.MessageFragment;
 import com.ipinpar.app.fragment.PastFragment;
 import com.ipinpar.app.util.NetWorkState;
 
@@ -45,7 +47,7 @@ public class MainActivity extends PPBaseActivity {
 	
 	private DiscoverFragment discoverFragment;
 	public MeFragment meFragment;
-	
+	private MessageFragment messageFragment;
 	public PastFragment pastFragment;
 	public PastFragment pastFragment2;
 	
@@ -62,6 +64,8 @@ public class MainActivity extends PPBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mContext = this;
+		
+		ShareSDK.initSDK(mContext);
 		
 		checkNetWork();
 		initWidgets();
@@ -159,12 +163,14 @@ public class MainActivity extends PPBaseActivity {
 		discoverFragment = new DiscoverFragment();
 //		
 //		
+		messageFragment  = new MessageFragment();
 		meFragment = new MeFragment();
 		
 		pastFragment = new PastFragment();
 		pastFragment2 = new PastFragment();
 		
 		fragments.add(discoverFragment);
+		fragments.add(messageFragment);
 		fragments.add(meFragment);
 		fragments.add(pastFragment);
 		fragments.add(pastFragment2);

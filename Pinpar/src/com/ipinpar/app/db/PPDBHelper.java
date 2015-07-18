@@ -17,7 +17,28 @@ public class PPDBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE IF NOT EXIT user(uid integer,uname text,uicon text)");
+		db.execSQL("CREATE TABLE IF NOT exists user(uid integer PRIMARY KEY ,"
+				+ "username text,"
+				+ "mobile text,"
+				+ "email text,"
+				+ "imgsrc text,"
+				+ "lastloginip text,"
+				+ "latitude text,"
+				+ "longitude text,"
+				+ "password text,"
+				+ "platform text,"
+				+ "qq text,"
+				+ "regdate long,"
+				+ "regip salt,"
+				+ "sex INTEGER,"
+				+ "salt text,"
+				+ "signature text,"
+				+ "weixin text"
+				+ ")");
+		db.execSQL("CREATE TABLE IF NOT exists friend(uid integer PRIMARY KEY ,"
+				+ "imgsrc text,"
+				+ "username text"
+				+ ")");
 	}
 
 	@Override

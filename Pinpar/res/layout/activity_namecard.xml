@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ipinpar.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/iv_blur_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7b5dd7"
+        android:scaleType="fitStart"
+         />
+
+    <RelativeLayout
+        android:id="@+id/rl_me_content"
+        android:layout_width="290dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/me_center_bkg" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:src="#ababab" />
+
+            <TextView
+                android:id="@+id/tv_uname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="78dp"
+                android:layout_marginTop="8dp"
+                android:text="快登陆吧" />
+
+            <ImageView
+                android:id="@+id/iv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_uname"
+                android:layout_alignTop="@id/tv_uname"
+                android:layout_toRightOf="@id/tv_uname"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/female" />
+
+
+            <TextView
+                android:id="@+id/tv_qianming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_uname"
+                android:layout_marginLeft="78dp"
+                android:text="个性签名"
+                android:textColor="#818181"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_qianming" >
+
+                <ImageView
+                    android:id="@+id/iv_namecard_signature"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="23dp"
+                    android:src="@drawable/namecard_signature" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/iv_namecard_signature"
+                    android:layout_alignTop="@id/iv_namecard_signature"
+                    android:layout_marginLeft="12sp"
+                    android:layout_toRightOf="@id/iv_namecard_signature"
+                    android:gravity="center_vertical"
+                    android:text="个性签名"
+                    android:textColor="#ababab" />
+
+                <TextView
+                    android:id="@+id/tv_signatur_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_namecard_signature"
+                    android:layout_marginLeft="12sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/iv_namecard_signature"
+                    android:gravity="center_vertical"
+                    android:text="这是一个免费的时代" />
+
+                <ImageView
+                    android:id="@+id/iv_namecard_intrest"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/tv_signatur_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="23dp"
+                    android:src="@drawable/namecard_interest" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/iv_namecard_intrest"
+                    android:layout_alignTop="@id/iv_namecard_intrest"
+                    android:layout_marginLeft="12sp"
+                    android:layout_toRightOf="@id/iv_namecard_intrest"
+                    android:gravity="center_vertical"
+                    android:text="兴趣"
+                    android:textColor="#ababab" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/iv_namecard_intrest"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_toRightOf="@id/iv_namecard_intrest" >
+
+                    <com.ipinpar.app.view.FlowLayout
+                        android:id="@+id/fl_intrest"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </ScrollView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.ipinpar.app.view.CircularImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/app_icon"
+            app:border_outside_color="@color/white"
+            app:border_thickness="2dp" />
+    </RelativeLayout>
+    
+    <Button 
+        android:id="@+id/btn_add_friend"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/rl_me_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/roundedbutton_lightpurple"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="添加好友"
+        android:textColor="@color/white"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp" >
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="名片"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

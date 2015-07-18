@@ -22,9 +22,9 @@ public class BaseJsonRequest extends JsonObjectRequest{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public BaseJsonRequest(int method, String url, JSONObject jsonRequest,
+	public BaseJsonRequest(int method, String url,JSONObject jsonObject,
 			Listener<JSONObject> listener) {
-		this(method, url, jsonRequest, listener, new ErrorListener() {
+		this(method, url, null, listener, new ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
