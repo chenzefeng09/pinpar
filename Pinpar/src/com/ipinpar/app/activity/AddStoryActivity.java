@@ -108,7 +108,7 @@ public class AddStoryActivity extends PPBaseActivity {
 		if (arg1 == RESULT_CANCELED) {
 			return;
 		}
-		imgFile = new File(TakePictureUtil.photoPath);
+		imgFile = BitmapUtil.compressFile(TakePictureUtil.photoPath);
 		showProgressDialog();
 		UploadActivityImgRequest request = new UploadActivityImgRequest(UserManager
 				.getInstance().getUserInfo().getUid(),imgFile,

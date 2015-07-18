@@ -65,7 +65,7 @@ public class UploadIconRequest{
         //String pathToOurFile = path.getPath()+File.separator+"ak.txt"; //uploadfile
         //String urlServer = "http://192.168.1.88/test/upload.php"; 
          
-        HttpPost httppost = new HttpPost(String.format("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=%s&a=%s",
+        HttpPost httppost = new HttpPost(String.format("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=%s&a=%s&platform=android",
    				PROTOCOL,
 				uid));
         File file = new File(pathToOurFile);

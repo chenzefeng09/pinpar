@@ -50,7 +50,7 @@
                     android:background="@color/title_theme"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="邀请信"
+                    android:text="编辑体验日记"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

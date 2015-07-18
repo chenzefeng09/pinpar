@@ -17,10 +17,11 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,9 +33,9 @@ import com.google.gson.reflect.TypeToken;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.ExperienceDiaryDetailEntity;
-import com.ipinpar.app.entity.ExperienceDiaryEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ExperienceDiaryRequest;
+import com.ipinpar.app.network.api.UpdateExperienceDiaryRequest;
 import com.ipinpar.app.network.api.UploadActivityImgRequest;
 import com.ipinpar.app.service.ForegroundService;
 import com.ipinpar.app.util.BitmapUtil;
@@ -54,7 +55,7 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 	private int activityid,uid,sid;
 	private File imgFile;
 	private String uploadUrl;
-
+	private String newtitle;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -153,7 +154,16 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 			break;
 			
 		case R.id.iv_edit_name:
-			
+			final EditText editText = new EditText(this);
+			new AlertDialog.Builder(this).setTitle("请输入新的标题").setView(editText)
+					.setPositiveButton("确定", new AlertDialog.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							newtitle = editText.getText().toString().trim();
+							tv_name.setText(newtitle);
+
+						}
+					}).setNegativeButton("取消", null).show();
 			
 			break;
 			
@@ -189,8 +199,32 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 			break;
 			
 		case R.id.tv_publish:
-			
-			
+			Gson gson = new Gson();
+			showProgressDialog();
+			UpdateExperienceDiaryRequest request = new UpdateExperienceDiaryRequest(
+					UserManager.getInstance().getUserInfo().getUid(), activityid, newtitle, 
+					uploadUrl,gson.toJson(experienceDetials) , new Listener<JSONObject>() {
+
+						@Override
+						public void onResponse(JSONObject response) {
+							dissmissProgressDialog();
+							try {
+								if (response != null && response.getInt("result") == 1) {
+									Toast.makeText(mContext, "编辑体验日记成功！", 1000).show();;
+									startActivity(ExperienceDiaryActivity.getIntent2Me(mContext, activityid, uid));
+									
+								}
+								else {
+									Toast.makeText(mContext, "编辑体验失败，请重试", 1000).show();;
+
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+							
+						}
+					});
+			apiQueue.add(request);
 			break;
 
 		default:
@@ -233,7 +267,7 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 		if (arg1 == RESULT_CANCELED) {
 			return;
 		}
-		imgFile = new File(TakePictureUtil.photoPath);
+		imgFile = BitmapUtil.compressFile(TakePictureUtil.photoPath);
 		showProgressDialog();
 		UploadActivityImgRequest request = new UploadActivityImgRequest(UserManager
 				.getInstance().getUserInfo().getUid(),imgFile,
@@ -364,9 +398,11 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 			final ExperienceDiaryDetailEntity detailEntity = details.get(position);
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = getLayoutInflater().inflate(R.layout.list_item_experience_diary, null);
+				convertView = getLayoutInflater().inflate(R.layout.list_item_experience_diary_edit, null);
 				holder.iv_diary_img = (ImageView) convertView.findViewById(R.id.iv_diary_img);
 				holder.tv_diary_txt = (TextView) convertView.findViewById(R.id.tv_diary_txt);
+				holder.iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
+
 				convertView.setTag(holder);
 			}
 			else {
@@ -379,6 +415,21 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 				holder.iv_diary_img.setVisibility(View.VISIBLE);
 				ImageLoader.getInstance().displayImage(detailEntity.getImg(), holder.iv_diary_img);
 			}
+			holder.iv_del.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					new AlertDialog.Builder(mContext).setMessage("确定删除该条吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							details.remove(detailEntity);
+							notifyDataSetChanged();
+						}
+					}).setNegativeButton("取消", null).create().show();;
+					
+				}
+			});
 			holder.tv_diary_txt.setText(detailEntity.getContent());
 			return convertView;
 		}
@@ -386,6 +437,7 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 		private class ViewHolder{
 			public ImageView iv_diary_img;
 			public TextView tv_diary_txt;
+			public ImageView iv_del;
 		}
 		
 	}
