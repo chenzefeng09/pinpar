@@ -30,6 +30,7 @@ public class ActivityEntity implements Serializable{
 	private int readcount;						//活动浏览次数
 	private String sname;
 	private int status;							//活动的当前状态
+	private int status2;						//我受邀活动的状态
 	private int storeid;
 	private String title;						//活动标题
 	public int getAcid() {
@@ -187,6 +188,12 @@ public class ActivityEntity implements Serializable{
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public int getStatus2() {
+		return status2;
+	}
+	public void setStatus2(int status2) {
+		this.status2 = status2;
 	}
 	public int getStoreid() {
 		return storeid;

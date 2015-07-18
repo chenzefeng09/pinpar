@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.ipinpar.app"
+    android:id="@+id/backlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout 
+        android:id="@+id/my_enrolled_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/title_theme">
+	
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/my_enrolled_title"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/ib_left"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/return1" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/RL_my_enrolled_activities_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/my_enrolled_title"
+        android:background="@color/background_theme">
+        
+        <com.ipinpar.app.widget.PullToRefreshListView
+            android:id="@+id/my_enrolled_activities_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:cacheColorHint="#00000000"
+            android:divider="@color/transparent"
+            android:dividerHeight="10dp"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="true"
+            android:listSelector="#00000000"
+            app:effect="tilt"
+            app:only_animate_new_items="flase"
+            app:only_animate_fling="false"
+            app:max_velocity="0">
+            
+        </com.ipinpar.app.widget.PullToRefreshListView>
+    </RelativeLayout>
+    
+
+</RelativeLayout>

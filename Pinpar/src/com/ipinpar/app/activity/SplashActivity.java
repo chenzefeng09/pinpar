@@ -29,7 +29,6 @@ public class SplashActivity extends PPBaseActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_splash);
 		final UserEntity entity = UserDao.getInstance().getLogedUser();
-	
 		if (entity != null) {
 			UserManager.getInstance().setUserInfo(entity);
 			LoginRequest request = new LoginRequest(entity.getMobile(), entity.getPassword(), new Listener<JSONObject>() {
@@ -69,6 +68,7 @@ public class SplashActivity extends PPBaseActivity {
 			EMChatManager.getInstance().login(entity.getUid()+"",MD5Util.MD5(entity.getUid()+"pinpa"),new EMCallBack() {//回调
 				@Override
 				public void onSuccess() {
+					EMChatManager.getInstance().updateCurrentUserNick(entity.getUsername());
 					runOnUiThread(new Runnable() {
 						public void run() {
 //							EMGroupManager.getInstance().loadAllGroups();

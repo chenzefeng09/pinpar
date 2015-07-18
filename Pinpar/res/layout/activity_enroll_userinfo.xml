@@ -30,7 +30,6 @@
             android:src="@drawable/return1" />
     </RelativeLayout>
     
-        
     <RelativeLayout 
         android:id="@+id/RL_enroll_userinfo_and_submitbutton"
         android:layout_width="fill_parent"
@@ -85,220 +84,262 @@
             
             <TextView 
                 android:id="@+id/tv_enroll_userinfo_tip"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_centerHorizontal="true"
                 android:layout_below="@id/RL_enroll_userinfo_decoration"
                 android:text="@string/enroll_userinfo_tip"
                 android:textSize="12sp"/>
-            
-            <LinearLayout 
-                android:id="@+id/LL_enroll_userinfo_name"
+            <ScrollView 
+                android:id="@+id/sv_enroll_userinfo_content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/tv_enroll_userinfo_tip"
-                android:orientation="horizontal">
-                <TextView 
-                    android:id="@+id/tv_userinfo_name_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:text="@string/enroll_userinfo_name"/>
-                <EditText 
-	                android:id="@+id/et_enroll_userinfo_name"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/tv_enroll_userinfo_tip">
+                 <RelativeLayout 
+	                android:id="@+id/RL_enroll_userinfo_content_all"
 	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="15dp"
-	                android:layout_marginRight="15dp"
-	                android:singleLine="true"
-	                android:textSize="18sp"
-                	android:background="@drawable/enroll_statement_edittext"/>
-            </LinearLayout>
-            
-            <LinearLayout 
-                android:id="@+id/LL_enroll_userinfo_phone"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/LL_enroll_userinfo_name"
-                android:orientation="horizontal">
-                <TextView 
-                    android:id="@+id/tv_userinfo_phone_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:text="@string/enroll_userinfo_phone"/>
-                <EditText 
-	                android:id="@+id/et_enroll_enroll_phone"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="29dp"
-	                android:layout_marginRight="15dp"
-	                android:textSize="18sp"
-                	android:background="@drawable/enroll_statement_edittext"/>
-            </LinearLayout>
-            
-            <LinearLayout 
-                android:id="@+id/LL_enroll_userinfo_sex"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/LL_enroll_userinfo_phone"
-                android:orientation="horizontal">
-                <TextView 
-                    android:id="@+id/tv_userinfo_sex_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:text="@string/enroll_userinfo_sex"/>
-                <EditText 
-	                android:id="@+id/et_enroll_enroll_sex"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="29dp"
-	                android:layout_marginRight="15dp"
-	                android:textSize="18sp"
-                	android:background="@drawable/enroll_statement_edittext"/>
-            </LinearLayout>
-            
-            <LinearLayout 
-                android:id="@+id/LL_enroll_userinfo_school_company"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/LL_enroll_userinfo_sex"
-                android:orientation="horizontal">
-                <TextView 
-                    android:id="@+id/tv_userinfo_school_company_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:text="@string/enroll_userinfo_school_company"/>
-                <EditText 
-	                android:id="@+id/et_enroll_enroll_school_company"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="29dp"
-	                android:layout_marginRight="15dp"
-	                android:textSize="18sp"
-                	android:background="@drawable/enroll_statement_edittext"/>
-            </LinearLayout>
-            
-            <LinearLayout 
-                android:id="@+id/LL_enroll_userinfo_id"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/LL_enroll_userinfo_school_company"
-                android:orientation="horizontal">
-                <TextView 
-                    android:id="@+id/tv_userinfo_id_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:text="@string/enroll_userinfo_id"/>
-                <EditText 
-	                android:id="@+id/et_enroll_enroll_id"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="29dp"
-	                android:layout_marginRight="15dp"
-	                android:textSize="18sp"
-                	android:background="@drawable/enroll_statement_edittext"/>
-            </LinearLayout>
-            
-            <LinearLayout 
-                android:id="@+id/LL_enroll_userinfo_address"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/LL_enroll_userinfo_id"
-                android:orientation="horizontal">
-                <TextView 
-                    android:id="@+id/tv_userinfo_address_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:text="@string/enroll_userinfo_address"/>
-                <LinearLayout 
-                    android:id="@+id/LL_enroll_userinfo_address_detail"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    android:orientation="vertical">
-                    
-                    <EditText 
-		                android:id="@+id/et_enroll_address_city_area"
+	                android:layout_height="wrap_content">
+	                <LinearLayout 
+		                android:id="@+id/LL_enroll_userinfo_name"
 		                android:layout_width="fill_parent"
 		                android:layout_height="wrap_content"
-		                android:layout_marginLeft="10dp"
-		                android:layout_marginRight="15dp"
-		                android:textSize="18sp"
-	                	android:background="@drawable/enroll_statement_edittext"/>
-                    <EditText 
-		                android:id="@+id/et_enroll_address"
+		                android:layout_marginTop="10dp"
+		                android:orientation="horizontal">
+		                <TextView 
+		                    android:id="@+id/tv_userinfo_name_tip"
+		                    android:layout_width="70dp"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dp"
+		                    android:gravity="center"
+		                    android:layout_gravity="center_vertical"
+		                    android:textSize="12sp"
+		                    android:text="@string/enroll_userinfo_name"/>
+		                <EditText 
+			                android:id="@+id/et_enroll_userinfo_name"
+			                android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="15dp"
+			                android:layout_marginRight="15dp"
+			                android:singleLine="true"
+			                android:textSize="18sp"
+		                	android:background="@drawable/enroll_statement_edittext"/>
+		            </LinearLayout>
+		            
+		            <LinearLayout 
+		                android:id="@+id/LL_enroll_userinfo_phone"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_marginTop="10dp"
+		                android:layout_below="@id/LL_enroll_userinfo_name"
+		                android:orientation="horizontal">
+		                <TextView 
+		                    android:id="@+id/tv_userinfo_phone_tip"
+		                    android:layout_width="70dp"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dp"
+		                    android:gravity="center"
+		                    android:layout_gravity="center_vertical"
+		                    android:textSize="12sp"
+		                    android:text="@string/enroll_userinfo_phone"/>
+		                <EditText 
+			                android:id="@+id/et_enroll_enroll_phone"
+			                android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="15dp"
+			                android:layout_marginRight="15dp"
+			                android:textSize="18sp"
+		                	android:background="@drawable/enroll_statement_edittext"/>
+		            </LinearLayout>
+		            
+		            <LinearLayout 
+		                android:id="@+id/LL_enroll_userinfo_sex"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_marginTop="10dp"
+		                android:layout_below="@id/LL_enroll_userinfo_phone"
+		                android:orientation="horizontal">
+		                <TextView 
+		                    android:id="@+id/tv_userinfo_sex_tip"
+		                    android:layout_width="70dp"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dp"
+		                    android:gravity="center"
+		                    android:layout_gravity="center_vertical"
+		                    android:textSize="12sp"
+		                    android:text="@string/enroll_userinfo_sex"/>
+		                
+		                <RadioGroup 
+		                    android:id="@+id/rg_userinfo_sex"
+		                    android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:orientation="horizontal"
+			                android:layout_marginLeft="15dp"
+			                android:layout_marginRight="15dp">
+		                    <RadioButton 
+		                        android:id="@+id/rb_male"
+		                        android:layout_width="80dp"
+		                        android:layout_height="wrap_content"
+		                        android:layout_marginLeft="5dp"
+		                        android:gravity="center"
+		                        android:button="@null"
+		                        android:background="@drawable/enroll_userinfo_sex_radiobutton"
+		                        android:text="男"
+		                        android:textColor="@color/white"/>
+		                    <RadioButton 
+		                        android:id="@+id/rb_female"
+		                        android:layout_width="80dp"
+		                        android:layout_height="wrap_content"
+		                        android:layout_marginLeft="5dp"
+		                        android:layout_marginRight="5dp"
+		                        android:gravity="center"
+		                        android:button="@null"
+		                        android:background="@drawable/enroll_userinfo_sex_radiobutton"
+		                        android:checked="true"
+		                        android:text="女"
+		                        android:textColor="@color/white"/>
+		                </RadioGroup>
+		                <EditText 
+			                android:id="@+id/et_enroll_enroll_sex"
+			                android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="29dp"
+			                android:layout_marginRight="15dp"
+			                android:textSize="18sp"
+		                	android:background="@drawable/enroll_statement_edittext"/>
+		            </LinearLayout>
+		            
+		            <LinearLayout 
+		                android:id="@+id/LL_enroll_userinfo_school_company"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_marginTop="10dp"
+		                android:layout_below="@id/LL_enroll_userinfo_sex"
+		                android:orientation="horizontal">
+		                <TextView 
+		                    android:id="@+id/tv_userinfo_school_company_tip"
+		                    android:layout_width="70dp"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dp"
+		                    android:gravity="center"
+		                    android:layout_gravity="center_vertical"
+		                    android:textSize="12sp"
+		                    android:text="@string/enroll_userinfo_school_company"/>
+		                <EditText 
+			                android:id="@+id/et_enroll_enroll_school_company"
+			                android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="15dp"
+			                android:layout_marginRight="15dp"
+			                android:textSize="18sp"
+		                	android:background="@drawable/enroll_statement_edittext"/>
+		            </LinearLayout>
+		            
+		            <LinearLayout 
+		                android:id="@+id/LL_enroll_userinfo_id"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_marginTop="10dp"
+		                android:layout_below="@id/LL_enroll_userinfo_school_company"
+		                android:orientation="horizontal">
+		                <TextView 
+		                    android:id="@+id/tv_userinfo_id_tip"
+		                    android:layout_width="70dp"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dp"
+		                    android:gravity="center"
+		                    android:layout_gravity="center_vertical"
+		                    android:textSize="12sp"
+		                    android:text="@string/enroll_userinfo_id"/>
+		                <EditText 
+			                android:id="@+id/et_enroll_enroll_id"
+			                android:layout_width="fill_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="15dp"
+			                android:layout_marginRight="15dp"
+			                android:textSize="18sp"
+		                	android:background="@drawable/enroll_statement_edittext"/>
+		            </LinearLayout>
+		            
+		            <LinearLayout 
+		                android:id="@+id/LL_enroll_userinfo_address"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_marginTop="10dp"
+		                android:layout_below="@id/LL_enroll_userinfo_id"
+		                android:orientation="horizontal">
+		                <TextView 
+		                    android:id="@+id/tv_userinfo_address_tip"
+		                    android:layout_width="70dp"
+		                    android:layout_height="wrap_content"
+		                    android:gravity="center"
+		                    android:layout_marginLeft="5dp"
+		                    android:textSize="12sp"
+		                    android:text="@string/enroll_userinfo_address"/>
+		                <LinearLayout 
+		                    android:id="@+id/LL_enroll_userinfo_address_detail"
+		                    android:layout_width="fill_parent"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="15dp"
+			                	android:layout_marginRight="15dp"
+		                    android:orientation="vertical">
+		                    
+		                    <EditText 
+				                android:id="@+id/et_enroll_address_city_area"
+				                android:layout_width="fill_parent"
+				                android:layout_height="wrap_content"
+				                android:textSize="18sp"
+			                	android:background="@drawable/enroll_statement_edittext"/>
+		                    <EditText 
+				                android:id="@+id/et_enroll_address"
+				                android:layout_width="fill_parent"
+				                android:layout_height="wrap_content"
+				                android:layout_marginTop="5dp"
+				                android:textSize="18sp"
+			                	android:background="@drawable/enroll_statement_edittext"/>
+		                    <TextView 
+		                        android:id="@+id/tv_enroll_address_tip"
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:layout_marginTop="5dp"
+		                        android:text="@string/enroll_userinfo_address_tip"
+		                        android:textSize="12sp"
+		                        android:textColor="@color/activity_statement_time"/>
+		            
+		                </LinearLayout>
+		            </LinearLayout>
+		            
+		            <RelativeLayout 
+		                android:id="@+id/LL_enroll_userinfo_protocol"
 		                android:layout_width="fill_parent"
 		                android:layout_height="wrap_content"
 		                android:layout_marginTop="3dp"
-		                android:layout_marginLeft="10dp"
-		                android:layout_marginRight="15dp"
-		                android:textSize="18sp"
-	                	android:background="@drawable/enroll_statement_edittext"/>
-                    <TextView 
-                        android:id="@+id/tv_enroll_address_tip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/enroll_userinfo_address_tip"
-                        android:textSize="13sp"
-                        android:textColor="@color/activity_statement_time"/>
-            
-                </LinearLayout>
-            </LinearLayout>
-            
-            <RelativeLayout 
-                android:id="@+id/LL_enroll_userinfo_protocol"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/LL_enroll_userinfo_address">
-                <CheckBox 
-	                android:id="@+id/cb_enroll_userinfo_agree"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="80dp"
-	                android:paddingLeft="18dp"
-					android:layout_centerInParent="true"
-	                style="@style/EnrollCheckboxTheme"
-	                android:text="@string/enroll_userinfo_agree"
-	                android:textSize="14sp"/>
-                <TextView 
-                    android:id="@+id/tv_enroll_userinfo_protocol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/cb_enroll_userinfo_agree"
-                    android:text="@string/enroll_userinfo_protocol"
-                    android:textSize="14sp"
-                    android:textColor="#4f3a98"/>
-            </RelativeLayout>
-            
-            
+		                android:layout_below="@id/LL_enroll_userinfo_address">
+		                <CheckBox 
+			                android:id="@+id/cb_enroll_userinfo_agree"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="80dp"
+			                android:paddingLeft="18dp"
+							android:layout_centerInParent="true"
+			                style="@style/EnrollCheckboxTheme"
+			                android:text="@string/enroll_userinfo_agree"
+			                android:textSize="14sp"/>
+		                <TextView 
+		                    android:id="@+id/tv_enroll_userinfo_protocol"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+							android:layout_centerVertical="true"
+		                    android:layout_marginLeft="5dp"
+		                    android:layout_toRightOf="@id/cb_enroll_userinfo_agree"
+		                    android:text="@string/enroll_userinfo_protocol"
+		                    android:textSize="14sp"
+		                    android:textColor="#4f3a98"/>
+		            </RelativeLayout>
+	            </RelativeLayout>
+            </ScrollView>
+           
             
         </RelativeLayout>
         

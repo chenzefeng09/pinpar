@@ -3,14 +3,18 @@ package com.ipinpar.app.activity;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.db.dao.FriendDao;
 import com.ipinpar.app.entity.FriendEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.FriendsListRequest;
@@ -39,6 +44,17 @@ public class FriendActivity extends PPBaseActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_my_friend);
 		lv_friends = (ListView) findViewById(R.id.lv_friends);
+		lv_friends.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				FriendEntity frEntity = friends.get(arg2);
+				startActivity(NameCardActivity.getIntent2Me(mContext, frEntity.getUid()));
+				
+			}
+		});
+		friends = new ArrayList<FriendEntity>();
 	}
 	@Override
 	protected void onResume() {
@@ -52,12 +68,13 @@ public class FriendActivity extends PPBaseActivity {
 						// TODO Auto-generated method stub
 						try {
 							if (response != null && response.getInt("result") == 1) {
+								friends.clear();
 								int size = response.getInt("total");
 								if (size != 0) {
-									JSONObject jsonObject = response.getJSONObject("data");
+									JSONArray jsonObject = response.getJSONArray("data");
 									Gson gson = new Gson();
 									Type listType=new TypeToken<ArrayList<FriendEntity>>(){}.getType();
-									friends = gson.fromJson(jsonObject.toString(), listType);
+									friends.addAll((ArrayList<FriendEntity>)gson.fromJson(jsonObject.toString(), listType));
 									if (adapter == null) {
 										adapter = new MyFriendsAdapter(friends);
 										lv_friends.setAdapter(adapter);
@@ -65,6 +82,7 @@ public class FriendActivity extends PPBaseActivity {
 									else {
 										adapter.notifyDataSetChanged();
 									}
+									FriendDao.getInstance().insertUsers(friends);
 								}
 							}
 							else {
@@ -128,7 +146,10 @@ public class FriendActivity extends PPBaseActivity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					
+					Intent intent = new Intent(mContext, ChatActivity.class);
+					intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+					intent.putExtra("userId", friendENtity.getUid()+"");
+					startActivity(intent);
 				}
 			});
 			holder.tv_name.setText(friendENtity.getUsername());

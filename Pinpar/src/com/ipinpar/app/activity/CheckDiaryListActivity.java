@@ -152,6 +152,7 @@ public class CheckDiaryListActivity extends PPBaseActivity {
 				
 				@Override
 				public void onClick(View v) {
+//					startActivity(ExperienceDiaryEditActivity.getIntent2Me(mContext, experienceDiaryEntity.getAcid(), experienceDiaryEntity.getUid()));
 					startActivity(ExperienceDiaryActivity.getIntent2Me(mContext, experienceDiaryEntity.getAcid(), experienceDiaryEntity.getUid()));
 				}
 			});;

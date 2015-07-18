@@ -11,7 +11,6 @@
        android:layout_height="@dimen/memberexperi_imagesize"
        app:border_thickness="2dp"
        app:border_outside_color="#dcdcdc"
-       app:border_inside_color="#ffffff"
        android:src="@drawable/friend"
        android:scaleType="centerCrop"
        android:layout_marginLeft="10dp"

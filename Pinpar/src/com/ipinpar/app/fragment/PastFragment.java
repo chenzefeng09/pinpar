@@ -16,14 +16,13 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -31,10 +30,8 @@ import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.ExperienceFlow;
 import com.ipinpar.app.activity.MainActivity;
-import com.ipinpar.app.activity.OngoingAcDetail;
 import com.ipinpar.app.activity.PastCompleteAcDetail;
 import com.ipinpar.app.activity.PastInvitingAcDetail;
-import com.ipinpar.app.adapter.OngoingActivityListAdapter;
 import com.ipinpar.app.adapter.PastActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
@@ -67,7 +64,6 @@ public class PastFragment extends PPBaseFragment implements OnScrollListener{
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
-		Log.d("PastFragment:", "onAttach");
 		if(mContext == null){
 			mContext = (Context)activity;
 		}
@@ -78,7 +74,6 @@ public class PastFragment extends PPBaseFragment implements OnScrollListener{
 			ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		view = inflater.inflate(R.layout.past_fragment, null);
-		Log.d("PastFragment:", "onCreateView");
 		initView(view);
 		setView();
 		
@@ -89,7 +84,6 @@ public class PastFragment extends PPBaseFragment implements OnScrollListener{
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		Log.d("PastFragment:", "onCreate");
 		//请求进行中的活动
 		handlerPastAcsRequest.sendEmptyMessage(0);
 	}
