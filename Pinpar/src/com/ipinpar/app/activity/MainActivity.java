@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Scroller;
 import android.widget.Toast;
+import cn.sharesdk.framework.ShareSDK;
 
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.PPBaseFragment;
@@ -63,6 +64,8 @@ public class MainActivity extends PPBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mContext = this;
+		
+		ShareSDK.initSDK(mContext);
 		
 		checkNetWork();
 		initWidgets();

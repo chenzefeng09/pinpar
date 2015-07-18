@@ -6,11 +6,18 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +29,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
+import com.google.gson.JsonObject;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.manager.UserManager;
@@ -42,6 +55,9 @@ import com.ipinpar.app.network.api.UploadIconRequest;
 import com.ipinpar.app.service.ForegroundService;
 import com.ipinpar.app.util.BitmapUtil;
 import com.ipinpar.app.util.TakePictureUtil;
+import com.ipinpar.app.network.api.PhotoMultipartRequest;
+import com.ipinpar.app.service.ForegroundService;
+import com.ipinpar.app.util.BitmapUtil;
 import com.ipinpar.app.view.FlowLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -61,7 +77,6 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 	private String signature;
 	private ArrayList<String> hobbys;
 	private File imgFile;
-
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -150,6 +165,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 		apiQueue.add(request);
 
 	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int arg1, Intent data) {
@@ -407,6 +423,68 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 
 		default:
 			break;
+		}
+	}
+	
+
+	public File getPhotoFile(Context context) {
+		File file = new File(getPhotoFilePath(context));
+		if(file.exists()){
+			file.delete();
+			try {
+				file.createNewFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return file;
+	}
+	
+	private String PHOTO_DIR;// 存储照片的位置
+	public static final int REQUEST_TAKE_PHOTO = 11;// 照相
+	public static final int REQUEST_GALLERY = 22;// 相册
+	private String photoPath ;
+	
+	public String getPhotoFilePath(Context context) {
+		if (TextUtils.isEmpty(PHOTO_DIR)) {
+			createImgFolders(context);
+		}
+		 photoPath = PHOTO_DIR+"/"+getPhotoName();
+		return photoPath;
+	}
+	
+	/**
+	 * 得到图片的名称
+	 */
+	public String getPhotoName() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHssSSS");
+		String str = sdf.format(date);
+		Random ran = new Random();
+		str = str + ran.nextInt(100) + ".jpg";
+		return str;
+	}
+	
+	private void createImgFolders(Context context) {
+		File compressImgDir;
+		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			// 如果未加载SD卡，存放在内置卡中
+			PHOTO_DIR = context.getCacheDir().getAbsolutePath()
+					+ File.separator + "pics" + File.separator;
+			compressImgDir = new File(PHOTO_DIR, "CompressPics");
+		} else {
+			PHOTO_DIR = Environment.getExternalStorageDirectory()
+					+ "/DCIM/Camera";
+			compressImgDir = new File(Environment
+					.getExternalStorageDirectory().getAbsoluteFile().toString()
+					+ "/ipinpar/pictures/CompressedPictures");
+		}
+		BitmapUtil.compressPicDir = compressImgDir;
+
+		File photoDir = new File(PHOTO_DIR);
+		if (!photoDir.exists()) {
+			photoDir.mkdirs();
+			photoDir = null;
 		}
 	}
 
