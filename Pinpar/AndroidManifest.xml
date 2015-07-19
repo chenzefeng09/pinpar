@@ -152,6 +152,22 @@
             android:name="com.ipinpar.app.activity.UserInfoEditActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.MyInterested"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.MyEnrolled"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+          <activity
+            android:name="com.ipinpar.app.activity.MyInvited"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         <activity
             android:name="com.ipinpar.app.activity.SettingActivity"
             android:screenOrientation="portrait" >

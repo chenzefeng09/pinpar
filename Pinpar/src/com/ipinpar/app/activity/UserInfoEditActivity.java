@@ -227,6 +227,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 			if (str == null) {
 				return;
 			}
+			File file = null;
 			if (str.equalsIgnoreCase("file")) {
 				String path = uri.getPath();
 				imgFile = BitmapUtil.compressFile(path);

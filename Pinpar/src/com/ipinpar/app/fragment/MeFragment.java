@@ -21,6 +21,9 @@ import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.FriendActivity;
 import com.ipinpar.app.activity.LoginActivity;
+import com.ipinpar.app.activity.MyEnrolled;
+import com.ipinpar.app.activity.MyInterested;
+import com.ipinpar.app.activity.MyInvited;
 import com.ipinpar.app.activity.SettingActivity;
 import com.ipinpar.app.activity.UserInfoEditActivity;
 import com.ipinpar.app.entity.UserEntity;
@@ -184,13 +187,28 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 		switch (v.getId()) {
 
 		case R.id.tv_my_activity:
-			
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, MyEnrolled.class));
+			}
+			else {
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+			}
 			break;
 		case R.id.tv_my_invited_activity:
-			
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, MyInvited.class));
+			}
+			else {
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+			}
 			break;
 		case R.id.tv_my_faverite_activity:
-			
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, MyInterested.class));
+			}
+			else {
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+			}
 			break;
 		case R.id.tv_my_friend:
 			if (UserManager.getInstance().isLogin()) {

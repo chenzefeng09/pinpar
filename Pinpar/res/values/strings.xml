@@ -151,4 +151,21 @@
     <string name="enroll_success_message">我们将在报名日期截止后1-2个工作日筛选出幸运的趴友，确认名单后将为您寄出邀请函，请您耐心等待哦！</string>
     <string name="enroll_success_ok">确认</string>
     <string name="enroll_success_ok_time">5s</string>
+    
+    <!-- "我"相关的活动界面 -->
+    
+    <!-- 1、"我"感兴趣的活动 -->
+    <string name="my_interested_title">我感兴趣的活动</string>
+    <!-- 2、"我"报名的活动 -->
+    <string name="my_enrolled_title">我报名的活动</string>
+    <!-- 3、"我"受邀的活动 -->
+    <string name="my_invited_title">我受邀的活动</string>
+    <string name="activity_default_invited_title">微薄之盐调酒体验师</string>
+    
+    <string name="activity_invited_envelope_desc">恭喜您！您收到了本次活动的体验邀请！请查看并确认！</string>
+    <string name="activity_invited_edit">编辑体验收获</string>
+    
+    <string name="activity_invited_edit_experi">恭喜您抓住了体验机会，体验完成后记得回来和趴友们分享本次的体验感受哦，快快写起来吧！</string>
+    <string name="activity_invited_view">查看我的体验记</string>
+    
 </resources>
