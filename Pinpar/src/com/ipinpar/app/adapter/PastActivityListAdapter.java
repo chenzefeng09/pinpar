@@ -93,7 +93,7 @@ public class PastActivityListAdapter extends BaseAdapter{
 			viewHolder.ivActivityStateInviting.setVisibility(View.INVISIBLE);
 			viewHolder.ivActivityStateComplete.setVisibility(View.VISIBLE);
 			viewHolder.ivEssentialStatement.setVisibility(View.INVISIBLE);
-		}else if(acEntity.getStatus() == 3){
+		}else if(acEntity.getStatus() == 3 || acEntity.getStatus() == 2){
 			viewHolder.ivActivityStateInviting.setVisibility(View.VISIBLE);
 			viewHolder.ivActivityStateComplete.setVisibility(View.INVISIBLE);
 			viewHolder.ivEssentialStatement.setVisibility(View.VISIBLE);
