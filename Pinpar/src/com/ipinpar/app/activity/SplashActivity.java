@@ -65,7 +65,9 @@ public class SplashActivity extends PPBaseActivity {
 				}
 			}).start();;
 			 
-			EMChatManager.getInstance().login(entity.getUid()+"",MD5Util.MD5(entity.getUid()+"pinpa"),new EMCallBack() {//回调
+			EMChatManager.getInstance().login(entity.getUid()+"",
+					MD5Util.MD5(entity.getUid()+"pinpa"),
+					new EMCallBack() {//回调
 				@Override
 				public void onSuccess() {
 					EMChatManager.getInstance().updateCurrentUserNick(entity.getUsername());

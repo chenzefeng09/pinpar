@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
@@ -15,7 +16,7 @@ public class EnrollSuccess extends PPBaseActivity{
 
 	private Context mContext;
 	
-	private RelativeLayout rlEnrollOk;
+	private TextView rlEnrollOk;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class EnrollSuccess extends PPBaseActivity{
 
 	
 	public void findView(){
-		rlEnrollOk =  (RelativeLayout) findViewById(R.id.rl_enroll_success_ok);
+		rlEnrollOk =  (TextView) findViewById(R.id.tv_ok);
 	}
 	
 	public void setView(){

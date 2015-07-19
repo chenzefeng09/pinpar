@@ -83,7 +83,7 @@
 			android:screenOrientation="portrait" />
         
         <!-- 调用新浪原生SDK，需要注册的activity -->
-        <activity
+        <activity 
 			android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
 			android:configChanges="keyboardHidden|orientation"
 			android:windowSoftInputMode="adjustResize"
@@ -197,6 +197,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.ipinpar.app.activity.StatementsListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.ipinpar.app.activity.NotificationListActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -238,6 +242,14 @@
         </activity>
          <activity
             android:name="com.ipinpar.app.activity.ExperienceDiaryEditActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.EnrollDefaultInfoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.EnrollInfoListActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

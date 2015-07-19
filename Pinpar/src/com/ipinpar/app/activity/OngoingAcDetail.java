@@ -29,6 +29,7 @@ import com.ipinpar.app.entity.AcImageEntity;
 import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityStatementListEntity;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityDetailRequest;
 import com.ipinpar.app.network.api.StatementListRequest;
 import com.ipinpar.app.view.RollViewPager;
@@ -179,9 +180,12 @@ public class OngoingAcDetail extends PPBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(mContext, EnrollStatement.class);
-				startActivity(intent);
+				if (UserManager.getInstance().isLogin()) {
+					startActivity(new Intent(mContext, EnrollStatement.class));
+				}
+				else {
+					startActivity(new Intent(mContext, LoginActivity.class));
+				}
 			}
 		});
 	}

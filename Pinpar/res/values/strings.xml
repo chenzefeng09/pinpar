@@ -168,4 +168,7 @@
     <string name="activity_invited_edit_experi">恭喜您抓住了体验机会，体验完成后记得回来和趴友们分享本次的体验感受哦，快快写起来吧！</string>
     <string name="activity_invited_view">查看我的体验记</string>
     
+     <!-- 最强宣言列表字符资源 -->
+ 	<string name="statements_list_title">最强宣言</string>
+    
 </resources>

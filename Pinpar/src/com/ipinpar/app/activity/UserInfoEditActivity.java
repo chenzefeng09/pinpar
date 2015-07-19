@@ -193,6 +193,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 									dissmissProgressDialog();
 									try {
 										if (response.getInt("result") == 1) {
+											ImageLoader.getInstance().displayImage("file://"+imgFile.getAbsolutePath(), iv_icon);
 											Toast.makeText(mContext, "修改头像成功", 1000).show();
 										}
 										else {
@@ -229,17 +230,17 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 			File file = null;
 			if (str.equalsIgnoreCase("file")) {
 				String path = uri.getPath();
-				file = BitmapUtil.compressFile(path);
+				imgFile = BitmapUtil.compressFile(path);
 
 			} else if (str.equals("content")) {
 				String fileStr = TakePictureUtil.getImageFilePathName(uri,mContext );
 				if (fileStr != null) {
-					file = BitmapUtil.compressFile(fileStr);
+					imgFile = BitmapUtil.compressFile(fileStr);
 				}
 			}
 			showProgressDialog();
 			new UploadIconRequest(UserManager
-					.getInstance().getUserInfo().getUid(),file,
+					.getInstance().getUserInfo().getUid(),imgFile,
 					new Listener<JSONObject>() {
 
 						@Override
@@ -250,6 +251,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 									dissmissProgressDialog();
 									try {
 										if (response.getInt("result") == 1) {
+											ImageLoader.getInstance().displayImage("file://"+imgFile.getAbsolutePath(), iv_icon);
 											Toast.makeText(mContext, "修改头像成功", 1000).show();
 										}
 										else {

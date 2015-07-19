@@ -163,7 +163,7 @@ public class NotificationListActivity extends PPBaseActivity {
 			viewHoler.tv_name.setText(commentEntity.getAuthor());
 			ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+commentEntity.getAuthorid(), viewHoler.iv_icon);
 			
-			if ("friend".equals(commentEntity.getType())) {
+			if ("friend".equals(commentEntity.getType()) && "friend_request".equals(commentEntity.getFrom_idtype())) {
 				switch (commentEntity.getStatus()) {
 				case 0:
 					viewHoler.tv_time.setVisibility(View.GONE);
@@ -251,7 +251,15 @@ public class NotificationListActivity extends PPBaseActivity {
 					break;
 				}
 			}
+			else if ("friend".equals(commentEntity.getType())) {
+				viewHoler.tv_time.setVisibility(View.VISIBLE);
+				viewHoler.btn_accept.setVisibility(View.GONE);
+				viewHoler.btn_refuse.setVisibility(View.GONE);
+				viewHoler.tv_time.setText(commentEntity.getNote());
+			}
 			else {
+				viewHoler.btn_accept.setVisibility(View.GONE);
+				viewHoler.btn_refuse.setVisibility(View.GONE);
 				viewHoler.tv_time.setText(formatTime(commentEntity.getDateline()));
 			}
 			return convertView;

@@ -88,6 +88,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 	private ListView memberExperiListView;
 	
 	private View RL_view_memeber_experi;
+	private View RL_view_more_statements;
 	
 
 	@Override
@@ -142,6 +143,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 		memberExperiListView = (ListView) findViewById(R.id.lv_complete_detail_luck_member);
 		
 		RL_view_memeber_experi = findViewById(R.id.RL_view_memeber_experi);
+		RL_view_more_statements = findViewById(R.id.RL_view_more_statement);
 	}
 	
 	public void setView(){
@@ -174,6 +176,18 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(CheckDiaryListActivity.getIntent2Me(mContext, acid));
+			}
+		});
+		
+		RL_view_more_statements.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.putExtra("activityID", acid);
+				intent.setClass(mContext, StatementsListActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
