@@ -68,6 +68,14 @@ private static EnrollInfoDao instance;
 
 	}
 	
+	public boolean removeInfo(int infoid){
+		openDB();
+		sqLiteDatabase.delete(TABLE_NAME, COLUMN_INFOID+"=?", new String[]{infoid+""});
+		closeDB();
+		return false;
+
+	}
+	
 	public void insertEnrollInfo(EnrollInfoEntity user){
 		openDB();
 		ContentValues values = new ContentValues();

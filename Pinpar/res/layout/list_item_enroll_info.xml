@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
+    android:layout_marginBottom="12dp"
     android:paddingTop="12dp" >
 
     <ImageView
         android:id="@+id/iv_del"
         android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
         android:layout_gravity="center_vertical"
         android:src="@drawable/experience_diary_del" />
 
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1" >
 
         <TextView
@@ -74,14 +81,23 @@
 
     <CheckBox
         android:id="@+id/cb_default"
-        style="@style/EnrollCheckboxTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:drawablePadding="8dp"
+        android:button="@drawable/enroll_checkbox_normal"
         android:paddingLeft="8dp"
         android:text="默认"
-        android:textColor="#dcdcdc" >
+        android:textColor="#898989" >
     </CheckBox>
-
+    
+    
 </LinearLayout>
+<ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:src="#ababab"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

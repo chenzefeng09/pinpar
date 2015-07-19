@@ -1,10 +1,12 @@
 package com.ipinpar.app.activity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
@@ -74,13 +79,59 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 			if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(pwd)) {
 				request = new LoginRequest(phone, MD5Util.MD5(pwd), new Listener<JSONObject>() {
 								@Override
-								public void onResponse(JSONObject response) {
+								public void onResponse(final JSONObject response) {
 									dissmissProgressDialog();
 									// TODO Auto-generated method stub
 									Gson gson = new Gson();
 									UserEntity user = gson.fromJson(response.toString(), UserEntity.class);
 									if (user != null && user.getResult() == 1) {
 										//登录成功
+										
+									try {
+										EMChatManager.getInstance().login(
+												response.getInt("uid") + "",
+												MD5Util.MD5(response
+														.getInt("uid")
+														+ "pinpa"),
+												new EMCallBack() {// 回调
+													@Override
+													public void onSuccess() {
+														runOnUiThread(new Runnable() {
+															public void run() {
+																try {
+																	EMChatManager.getInstance().updateCurrentUserNick(response.getString("username"));
+																} catch (JSONException e) {
+																	// TODO Auto-generated catch block
+																	e.printStackTrace();
+																}
+																EMChatManager
+																		.getInstance()
+																		.loadAllConversations();
+																Log.d("main",
+																		"登陆聊天服务器成功！");
+															}
+														});
+													}
+
+													@Override
+													public void onProgress(
+															int progress,
+															String status) {
+
+													}
+
+													@Override
+													public void onError(
+															int code,
+															String message) {
+														Log.d("main",
+																"登陆聊天服务器失败！");
+													}
+												});
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 										user.setPassword(MD5Util.MD5(pwd));
 										UserDao.getInstance().insertUser(user);
 										UserManager.getInstance().setUserInfo(user);

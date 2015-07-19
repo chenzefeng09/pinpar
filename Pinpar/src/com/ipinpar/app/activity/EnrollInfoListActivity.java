@@ -7,6 +7,8 @@ import java.util.Collection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,9 +19,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -29,6 +34,8 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.db.dao.EnrollInfoDao;
 import com.ipinpar.app.entity.EnrollInfoEntity;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.EnrollInfoDelRequest;
+import com.ipinpar.app.network.api.EnrollInfoSetDefaultRequest;
 import com.ipinpar.app.network.api.GetEnrollInfoListRequest;
 
 public class EnrollInfoListActivity extends PPBaseActivity {
@@ -53,6 +60,22 @@ public class EnrollInfoListActivity extends PPBaseActivity {
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(mContext, EnrollUserinfo.class));
+			}
+		});
+		tv_header_right.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (adapter != null ) {
+					adapter.setEditmode(!adapter.isEditmode());
+					adapter.notifyDataSetChanged();
+					if (adapter.isEditmode()) {
+						tv_header_right.setText("完成");
+					}
+					else {
+						tv_header_right.setText("管理");
+					}
+				}
 			}
 		});
 	}
@@ -107,16 +130,20 @@ public class EnrollInfoListActivity extends PPBaseActivity {
 	private class EnrollInfoListAdapter extends BaseAdapter{
 		private ArrayList<EnrollInfoEntity> infos;
 		private ViewHolder holder;
-		private int default_id;
+		private EnrollInfoEntity default_info;
+		private boolean editmode;
 		
 		public EnrollInfoListAdapter(ArrayList<EnrollInfoEntity> entities) {
 			this.infos = entities;
 		}
 		
-		public void setDefault_id(int default_id) {
-			this.default_id = default_id;
-			notifyDataSetChanged();
+		public void setEditmode(boolean editmode) {
+			this.editmode = editmode;
 		}
+		public boolean isEditmode(){
+			return editmode;
+		}
+		
 
 		@Override
 		public int getCount() {
@@ -152,15 +179,100 @@ public class EnrollInfoListActivity extends PPBaseActivity {
 			else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			if (enInfoEntity.getIsdefault() == 1) {
-				holder.cb_default.setChecked(true);
+			if (editmode) {
+				holder.iv_del.setVisibility(View.VISIBLE);
 			}
 			else {
-				holder.cb_default.setChecked(false);
+				holder.iv_del.setVisibility(View.GONE);
+
+			}
+			if (enInfoEntity.getIsdefault() == 1) {
+				default_info = enInfoEntity;
+				holder.cb_default.setButtonDrawable(R.drawable.enroll_checkbox_pressed);
+				holder.cb_default.setText("默认");
+			}
+			else {
+				holder.cb_default.setButtonDrawable(R.drawable.enroll_checkbox_normal);
+				holder.cb_default.setText("");
 			}
 			holder.tv_phone.setText(enInfoEntity.getPhone());
 			holder.tv_address.setText(enInfoEntity.getAddress());
 			holder.tv_name.setText(enInfoEntity.getName());
+			holder.cb_default.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (enInfoEntity.getIsdefault() == 1) {
+						return;
+					}
+					if (isChecked) {
+						showProgressDialog();
+						EnrollInfoSetDefaultRequest request = new EnrollInfoSetDefaultRequest(
+								UserManager.getInstance().getUserInfo().getUid(),
+								enInfoEntity.getInfoid(), new Listener<JSONObject>() {
+
+									@Override
+									public void onResponse(JSONObject response) {
+										dissmissProgressDialog();
+										try {
+											if (response != null && response.getInt("result") == 1) {
+												enInfoEntity.setIsdefault(1);
+												default_info.setIsdefault(0);
+												EnrollInfoDao.getInstance().insertEnrollInfo(enInfoEntity);
+												EnrollInfoDao.getInstance().insertEnrollInfo(default_info);
+												notifyDataSetChanged();
+											}
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								});
+						apiQueue.add(request);
+					}
+				}
+			});
+			holder.iv_del.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					new AlertDialog.Builder(mContext)
+					.setMessage("确定要删除该条联系方式吗？")
+					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							showProgressDialog();
+							EnrollInfoDelRequest request = new EnrollInfoDelRequest(
+									UserManager.getInstance().getUserInfo().getUid(), 
+									enInfoEntity.getInfoid(), new Listener<JSONObject>() {
+
+										@Override
+										public void onResponse(
+												JSONObject response) {
+											dissmissProgressDialog();
+											try {
+												if (response != null && response.getInt("result") == 1) {
+													EnrollInfoDao.getInstance().removeInfo(enInfoEntity.getInfoid());
+													Toast.makeText(mContext, "删除成功", 1000).show();
+													infos.remove(enInfoEntity);
+													notifyDataSetChanged();
+												}
+												else {
+													Toast.makeText(mContext, "删除失败，请重试", 1000).show();
+												}
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									});
+							apiQueue.add(request);
+						}
+					})
+					.create().show();
+				}
+			});
 			return convertView;
 		}
 		

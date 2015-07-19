@@ -1,5 +1,8 @@
 package com.ipinpar.app.manager;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.ipinpar.app.db.dao.EnrollInfoDao;
 import com.ipinpar.app.db.dao.UserDao;
 import com.ipinpar.app.entity.UserEntity;
 
@@ -46,5 +49,26 @@ public class UserManager {
 		userInfo = null;
 		isLogin = false;
 		UserDao.getInstance().clearUsers();
+		EnrollInfoDao.getInstance().clearEnrollInfo();
+		//此方法为异步方法
+		EMChatManager.getInstance().logout(new EMCallBack() {
+		            
+			@Override
+			public void onSuccess() {
+			    
+			}
+			
+			@Override
+			public void onProgress(int progress, String status) {
+			    // TODO Auto-generated method stub
+			    
+			}
+			
+			@Override
+			public void onError(int code, String message) {
+			    // TODO Auto-generated method stub
+			    
+			}
+		});
 	}
 }
