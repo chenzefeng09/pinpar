@@ -104,6 +104,7 @@
                 android:inputType="textMultiLine"
                 android:gravity="left|top"
                 android:minLines="7"
+                android:padding="8dp"
                 android:hint="@string/enroll_statement_hint"
                 android:textSize="14sp"
                 android:layout_below="@id/tv_enroll_statement_tip"

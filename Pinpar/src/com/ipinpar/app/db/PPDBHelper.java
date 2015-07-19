@@ -39,6 +39,19 @@ public class PPDBHelper extends SQLiteOpenHelper {
 				+ "imgsrc text,"
 				+ "username text"
 				+ ")");
+		db.execSQL("CREATE TABLE IF NOT exists enrollinfo(infoid integer PRIMARY KEY ,"
+				+ "uid integer,"
+				+ "address1 text,"
+				+ "address2 text,"
+				+ "address3 text,"
+				+ "addressdetail text,"
+				+ "idnumber text,"
+				+ "isdefault integer,"
+				+ "name text,"
+				+ "phone text,"
+				+ "sex integer,"
+				+ "unit text"
+				+ ")");
 	}
 
 	@Override
