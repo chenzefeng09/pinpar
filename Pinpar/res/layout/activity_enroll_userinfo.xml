@@ -312,7 +312,7 @@
                             android:layout_marginRight="15dp"
                             android:orientation="vertical" >
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/et_enroll_address_city_area"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"

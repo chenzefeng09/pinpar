@@ -530,6 +530,7 @@ containing a value of this type.
         /**  火砖色 
          */
         public static final int powderblue=0x7f060059;
+        public static final int province_line_border=0x7f0600a6;
         /**  橄榄色 
          */
         public static final int purple=0x7f060070;
@@ -1074,6 +1075,8 @@ containing a value of this type.
         public static final int video_recorder_stop_btn=0x7f0201a6;
         public static final int view_more_statement_border=0x7f0201a7;
         public static final int voice_unread=0x7f0201a8;
+        public static final int wheel_bg=0x7f0201a9;
+        public static final int wheel_val=0x7f0201aa;
     }
     public static final class id {
         public static final int LL_acAddress=0x7f0a014e;
@@ -1165,7 +1168,7 @@ containing a value of this type.
         public static final int RL_view_memeber_experi=0x7f0a017e;
         public static final int RL_view_more_statement=0x7f0a0180;
         public static final int RL_view_more_statement_format=0x7f0a0181;
-        public static final int action_settings=0x7f0a01c8;
+        public static final int action_settings=0x7f0a01cc;
         public static final int actionbarLayout=0x7f0a01ae;
         public static final int atDescTextView=0x7f0a01ba;
         public static final int atLayout=0x7f0a01b5;
@@ -1179,6 +1182,7 @@ containing a value of this type.
         public static final int btn_add_new=0x7f0a0074;
         public static final int btn_add_pic=0x7f0a007b;
         public static final int btn_back=0x7f0a007d;
+        public static final int btn_confirm=0x7f0a01cb;
         public static final int btn_discover=0x7f0a00a7;
         public static final int btn_file=0x7f0a001c;
         public static final int btn_finish_regit=0x7f0a002d;
@@ -1249,6 +1253,9 @@ containing a value of this type.
         public static final int ib_back=0x7f0a00c9;
         public static final int ib_left=0x7f0a0005;
         public static final int ib_right=0x7f0a00ca;
+        public static final int id_city=0x7f0a01c9;
+        public static final int id_district=0x7f0a01ca;
+        public static final int id_province=0x7f0a01c8;
         public static final int image=0x7f0a00c7;
         public static final int imageRemoveBtn=0x7f0a01bb;
         public static final int imageView=0x7f0a00cb;
@@ -1605,6 +1612,7 @@ containing a value of this type.
         public static final int skyblue_share_platform_list_item=0x7f030043;
         public static final int statement_list_item=0x7f030044;
         public static final int view_hobbys_textview=0x7f030045;
+        public static final int view_select_address=0x7f030046;
     }
     public static final class menu {
         public static final int main=0x7f090000;

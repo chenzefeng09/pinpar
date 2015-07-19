@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-	<!-- 应用背景主题色以及其他颜色 -->
+
+    <!-- 应用背景主题色以及其他颜色 -->
     <color name="title_theme">#8f72e6</color>
     <color name="background_theme">#7b5dd7</color>
-    
     <color name="white">#ffffff</color>
     <color name="secondaryTitleWhite">#fefefe</color>
-    
+
     <!-- 活动详情页面中用到的颜色 -->
     <color name="activity_detail_tip">#3d3c3c</color>
     <color name="activity_detail">#818181</color>
     <color name="activity_contact_bg">#cac9cb</color>
-    
+
     <!-- 宣言列表中用到的颜色 -->
     <color name="activity_statement_username">#3d3c3c</color>
     <color name="activity_statement_content">#8c8c8c</color>
     <color name="activity_statement_time">#c4c4c4</color>
-    
-     <color name="activity_regist_end">#ababab</color>
-     
+    <color name="activity_regist_end">#ababab</color>
+
     <!-- 趴友体验中用到的颜色 -->
     <color name="activity_memberexperi_username">#3d3c3c</color>
     <color name="activity_memberexperi_content">#8c8c8c</color>
     <color name="activity_memberexperi_time">#c4c4c4</color>
     <color name="activity_luck_reason_bg">#cac9cb</color>
-    
-   
-    
+
     <!-- 文字选中高亮颜色 本颜色为淡蓝色 -->
     <color name="text_highlight">#2983c1</color>
     <color name="transparent">#00000000</color>
@@ -320,14 +316,12 @@
     <!-- 海军色 -->
     <color name="black">#000000</color>
     <!-- 黑色 -->
-    
-        <color name="gray_normal">#666667</color>
-            <color name="top_bar_normal_bg">#00acff</color>
-                <color name="btn_gray_normal">#c0c0c0</color>
-                    <color name="grid_state_pressed">#1Affffff</color>
-                    <color name="grid_state_focused">#80000000</color>
-                    
-            
-    
-    
+
+    <color name="gray_normal">#666667</color>
+    <color name="top_bar_normal_bg">#00acff</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+    <color name="grid_state_pressed">#1Affffff</color>
+    <color name="grid_state_focused">#80000000</color>
+    <color name="province_line_border">#C7C7C7</color>
+
 </resources>

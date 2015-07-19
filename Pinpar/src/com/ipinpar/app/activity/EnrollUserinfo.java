@@ -9,14 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -26,6 +27,8 @@ import com.ipinpar.app.db.dao.EnrollInfoDao;
 import com.ipinpar.app.entity.EnrollInfoEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.AddEnrollInfoRequest;
+import com.ipinpar.app.view.AddressSelectVIew;
+import com.ipinpar.app.view.AddressSelectVIew.onSelectListener;
 
 public class EnrollUserinfo extends PPBaseActivity{
 
@@ -35,15 +38,15 @@ public class EnrollUserinfo extends PPBaseActivity{
 	private EditText et_enroll_userinfo_name,et_enroll_enroll_phone
 	,et_enroll_enroll_school_company,et_enroll_enroll_id,et_enroll_address;
 	private CheckBox cb_enroll_userinfo_agree;
-	
+	private TextView et_enroll_address_city_area;
 	private RadioGroup rg_userinfo_sex;
 	
-	private String username,phone,unit,idnumber,adress;
+	private String username,phone,unit,idnumber,adress,address1,address2,address3;
 	private int sex = 1;
 	
 	private int acid;
 	private String declaration;
-	
+	private AddressSelectVIew addressView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -79,6 +82,7 @@ public class EnrollUserinfo extends PPBaseActivity{
 		et_enroll_address = (EditText) findViewById(R.id.et_enroll_address);
 		rg_userinfo_sex = (RadioGroup) findViewById(R.id.rg_userinfo_sex);
 		cb_enroll_userinfo_agree = (CheckBox) findViewById(R.id.cb_enroll_userinfo_agree);
+		et_enroll_address_city_area = (TextView) findViewById(R.id.et_enroll_address_city_area);
 		rg_userinfo_sex.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -92,6 +96,48 @@ public class EnrollUserinfo extends PPBaseActivity{
 				}
 			}
 		});
+		et_enroll_address_city_area.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (addressView == null) {
+					addressView = new AddressSelectVIew(mContext, new onSelectListener() {
+						@Override
+						public void onSelect(String address1, String address2, String address3) {
+							EnrollUserinfo.this.address1 = address1;
+							EnrollUserinfo.this.address2 = address2;
+							EnrollUserinfo.this.address3 = address3;
+							et_enroll_address_city_area.setText(address1+address2+address3);
+						}
+					});
+					int[] anchorCenter = new int[2];
+					// 读取位置anchor座标
+					et_enroll_address_city_area.getLocationInWindow(anchorCenter);
+					addressView.showAtLocation(et_enroll_address_city_area, Gravity.TOP | Gravity.LEFT,
+							anchorCenter[0], anchorCenter[1]);
+					addressView.update();
+				}
+				else {
+					int[] anchorCenter = new int[2];
+					// 读取位置anchor座标
+					et_enroll_address_city_area.getLocationInWindow(anchorCenter);
+					addressView.showAtLocation(et_enroll_address_city_area, Gravity.TOP | Gravity.LEFT,
+							anchorCenter[0], anchorCenter[1]);
+					addressView.update();
+				}
+				
+			}
+		});
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if (addressView != null && addressView.isShowing()) {
+			addressView.dismiss();
+		}
+		else {
+			super.onBackPressed();
+		}
 	}
 	
 	public void setView(){
