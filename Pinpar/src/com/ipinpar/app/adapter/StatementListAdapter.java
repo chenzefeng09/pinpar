@@ -10,13 +10,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ipinpar.app.Constant;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.view.CircularImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class StatementListAdapter extends BaseAdapter{
 	private Context mContext;
 	private ArrayList<AcStatementEntity> acStatementList = new ArrayList<AcStatementEntity>();
+	private DisplayImageOptions options;
 
 	public StatementListAdapter(Context mContext) {
 		this.mContext = mContext;
@@ -28,6 +32,9 @@ public class StatementListAdapter extends BaseAdapter{
 			ArrayList<AcStatementEntity> acStatementList) {
 		this.mContext = mContext;
 		this.acStatementList = acStatementList;
+		
+		options = new DisplayImageOptions.Builder().
+				cacheOnDisk(false).build();
 	}
 
 
@@ -79,6 +86,8 @@ public class StatementListAdapter extends BaseAdapter{
 		}else{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
+		
+		ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+acStatementEntity.getUid(), viewHolder.userImage,options);
 		
 		viewHolder.name.setText(acStatementEntity.getUsername());
 		

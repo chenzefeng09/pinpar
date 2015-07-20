@@ -10,13 +10,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ipinpar.app.Constant;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.AcStatementEntity;
+import com.ipinpar.app.view.CircleImageView;
 import com.ipinpar.app.view.CircularImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MemberExperiListAdapter extends BaseAdapter{
 	private Context mContext;
 	private ArrayList<AcStatementEntity> acMemberExperiList = new ArrayList<AcStatementEntity>();
+	private DisplayImageOptions options;
 
 	public MemberExperiListAdapter(Context mContext) {
 		this.mContext = mContext;
@@ -28,6 +33,8 @@ public class MemberExperiListAdapter extends BaseAdapter{
 			ArrayList<AcStatementEntity> acMemberExperiList) {
 		this.mContext = mContext;
 		this.acMemberExperiList = acMemberExperiList;
+		options = new DisplayImageOptions.Builder().
+				cacheOnDisk(false).build();
 	}
 
 
@@ -80,6 +87,8 @@ public class MemberExperiListAdapter extends BaseAdapter{
 		}else{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
+		
+		ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+acMemberExperiEntity.getUid(), viewHolder.userImage,options);
 		
 		viewHolder.name.setText(acMemberExperiEntity.getUsername());
 		

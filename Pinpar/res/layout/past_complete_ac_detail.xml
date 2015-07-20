@@ -81,12 +81,31 @@
 	    
     </RelativeLayout>
     
+    <RelativeLayout
+	    android:id="@+id/RL_view_memeber_experi"
+	    android:layout_width="fill_parent"
+	    android:layout_height="50dp"
+	    android:background="@color/title_theme"
+	    android:layout_alignParentBottom="true">
+	    <TextView 
+	        android:id="@+id/tv_view_member_experi"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+	        android:layout_marginBottom="15dp"
+	        android:layout_centerInParent="true"
+	        android:text="@string/past_activity_view_member_experience"
+	        android:textSize="16sp"
+	        android:textColor="@color/white"/>
+	</RelativeLayout>
+    
 			
 	<ScrollView
 	    android:id="@+id/sv_activity_detail_desc"
 	    android:layout_width="fill_parent"
 	    android:layout_height="80dp"
 	    android:layout_below="@id/RL_top_sliding"
+	    android:layout_above="@id/RL_view_memeber_experi"
 	    android:background="@color/white">
 	     <RelativeLayout 
 	         android:id="@+id/RL_in_Scroll_ac_detail"
@@ -373,118 +392,99 @@
 	                android:textSize="14sp"
 			        android:textColor="@color/activity_detail"/>
 	         </LinearLayout>
+	         
+	          <RelativeLayout 
+	             android:id="@+id/RL_luck_member_listview"
+	             android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_below="@id/LL_acContact">
+	             <ImageView 
+			        android:id="@+id/iv_ac_luck_member_bottom_bar"
+			        android:layout_width="fill_parent"
+		            android:layout_height="30dp"
+		            android:layout_marginTop="3dp"
+		            android:background="@drawable/ac_drawer_bottom_bar"/>
+		        <ImageView 
+			        android:id="@+id/iv_ac_luck_member"
+			        android:layout_width="fill_parent"
+			        android:layout_below="@+id/iv_ac_luck_member_bottom_bar"
+		            android:layout_height="30dp"
+		            android:layout_marginTop="3dp"
+		            android:background="@drawable/ac_luck_member"/>
+		        
+		        
+		        <ListView 
+		            android:id="@+id/lv_complete_detail_luck_member"
+		            android:layout_width="fill_parent"
+		            android:layout_height="50dp"
+		            android:layout_below="@id/iv_ac_luck_member">
+		        </ListView>
+	         </RelativeLayout>
+	         
+	         <RelativeLayout 
+		        android:id="@+id/RL_detail_luckMember_and_theStatement"
+		        android:layout_width="fill_parent"
+		    	android:layout_height="match_parent"
+		    	android:layout_below="@id/RL_luck_member_listview">
+		        
+		         <RelativeLayout 
+		             android:id="@+id/RL_the_statement_listview"
+		             android:layout_width="fill_parent"
+		             android:layout_height="wrap_content">
+		             <ImageView 
+				        android:id="@+id/iv_ac_the_statement_bottom_bar"
+				        android:layout_width="fill_parent"
+			            android:layout_height="30dp"
+			            android:layout_marginTop="3dp"
+			            android:background="@drawable/ac_drawer_bottom_bar"/>
+			        <ImageView 
+				        android:id="@+id/iv_ac_the_statement"
+				        android:layout_width="fill_parent"
+				        android:layout_below="@+id/iv_ac_the_statement_bottom_bar"
+			            android:layout_height="30dp"
+			            android:layout_marginTop="3dp"
+			            android:background="@drawable/ac_the_statement"/>
+			        
+			        <ListView 
+			            android:id="@+id/lv_complete_detail_the_statement"
+			            android:layout_width="fill_parent"
+			            android:layout_height="50dp"
+			            android:layout_below="@id/iv_ac_the_statement">
+			        </ListView>
+			        
+			        <RelativeLayout
+					    android:id="@+id/RL_view_more_statement"
+					    android:layout_width="fill_parent"
+					    android:layout_height="50dp"
+					    android:layout_below="@id/lv_complete_detail_the_statement">
+					    <RelativeLayout 
+					        android:id="@+id/RL_view_more_statement_format"
+					        android:layout_width="fill_parent"
+					        android:layout_height="fill_parent"
+					        android:layout_marginTop="10dp"
+						    android:layout_marginBottom="10dp"
+					        android:layout_marginLeft="25dp"
+					        android:layout_marginRight="25dp"
+					        android:background="@drawable/view_more_statement_border">
+					         <TextView 
+						        android:id="@+id/tv_view_more_statement"
+						        android:layout_width="wrap_content"
+						        android:layout_height="wrap_content"
+						        android:layout_centerInParent="true"
+						        android:text="@string/past_activity_view_more_statement"
+						        android:textSize="14sp"
+						        android:textColor="@color/title_theme"/>
+					    </RelativeLayout>
+					   
+					</RelativeLayout>
+		         </RelativeLayout>
+		         
+		    </RelativeLayout>
 		    
 	     </RelativeLayout>
 	     
 	</ScrollView>
 	
-    <RelativeLayout 
-        android:id="@+id/RL_detail_luckMember_and_theStatement"
-        android:layout_width="fill_parent"
-    	android:layout_height="match_parent"
-    	android:layout_below="@id/sv_activity_detail_desc">
-        
-        <RelativeLayout
-		    android:id="@+id/RL_view_memeber_experi"
-		    android:layout_width="fill_parent"
-		    android:layout_height="50dp"
-		    android:background="@color/title_theme"
-		    android:layout_alignParentBottom="true">
-		    <TextView 
-		        android:id="@+id/tv_view_member_experi"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="15dp"
-		        android:layout_marginBottom="15dp"
-		        android:layout_centerInParent="true"
-		        android:text="@string/past_activity_view_member_experience"
-		        android:textSize="16sp"
-		        android:textColor="@color/white"/>
-		</RelativeLayout>
-		
-         <RelativeLayout
-		    android:id="@+id/RL_view_more_statement"
-		    android:layout_width="fill_parent"
-		    android:layout_height="50dp"
-			android:layout_above="@id/RL_view_memeber_experi">
-		    <RelativeLayout 
-		        android:id="@+id/RL_view_more_statement_format"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:layout_marginTop="10dp"
-			    android:layout_marginBottom="10dp"
-		        android:layout_marginLeft="25dp"
-		        android:layout_marginRight="25dp"
-		        android:background="@drawable/view_more_statement_border">
-		         <TextView 
-			        android:id="@+id/tv_view_more_statement"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_centerInParent="true"
-			        android:text="@string/past_activity_view_more_statement"
-			        android:textSize="14sp"
-			        android:textColor="@color/title_theme"/>
-		    </RelativeLayout>
-		   
-		</RelativeLayout>
-        
-         <RelativeLayout 
-             android:id="@+id/RL_the_statement_listview"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_above="@id/RL_view_more_statement">
-             <ImageView 
-		        android:id="@+id/iv_ac_the_statement_bottom_bar"
-		        android:layout_width="fill_parent"
-	            android:layout_height="30dp"
-	            android:layout_marginTop="3dp"
-	            android:background="@drawable/ac_drawer_bottom_bar"/>
-	        <ImageView 
-		        android:id="@+id/iv_ac_the_statement"
-		        android:layout_width="fill_parent"
-		        android:layout_below="@+id/iv_ac_the_statement_bottom_bar"
-	            android:layout_height="30dp"
-	            android:layout_marginTop="3dp"
-	            android:background="@drawable/ac_the_statement"/>
-	        
-	        
-	        <ListView 
-	            android:id="@+id/lv_complete_detail_the_statement"
-	            android:layout_width="fill_parent"
-	            android:layout_height="50dp"
-	            android:layout_below="@id/iv_ac_the_statement">
-	        </ListView>
-         </RelativeLayout>
-         
-        <RelativeLayout 
-             android:id="@+id/RL_luck_member_listview"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_above="@id/RL_the_statement_listview"
-             android:layout_alignParentTop="true">
-             <ImageView 
-		        android:id="@+id/iv_ac_luck_member_bottom_bar"
-		        android:layout_width="fill_parent"
-	            android:layout_height="30dp"
-	            android:layout_marginTop="3dp"
-	            android:background="@drawable/ac_drawer_bottom_bar"/>
-	        <ImageView 
-		        android:id="@+id/iv_ac_luck_member"
-		        android:layout_width="fill_parent"
-		        android:layout_below="@+id/iv_ac_luck_member_bottom_bar"
-	            android:layout_height="30dp"
-	            android:layout_marginTop="3dp"
-	            android:background="@drawable/ac_luck_member"/>
-	        
-	        
-	        <ListView 
-	            android:id="@+id/lv_complete_detail_luck_member"
-	            android:layout_width="fill_parent"
-	            android:layout_height="50dp"
-	            android:layout_below="@id/iv_ac_luck_member">
-	        </ListView>
-         </RelativeLayout>
-        
-    </RelativeLayout>
+    
 	    
 </RelativeLayout>

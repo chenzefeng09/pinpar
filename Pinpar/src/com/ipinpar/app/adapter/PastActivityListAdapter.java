@@ -11,15 +11,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ipinpar.app.Constant;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.ActivityEntity;
+import com.ipinpar.app.view.CircularImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class PastActivityListAdapter extends BaseAdapter{
 	
 	private Context mContext;
 	private ArrayList<ActivityEntity> aList = new ArrayList<ActivityEntity>();
-
+	private DisplayImageOptions options;
 	
 	
 	public PastActivityListAdapter(Context mContext) {
@@ -31,6 +34,8 @@ public class PastActivityListAdapter extends BaseAdapter{
 	public PastActivityListAdapter(Context mContext, ArrayList<ActivityEntity> aList) {
 		this.mContext = mContext;
 		this.aList = aList;
+		options = new DisplayImageOptions.Builder().
+				cacheOnDisk(false).build();
 	}
 
 
@@ -71,6 +76,7 @@ public class PastActivityListAdapter extends BaseAdapter{
 					getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = vi.inflate(R.layout.past_list_item, null);
 			viewHolder = new ViewHolder();
+			viewHolder.userImage = (CircularImageView) convertView.findViewById(R.id.statement_image);
 			viewHolder.ivBackground = (ImageView) convertView.findViewById(R.id.iv_activity_desc);
 			viewHolder.ivBackgroundCover = (ImageView) convertView.findViewById(R.id.iv_activity_desc_cover);
 			viewHolder.ivActivityStateInviting = (ImageView) convertView.findViewById(R.id.iv_activity_state_inviting);
@@ -102,6 +108,9 @@ public class PastActivityListAdapter extends BaseAdapter{
 			viewHolder.ivActivityStateComplete.setVisibility(View.INVISIBLE);
 			viewHolder.ivEssentialStatement.setVisibility(View.INVISIBLE);
 		}
+		
+		ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+acEntity.getDynamic().get(0).getUid(), viewHolder.userImage,options);
+		
 		viewHolder.tvAcShortName.setText(acEntity.getSname());
 		viewHolder.tvAcName.setText(acEntity.getAcname());
 		viewHolder.tvAcDynamicTitle.setText(acEntity.getDynamic().get(0).getTitle());
@@ -111,6 +120,7 @@ public class PastActivityListAdapter extends BaseAdapter{
 	}
 	
 	public class ViewHolder{
+		CircularImageView userImage;// 头像图片
 		ImageView ivBackground;
 		ImageView ivBackgroundCover;
 		ImageView ivActivityStateInviting;
