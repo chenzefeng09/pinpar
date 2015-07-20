@@ -122,7 +122,6 @@ public class StatementListAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, acStatementEntity.getEnrollid()));
-				
 			}
 		});
 		
@@ -133,11 +132,14 @@ public class StatementListAdapter extends BaseAdapter{
 				if (UserManager.getInstance().isLogin()) {
 					if (AgreeManager.getInstance().isAgreed(acStatementEntity.getEnrollid(), "enrollid")) {
 						AgreeManager.getInstance().agree(
-								UserManager.getInstance().getUserInfo().getUid(), 
+								acStatementEntity.getEnrollid(), 
 								"enrollid", new AgreeResultListener() {
 									
 									@Override
 									public void onAgreeResult(boolean agree) {
+										if (!agree) {
+											acStatementEntity.setAgreecount(acStatementEntity.getAgreecount() - 1);
+										}
 										notifyDataSetChanged();
 									}
 								}, queue);
@@ -149,6 +151,9 @@ public class StatementListAdapter extends BaseAdapter{
 									
 									@Override
 									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											acStatementEntity.setAgreecount(acStatementEntity.getAgreecount() + 1);
+										}
 										notifyDataSetChanged();
 									}
 								}, queue);
@@ -160,7 +165,7 @@ public class StatementListAdapter extends BaseAdapter{
 			}
 		});
 		if (AgreeManager.getInstance().isAgreed(acStatementEntity.getEnrollid(), "enrollid")) {
-			viewHolder.iv_statement_support.setImageResource(R.drawable.ac_support);
+			viewHolder.iv_statement_support.setImageResource(R.drawable.enroll_fist);
 		}
 		else {
 			viewHolder.iv_statement_support.setImageResource(R.drawable.ac_support);
