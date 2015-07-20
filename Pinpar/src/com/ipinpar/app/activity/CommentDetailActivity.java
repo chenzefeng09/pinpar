@@ -55,6 +55,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private ListView lv_infolist;
 	private EditText et_input;
 	private Button btn_add_new;
+	private View RL_support;
 	
 	private boolean isreply;
 	private int reply_commentid;
@@ -82,6 +83,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 		et_input = (EditText) findViewById(R.id.et_input);
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
 		iv_statement_support = (ImageView) findViewById(R.id.iv_statement_support);
+		RL_support = findViewById(R.id.RL_support);
 	}
 	
 	@Override
@@ -198,27 +200,42 @@ public class CommentDetailActivity extends PPBaseActivity {
 		content.setText(contentString);
 		support.setText(agreecount+"");
 		comment.setText(commentcount+"");
-		support.setOnClickListener(new OnClickListener() {
+		RL_support.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				if (UserManager.getInstance().isLogin()) {
-					AgreeManager.getInstance().agree(fromid,
-							fromidtype,new AgreeResultListener() {
-						
-						@Override
-						public void onAgreeResult(boolean agree) {
-							if (agree) {
-								support.setCompoundDrawables(getResources().getDrawable(R.drawable.ac_support), null, null, null);
-							}
-							else {
-								support.setCompoundDrawables(getResources().getDrawable(R.drawable.ac_support), null, null, null);
-							}
-						}
-					}, apiQueue);
+					if (AgreeManager.getInstance().isAgreed(fromid, fromidtype)) {
+						AgreeManager.getInstance().agree(
+								fromid, 
+								fromidtype, new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (!agree) {
+											support.setText((--agreecount)+"");
+											iv_statement_support.setImageResource(R.drawable.ac_support);
+										}
+									}
+								}, apiQueue);
+					}
+					else {
+						AgreeManager.getInstance().agree(
+								fromid, 
+								fromidtype, new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											support.setText((++agreecount)+"");
+											iv_statement_support.setImageResource(R.drawable.enroll_fist);
+										}
+									}
+								}, apiQueue);
+					}
 				}
 				else {
-					startActivity(new Intent(mContext, LoginActivity.class));
+					mContext.startActivity(new Intent(mContext, LoginActivity.class));
 				}
 			}
 		});
