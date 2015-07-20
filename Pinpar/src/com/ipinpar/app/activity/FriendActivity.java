@@ -151,7 +151,6 @@ public class FriendActivity extends PPBaseActivity {
 					intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
 					intent.putExtra("userId", friendENtity.getUid()+"");
 					intent.putExtra("peer_name", friendENtity.getUsername());
-
 					startActivity(intent);
 				}
 			});

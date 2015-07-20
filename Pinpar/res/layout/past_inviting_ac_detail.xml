@@ -3,84 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-    <RelativeLayout 
-        android:id="@+id/RL_top_sliding"
-        android:layout_width="fill_parent"
-        android:layout_height="160dp">
-        
-        <!-- 放置轮播图片位置 -->
-	    <LinearLayout
-	        android:id="@+id/top_sliding_viewpager"
-	        android:layout_width="fill_parent"
-	        android:layout_height="160dp"
-	        android:layout_alignParentTop="true"
-	        android:background="@drawable/slideshow_loading"           
-	        android:orientation="horizontal" />
-	
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="30dp"
-	        android:layout_alignParentBottom="true"
-	        android:background="#88000000"
-	        android:gravity="center_vertical"
-	        android:orientation="horizontal" >
-			<!-- 放置图片标题的位置 -->
-	         <TextView
-	             android:id="@+id/top_news_title"
-	             android:layout_width="0dp"
-	             android:layout_weight="1"
-	             android:layout_height="wrap_content"
-	             android:text=""
-	             android:layout_marginRight="8dp"
-	             android:layout_marginLeft="5dp"
-	             android:singleLine="true"
-	             android:visibility="gone"
-	             android:textColor="#F6F6F6"/>
-			<!-- 放置图片中选中点的位置 -->
-		    <LinearLayout
-		        android:id="@+id/dots_ll"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginRight="5dp"
-		        android:gravity="center"
-		        android:orientation="horizontal"/>
-		</LinearLayout>
-		
-	    <RelativeLayout 
-	        android:id="@+id/RL_ac_detail_nav"
-	        android:layout_width="fill_parent"
-	        android:layout_height="35dp"
-	        android:layout_alignParentTop="true"
-	        android:background="@drawable/ac_navbg">
-	        <Button 
-	            android:id="@+id/btn_back"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
-	            android:layout_alignParentLeft="true"
-	            android:layout_marginLeft="15dp"
-	            android:layout_alignParentBottom="true"
-	            android:background="@drawable/btn_back"/>
-	        
-	        <Button 
-	            android:id="@+id/btn_share"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
-	            android:layout_alignParentRight="true"
-	            android:layout_marginRight="15dp"
-	            android:layout_alignParentBottom="true"
-	            android:background="@drawable/btn_share"/>
-	    </RelativeLayout>
-		
-	     <ImageView 
-            android:id="@+id/iv_ac_detail_decoration_bottom_bar"
-            android:layout_width="80dp"
-            android:layout_height="10dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/top_sliding_drawer"
-            android:layout_alignParentBottom="true"/>
-	    
-    </RelativeLayout>
-    
     <RelativeLayout
 	    android:id="@+id/RL_regist_end"
 	    android:layout_width="fill_parent"
@@ -103,7 +25,6 @@
 	    android:id="@+id/RL_sv"
 	    android:layout_width="fill_parent"
 	    android:layout_height="match_parent"
-	    android:layout_below="@id/RL_top_sliding"
 	    android:layout_above="@id/RL_regist_end">
 	    <ScrollView
 		    android:id="@+id/sv_activity_detail_desc"
@@ -114,12 +35,64 @@
 		         android:id="@+id/RL_in_Scroll_ac_detail"
 		         android:layout_width="fill_parent"
 		         android:layout_height="wrap_content">
+		         
+		         <RelativeLayout 
+			        android:id="@+id/RL_top_sliding"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content">
+			        
+			        <!-- 放置轮播图片位置 -->
+				    <LinearLayout
+				        android:id="@+id/top_sliding_viewpager"
+				        android:layout_width="fill_parent"
+				        android:layout_height="240dp"
+				        android:layout_alignParentTop="true"
+				        android:background="@drawable/slideshow_loading"           
+				        android:orientation="horizontal" />
+				
+				    <RelativeLayout
+				        android:layout_width="fill_parent"
+				        android:layout_height="30dp"
+				        android:layout_alignParentBottom="true"
+				        android:gravity="center_vertical"
+				        android:orientation="horizontal" >
+						<!-- 放置图片标题的位置 -->
+				         <TextView
+				             android:id="@+id/top_news_title"
+				             android:layout_width="0dp"
+				             android:layout_weight="1"
+				             android:layout_height="wrap_content"
+				             android:text=""
+				             android:layout_marginRight="8dp"
+				             android:layout_marginLeft="5dp"
+				             android:singleLine="true"
+				             android:visibility="gone"
+				             android:textColor="#F6F6F6"/>
+						<!-- 放置图片中选中点的位置 -->
+					    <LinearLayout
+					        android:id="@+id/dots_ll_pastinviting"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_centerHorizontal="true"
+					        android:orientation="horizontal"/>
+					</RelativeLayout>
+					
+				     <ImageView 
+			            android:id="@+id/iv_ac_detail_decoration_bottom_bar"
+			            android:layout_width="80dp"
+			            android:layout_height="10dp"
+			            android:layout_centerHorizontal="true"
+			            android:background="@drawable/top_sliding_drawer"
+			            android:layout_alignParentBottom="true"/>
+				    
+			    </RelativeLayout>
 			    
 		         <ImageView 
 			        android:id="@+id/iv_ac_detail"
 			        android:layout_width="fill_parent"
 		            android:layout_height="30dp"
 		            android:layout_centerHorizontal="true"
+		            android:layout_below="@id/RL_top_sliding"
 		            android:layout_marginTop="3dp"
 		            android:background="@drawable/ac_detail"/>
 			    
@@ -186,7 +159,8 @@
 		             android:orientation="horizontal"
 		             android:layout_below="@id/LL_acShop"
 		             android:layout_marginTop="3dp"
-		             android:layout_marginLeft="10dp">
+		             android:layout_marginLeft="10dp"
+		             android:layout_marginRight="5dp">
 	                 <TextView 
 				        android:id="@+id/tv_acAddress_tip"
 				        android:layout_width="wrap_content"
@@ -200,6 +174,7 @@
 		                android:layout_height="wrap_content"
 		                android:layout_marginLeft="5dp"
 		                android:text="@string/activity_fill_string"
+		                android:ellipsize="middle"
 		                android:textSize="14sp"
 				        android:textColor="@color/activity_detail"/>
 		             
@@ -431,6 +406,31 @@
 		     </RelativeLayout>
 		     
 		</ScrollView>
+		
+	    <RelativeLayout 
+	        android:id="@+id/RL_ac_detail_nav"
+	        android:layout_width="fill_parent"
+	        android:layout_height="35dp"
+	        android:layout_alignParentTop="true"
+	        android:background="@drawable/ac_navbg">
+	        <Button 
+	            android:id="@+id/btn_back"
+	            android:layout_width="25dp"
+	            android:layout_height="25dp"
+	            android:layout_alignParentLeft="true"
+	            android:layout_marginLeft="15dp"
+	            android:layout_alignParentBottom="true"
+	            android:background="@drawable/btn_back"/>
+	        
+	        <Button 
+	            android:id="@+id/btn_share"
+	            android:layout_width="25dp"
+	            android:layout_height="25dp"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginRight="15dp"
+	            android:layout_alignParentBottom="true"
+	            android:background="@drawable/btn_share"/>
+	    </RelativeLayout>
 	</RelativeLayout>
 	
 </RelativeLayout>

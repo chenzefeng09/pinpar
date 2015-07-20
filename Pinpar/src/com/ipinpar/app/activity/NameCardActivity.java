@@ -234,7 +234,6 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 				intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
 				intent.putExtra("userId", friendEntity.getUid()+"");
 				intent.putExtra("peer_name", friendEntity.getUsername());
-
 				startActivity(intent);
 			}
 			break;

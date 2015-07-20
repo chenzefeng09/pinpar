@@ -48,7 +48,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class CommentDetailActivity extends PPBaseActivity {
 
 	private TextView name,time,content,support,comment;
-	private ImageView userImage;
+	private ImageView userImage,iv_statement_support;
 	private AcStatementEntity currStatement;
 	private ArrayList<CommentEntity> comments = new ArrayList<CommentEntity>();
 	private CommentDetailAdapter adapter;
@@ -81,6 +81,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 		lv_infolist = (ListView) findViewById(R.id.lv_infolist);
 		et_input = (EditText) findViewById(R.id.et_input);
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
+		iv_statement_support = (ImageView) findViewById(R.id.iv_statement_support);
 	}
 	
 	@Override
@@ -221,6 +222,11 @@ public class CommentDetailActivity extends PPBaseActivity {
 				}
 			}
 		});
+		if (UserManager.getInstance().isLogin()) {
+			if (AgreeManager.getInstance().isAgreed(fromid, fromidtype)) {
+				iv_statement_support.setImageResource(R.drawable.enroll_fist);
+			}
+		}
 		btn_add_new.setOnClickListener(new OnClickListener() {
 			
 			@Override

@@ -1,9 +1,7 @@
 package com.ipinpar.app.db.dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
-import android.R.integer;
 import android.content.ContentValues;
 import android.database.Cursor;
 

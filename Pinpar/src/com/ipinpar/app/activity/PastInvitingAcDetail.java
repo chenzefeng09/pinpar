@@ -121,7 +121,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 		wattingDialog = new ProgressDialog(mContext);
 		//用于将轮播图添加进去
 		top_news_viewpager = (LinearLayout) findViewById(R.id.top_sliding_viewpager);
-		dots_ll = (LinearLayout) findViewById(R.id.dots_ll);
+		dots_ll = (LinearLayout) findViewById(R.id.dots_ll_pastinviting);
 		
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnShare = (Button) findViewById(R.id.btn_share);
@@ -181,9 +181,9 @@ public class PastInvitingAcDetail extends PPBaseActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){  
                 	statementScrollView.requestDisallowInterceptTouchEvent(false);  
                 }else{  
-                	statementScrollView.requestDisallowInterceptTouchEvent(true);  
+                	statementScrollView.requestDisallowInterceptTouchEvent(false);  
                 }  
-                return false;  
+                return true;  
             }  
         });  
 	}
@@ -324,7 +324,25 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 		 oks.setImageUrl(shareImageUrl);
 		// 启动分享GUI
 		 oks.show(this);
-		 }
+	}
+	
+	Handler handlerScrollTop = new Handler(){
+
+		@Override
+		public void dispatchMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.dispatchMessage(msg);
+			switch (msg.what) {
+			case 0:
+			    	statementScrollView.fullScroll(ScrollView.FOCUS_UP);
+				break;
+
+			default:
+				break;
+			}
+		}
+		
+	};
 	
 	Handler acticityDetailInfoHandler = new Handler(){
 
@@ -448,6 +466,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 				statementListView.setAdapter(statementListAdapter);
 				
 				setListViewHeightBasedOnChildren(statementListView);
+				handlerScrollTop.sendEmptyMessageDelayed(0,500);
 				break;
 			
 			default:

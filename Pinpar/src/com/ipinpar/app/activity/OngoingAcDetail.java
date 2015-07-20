@@ -25,7 +25,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-import com.amap.api.services.core.ac;
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
@@ -36,8 +35,8 @@ import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityStatementListEntity;
 import com.ipinpar.app.manager.AgreeManager;
-import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityDetailRequest;
 import com.ipinpar.app.network.api.StatementListRequest;
 import com.ipinpar.app.view.RollViewPager;
@@ -135,7 +134,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		wattingDialog = new ProgressDialog(mContext);
 		//用于将轮播图添加进去
 		top_news_viewpager = (LinearLayout) findViewById(R.id.top_sliding_viewpager);
-		dots_ll = (LinearLayout) findViewById(R.id.dots_ll);
+		dots_ll = (LinearLayout) findViewById(R.id.dots_ll_ongoing);
 		
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnShare = (Button) findViewById(R.id.btn_share);
@@ -261,6 +260,31 @@ public class OngoingAcDetail extends PPBaseActivity {
 				}
 			}
 		});
+		
+//		statementScrollView.setOnTouchListener(new View.OnTouchListener() {
+//			
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				// TODO Auto-generated method stub
+//				return true;
+//			}
+//		});
+		
+		statementListView.setOnTouchListener(new View.OnTouchListener() {  
+            
+			//不管怎样都拦截触摸事件
+            @Override  
+            public boolean onTouch(View v, MotionEvent event) {  
+                if(event.getAction() == MotionEvent.ACTION_UP){  
+                	statementScrollView.requestDisallowInterceptTouchEvent(false);  
+                }else{  
+                	statementScrollView.requestDisallowInterceptTouchEvent(false);  
+                }  
+                return true;  
+            }  
+        });  
+		//拦截触摸事件
+//		statementScrollView.requestDisallowInterceptTouchEvent(false);
 	}
 	
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -281,7 +305,6 @@ public class OngoingAcDetail extends PPBaseActivity {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-	
 	private void initDot() {
 		//滚动的个数应该和图片的个数相等
 		//清空点所在集合
@@ -401,7 +424,25 @@ public class OngoingAcDetail extends PPBaseActivity {
 		 oks.setImageUrl(shareImageUrl);
 		// 启动分享GUI
 		 oks.show(this);
-		 }
+	}
+	
+	Handler handlerScrollTop = new Handler(){
+
+		@Override
+		public void dispatchMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.dispatchMessage(msg);
+			switch (msg.what) {
+			case 0:
+			    	statementScrollView.fullScroll(ScrollView.FOCUS_UP);
+				break;
+
+			default:
+				break;
+			}
+		}
+		
+	};
 	
 	Handler acticityDetailInfoHandler = new Handler(){
 
@@ -463,6 +504,10 @@ public class OngoingAcDetail extends PPBaseActivity {
 								iv_interested.setImageResource(R.drawable.experience_diary_like_click);
 							}
 						}
+						shareTitle = activity.getSname() + activity.getAcname();
+						shareContent = activity.getDetail();
+						shareImageUrl = changeShareImageUrl(acImageList.get(0).getImg());
+						
 						shareTitle = activity.getSname() + activity.getAcname();
 						shareContent = activity.getDetail();
 						shareImageUrl = changeShareImageUrl(acImageList.get(0).getImg());
@@ -529,7 +574,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 				statementListView.setAdapter(statementListAdapter);
 				
 				setListViewHeightBasedOnChildren(statementListView);
-				
+				handlerScrollTop.sendEmptyMessageDelayed(0,500);
 				break;
 			
 			default:

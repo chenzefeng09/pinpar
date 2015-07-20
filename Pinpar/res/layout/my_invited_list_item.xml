@@ -7,7 +7,7 @@
     <RelativeLayout 
         android:id="@+id/RL_activity_description"
         android:layout_width="fill_parent"
-        android:layout_height="180dp"
+        android:layout_height="220dp"
         android:background="@color/transparent">
         
         <RelativeLayout 

@@ -1380,7 +1380,6 @@ public class ChatActivity extends PPBaseActivity implements OnClickListener, EME
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 
 			}

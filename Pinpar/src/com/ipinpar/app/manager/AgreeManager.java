@@ -5,7 +5,6 @@ import java.util.HashSet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
