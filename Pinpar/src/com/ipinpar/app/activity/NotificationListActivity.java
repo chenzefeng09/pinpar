@@ -28,6 +28,7 @@ import com.ipinpar.app.entity.NotificationEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.HandleAddFriendRequest;
 import com.ipinpar.app.network.api.NotificationRequest;
+import com.ipinpar.app.network.api.ReadNotificationRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class NotificationListActivity extends PPBaseActivity {
@@ -47,8 +48,15 @@ public class NotificationListActivity extends PPBaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
 				NotificationEntity entity = comments.get(position);
+				ReadNotificationRequest readNotificationRequest = new ReadNotificationRequest(
+						UserManager.getInstance().getUserInfo().getUid(), entity.getId()+"", new Listener<JSONObject>() {
+
+							@Override
+							public void onResponse(JSONObject response) {
+							}
+						});
+				apiQueue.add(readNotificationRequest);
 			}
 		});
 	}

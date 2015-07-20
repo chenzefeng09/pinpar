@@ -4,86 +4,8 @@
     android:layout_height="match_parent" >
     
     <RelativeLayout 
-        android:id="@+id/RL_top_sliding"
+        android:id="@+id/RL_interested_and_regist"
         android:layout_width="fill_parent"
-        android:layout_height="160dp">
-        
-        <!-- 放置轮播图片位置 -->
-	    <LinearLayout
-	        android:id="@+id/top_sliding_viewpager"
-	        android:layout_width="fill_parent"
-	        android:layout_height="160dp"
-	        android:layout_alignParentTop="true"
-	        android:background="@drawable/slideshow_loading"           
-	        android:orientation="horizontal" />
-	
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="30dp"
-	        android:layout_alignParentBottom="true"
-	        android:background="#88000000"
-	        android:gravity="center_vertical"
-	        android:orientation="horizontal" >
-			<!-- 放置图片标题的位置 -->
-	         <TextView
-	             android:id="@+id/top_news_title"
-	             android:layout_width="0dp"
-	             android:layout_weight="1"
-	             android:layout_height="wrap_content"
-	             android:text=""
-	             android:layout_marginRight="8dp"
-	             android:layout_marginLeft="5dp"
-	             android:singleLine="true"
-	             android:visibility="gone"
-	             android:textColor="#F6F6F6"/>
-			<!-- 放置图片中选中点的位置 -->
-		    <LinearLayout
-		        android:id="@+id/dots_ll"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginRight="5dp"
-		        android:gravity="center"
-		        android:orientation="horizontal"/>
-		</LinearLayout>
-		
-	    <RelativeLayout 
-	        android:id="@+id/RL_ac_detail_nav"
-	        android:layout_width="fill_parent"
-	        android:layout_height="35dp"
-	        android:layout_alignParentTop="true"
-	        android:background="@drawable/ac_navbg">
-	        <Button 
-	            android:id="@+id/btn_back"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
-	            android:layout_alignParentLeft="true"
-	            android:layout_marginLeft="15dp"
-	            android:layout_alignParentBottom="true"
-	            android:background="@drawable/btn_back"/>
-	        
-	        <Button 
-	            android:id="@+id/btn_share"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
-	            android:layout_alignParentRight="true"
-	            android:layout_marginRight="15dp"
-	            android:layout_alignParentBottom="true"
-	            android:background="@drawable/btn_share"/>
-	    </RelativeLayout>
-		
-	     <ImageView 
-            android:id="@+id/iv_ac_detail_decoration_bottom_bar"
-            android:layout_width="80dp"
-            android:layout_height="10dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/top_sliding_drawer"
-            android:layout_alignParentBottom="true"/>
-	    
-    </RelativeLayout>
-    
-    <RelativeLayout 
-        android:id="@+id/RL_detail_the_statement"
-        android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:layout_alignParentBottom="true">
         
@@ -201,25 +123,75 @@
 		    </LinearLayout>
 		    
 		</LinearLayout>
-       
+        
     </RelativeLayout>
     
 	<RelativeLayout 
 	    android:id="@+id/RL_sv"
 	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_below="@id/RL_top_sliding"
-	    android:layout_above="@id/RL_detail_the_statement">
-	    <ScrollView
+	    android:layout_height="match_parent"
+	    android:layout_alignParentTop="true"
+	    android:layout_above="@id/RL_interested_and_regist">	
+		<ScrollView
 		    android:id="@+id/sv_activity_detail_desc"
 		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
+		    android:layout_height="match_parent"
 		    android:background="@color/white">
-		     <LinearLayout 
+		    
+		     <RelativeLayout 
 		         android:id="@+id/RL_in_Scroll_ac_detail"
 		         android:layout_width="fill_parent"
-		         android:layout_height="wrap_content"
-		         android:orientation="vertical">
+		         android:layout_height="wrap_content">
+		        <RelativeLayout 
+			        android:id="@+id/RL_top_sliding"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content">
+			        
+			        <!-- 放置轮播图片位置 -->
+				    <LinearLayout
+				        android:id="@+id/top_sliding_viewpager"
+				        android:layout_width="fill_parent"
+				        android:layout_height="240dp"
+				        android:layout_alignParentTop="true"
+				        android:background="@drawable/slideshow_loading"           
+				        android:orientation="horizontal" />
+				
+				    <RelativeLayout
+				        android:layout_width="fill_parent"
+				        android:layout_height="30dp"
+				        android:layout_alignParentBottom="true"
+				        android:gravity="center_vertical"
+				        android:orientation="horizontal" >
+						<!-- 放置图片标题的位置 -->
+				         <TextView
+				             android:id="@+id/top_news_title"
+				             android:layout_width="0dp"
+				             android:layout_weight="1"
+				             android:layout_height="wrap_content"
+				             android:text=""
+				             android:layout_marginRight="8dp"
+				             android:layout_marginLeft="5dp"
+				             android:singleLine="true"
+				             android:visibility="gone"
+				             android:textColor="#F6F6F6"/>
+						<!-- 放置图片中选中点的位置 -->
+					    <LinearLayout
+					        android:id="@+id/dots_ll_ongoing"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_centerHorizontal="true"
+					        android:orientation="horizontal"/>
+					</RelativeLayout>
+					
+				     <ImageView 
+			            android:id="@+id/iv_ac_detail_decoration_bottom_bar"
+			            android:layout_width="80dp"
+			            android:layout_height="10dp"
+			            android:layout_centerHorizontal="true"
+			            android:background="@drawable/top_sliding_drawer"
+			            android:layout_alignParentBottom="true"/>
+				    
+			    </RelativeLayout>
 			    
 		         <ImageView 
 			        android:id="@+id/iv_ac_detail"
@@ -227,6 +199,7 @@
 		            android:layout_height="30dp"
 		            android:layout_centerHorizontal="true"
 		            android:layout_marginTop="3dp"
+		            android:layout_below="@id/RL_top_sliding"
 		            android:background="@drawable/ac_detail"/>
 			    
 		         <LinearLayout 
@@ -472,7 +445,6 @@
 		             android:layout_marginBottom="5dp"
 		             android:layout_marginLeft="10dp"
 		             android:layout_centerHorizontal="true"
-		             android:layout_gravity="center_horizontal"
 		             android:background="@color/activity_contact_bg">
 		             <ImageView 
 		                 android:id="@+id/iv_acContact"
@@ -503,12 +475,13 @@
 				        android:textColor="@color/activity_detail"/>
 		         </LinearLayout>
 		         
-		         <LinearLayout 
-			            android:id="@+id/LL_the_statement_listview"
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:orientation="vertical">
-			            <ImageView 
+		          <RelativeLayout 
+				        android:id="@+id/RL_detail_the_statement"
+				        android:layout_width="fill_parent"
+				    	android:layout_height="match_parent"
+				    	android:layout_below="@id/LL_acContact">
+						        
+				         <ImageView 
 					        android:id="@+id/iv_ac_the_statement_bottom_bar"
 					        android:layout_width="fill_parent"
 				            android:layout_height="30dp"
@@ -517,20 +490,49 @@
 				        <ImageView 
 					        android:id="@+id/iv_ac_the_statement"
 					        android:layout_width="fill_parent"
+					        android:layout_below="@+id/iv_ac_the_statement_bottom_bar"
 				            android:layout_height="30dp"
 				            android:layout_marginTop="3dp"
 				            android:background="@drawable/ac_the_statement"/>
 				        
+				        
 				        <ListView 
 				            android:id="@+id/lv_detail_the_statement"
 				            android:layout_width="fill_parent"
-				            android:layout_height="match_parent">
+				            android:layout_height="match_parent"
+				            android:layout_below="@id/iv_ac_the_statement">
+				            
 				        </ListView>
-			      </LinearLayout>
+					</RelativeLayout>
 			    
-		     </LinearLayout>
+		     </RelativeLayout>
 		     
 		</ScrollView>
+		
+		<RelativeLayout 
+	        android:id="@+id/RL_ac_detail_nav"
+	        android:layout_width="fill_parent"
+	        android:layout_height="35dp"
+	        android:layout_alignParentTop="true"
+	        android:background="@drawable/ac_navbg">
+	        <Button 
+	            android:id="@+id/btn_back"
+	            android:layout_width="25dp"
+	            android:layout_height="25dp"
+	            android:layout_alignParentLeft="true"
+	            android:layout_marginLeft="15dp"
+	            android:layout_alignParentBottom="true"
+	            android:background="@drawable/btn_back"/>
+	        
+	        <Button 
+	            android:id="@+id/btn_share"
+	            android:layout_width="25dp"
+	            android:layout_height="25dp"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginRight="15dp"
+	            android:layout_alignParentBottom="true"
+	            android:background="@drawable/btn_share"/>
+	    </RelativeLayout>
 	</RelativeLayout>
-	    
+	
 </RelativeLayout>

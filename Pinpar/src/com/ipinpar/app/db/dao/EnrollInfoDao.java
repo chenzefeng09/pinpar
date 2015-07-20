@@ -54,7 +54,6 @@ private static EnrollInfoDao instance;
 		}
 		closeDB();
 		return null;
-
 	}
 	
 	public boolean hasInfo(){

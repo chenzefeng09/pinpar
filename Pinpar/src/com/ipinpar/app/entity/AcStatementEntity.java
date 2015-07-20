@@ -1,6 +1,8 @@
 package com.ipinpar.app.entity;
 
-public class AcStatementEntity {
+import java.io.Serializable;
+
+public class AcStatementEntity implements Serializable{
 	private int acid;
 	private int agreecount;
 	private int commentcount;

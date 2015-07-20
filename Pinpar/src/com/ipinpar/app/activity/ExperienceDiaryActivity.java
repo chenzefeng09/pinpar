@@ -12,10 +12,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -30,7 +33,15 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 	
 	private ListView lv_diary;
 	private ImageView iv_icon,iv_title_bkg;
+	
+	private ImageView shareView;
+	private String shareTitle;
+	private String shareContent;
+//	private String shareImageUrl;
 	private TextView tv_name;
+	
+	private int shareSid;
+	
 	private ArrayList<ExperienceDiaryDetailEntity> experienceDetials;
 	
 	@Override
@@ -38,7 +49,7 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_experience_diary);
-		int sid = getIntent().getIntExtra("sid", 0);
+		final int sid = getIntent().getIntExtra("sid", 0);
 		int uid = getIntent().getIntExtra("uid", 0);
 		int activityid = getIntent().getIntExtra("activityid", 0);
 		showProgressDialog();
@@ -54,9 +65,15 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							ImageLoader.getInstance().displayImage(response.getString("img"), iv_title_bkg);
 							ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+response.getInt("uid"), iv_icon);
 							tv_name.setText(response.getString("title"));
+							
 							Gson gson = new Gson();
 							Type type = new TypeToken<ArrayList<ExperienceDiaryDetailEntity>>(){}.getType();
 							experienceDetials = gson.fromJson(response.getJSONArray("details").toString(), type);
+							
+							//分享中用到到字段
+							shareTitle = response.getString("title");
+							shareSid = sid;
+							
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -81,6 +98,13 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							Gson gson = new Gson();
 							Type type = new TypeToken<ArrayList<ExperienceDiaryDetailEntity>>(){}.getType();
 							experienceDetials = gson.fromJson(response.getJSONArray("details").toString(), type);
+							
+							//分享中用到到字段
+							shareTitle = response.getString("title");
+//							shareImageUrl = changeShareImageUrl(acImageList.get(0).getImg());
+							shareSid = experienceDetials.get(0).getSid();
+							
+							
 							DiaryDetailAdapter adapter = new DiaryDetailAdapter(experienceDetials);
 							lv_diary.setAdapter(adapter);
 						}
@@ -96,6 +120,45 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 		iv_icon = (ImageView) findViewById(R.id.iv_icon);
 		iv_title_bkg = (ImageView) findViewById(R.id.iv_title_bkg);
 		tv_name = (TextView) findViewById(R.id.tv_name);
+		shareView = (ImageView) findViewById(R.id.ib_right);
+		
+		shareView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showShare();
+			}
+		});
+	}
+	
+	private void showShare() {
+		 OnekeyShare oks = new OnekeyShare();
+		 //关闭sso授权
+		 oks.disableSSOWhenAuthorize(); 
+
+		// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+		 //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+		 // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+		 oks.setTitle(shareTitle);
+		 // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		 oks.setTitleUrl("http://www.ipinpar.com");
+		 // text是分享文本，所有平台都需要这个字段
+		 oks.setText("小伙伴们来看看这篇体验心得吧～");
+		 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+		 //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+		 // url仅在微信（包括好友和朋友圈）中使用
+		 oks.setUrl("http://m.ipinpar.com/summary.jsp?sid="+shareSid);
+		 // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+		 oks.setComment("品趴——给生活加点糖！");
+		 // site是分享此内容的网站名称，仅在QQ空间使用
+		 oks.setSite(getString(R.string.app_name));
+		 // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+		 oks.setSiteUrl("http://m.ipinpar.com/summary.jsp?sid="+shareSid);
+		 //图片的网络路径，新浪微博、人人、QQ空间和Linked-in
+//		 oks.setImageUrl(shareImageUrl);
+		// 启动分享GUI
+		 oks.show(this);
 	}
 	
 	

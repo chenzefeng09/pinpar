@@ -252,6 +252,10 @@
             android:name="com.ipinpar.app.activity.EnrollInfoListActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.CommentDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

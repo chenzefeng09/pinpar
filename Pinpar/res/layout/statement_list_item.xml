@@ -60,6 +60,8 @@
 	        android:layout_toRightOf="@id/statement_image"
 	        android:layout_marginLeft="8dp"
 	        android:layout_marginTop="4dp"
+	        android:lines="2"           
+			android:ellipsize="end"
 	        android:text="@string/ongoing_activity_comment_content"
 	        android:textSize="16sp"
 	        android:textColor="@color/activity_statement_content"/>
@@ -70,8 +72,10 @@
 	        android:layout_height="wrap_content"
 	        android:baselineAligned="false"
 	        android:layout_below="@id/statement_content"
+	        android:layout_toRightOf="@id/statement_image"
 	        android:paddingBottom="5dp"
 	        android:layout_marginBottom="3dp"
+	        android:layout_marginRight="5dp"
 	        android:orientation="horizontal">
 	        <RelativeLayout
 	            android:id="@+id/RL_support"

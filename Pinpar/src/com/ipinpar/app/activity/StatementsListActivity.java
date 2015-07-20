@@ -90,7 +90,7 @@ public class StatementsListActivity extends PPBaseActivity {
 	
 	public void setView(){
 		
-		statementListAdapter = new StatementListAdapter(mContext,acStatementList);
+		statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
 		
 		if(statementListAdapter!=null){
 			statementListView.setAdapter(statementListAdapter);
