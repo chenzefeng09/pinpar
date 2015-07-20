@@ -39,6 +39,7 @@ import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.PublishCommentRequest;
 import com.ipinpar.app.network.api.ReplyCommentRequest;
 import com.ipinpar.app.network.api.StatementCommentListRequest;
+import com.ipinpar.app.network.api.StatementDetailRequest;
 import com.ipinpar.app.view.CircularImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -57,12 +58,13 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private int reply_commentid;
 	private int reply_to_uid;
 	private String replyPrefix;
+	private int currenrollid;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_comments_list);
-		currStatement = (AcStatementEntity) getIntent().getSerializableExtra("statement");
+		currenrollid =getIntent().getIntExtra("enrollid",0);
 		userImage =(CircularImageView) findViewById(R.id.statement_image);
 		name = (TextView) findViewById(R.id.statement_user_name);
 		time = (TextView) findViewById(R.id.statement_time);
@@ -72,6 +74,73 @@ public class CommentDetailActivity extends PPBaseActivity {
 		lv_infolist = (ListView) findViewById(R.id.lv_infolist);
 		et_input = (EditText) findViewById(R.id.et_input);
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		refreshStatement();
+	}
+	
+	private void refreshStatement(){
+		showProgressDialog();
+		StatementDetailRequest request = new StatementDetailRequest(currenrollid, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				dissmissProgressDialog();
+				try {
+					if (response != null && response.getInt("result") == 1) {
+						dissmissProgressDialog();
+						Gson gson = new Gson();
+						AcStatementEntity statementEntity = gson.fromJson(response.toString(), AcStatementEntity.class);
+						currStatement = statementEntity;
+						setupViews();
+						refreshData();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		apiQueue.add(request);
+	}
+	
+	private void refreshData(){
+		showProgressDialog();
+		StatementCommentListRequest request = new StatementCommentListRequest(
+				currenrollid, "enrollid", new Listener<JSONObject>() {
+
+					@Override
+					public void onResponse(JSONObject response) {
+						dissmissProgressDialog();
+						try {
+							if (response != null && response.getInt("result") == 1) {
+								comments.clear();
+								Gson gson = new Gson();
+								Type token = new TypeToken<ArrayList<CommentEntity>>(){}.getType();
+								comments.addAll((ArrayList<CommentEntity>) gson.fromJson(response.getJSONArray("comments").toString(), token));
+								if (adapter == null) {
+									adapter = new CommentDetailAdapter(comments);
+									lv_infolist.setAdapter(adapter);
+								}
+								else {
+									adapter.notifyDataSetChanged();
+								}
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
+		apiQueue.add(request);
+	}
+	
+	private void setupViews(){
 		ImageLoader.getInstance().displayImage(
 				"http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+currStatement.getUid(),
 				userImage);
@@ -79,7 +148,6 @@ public class CommentDetailActivity extends PPBaseActivity {
 		
 		long timel = Long.parseLong(currStatement.getCreatetime())*1000;
 		time.setText(DateFormat.format("yyyy/MM/dd    kk:mm", timel));
-		
 		content.setText(currStatement.getDeclaration());
 		support.setText(currStatement.getAgreecount()+"");
 		comment.setText(currStatement.getCommentcount()+"");
@@ -185,43 +253,6 @@ public class CommentDetailActivity extends PPBaseActivity {
 		});
 	}
 	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		refreshData();
-	}
-	
-	private void refreshData(){
-		StatementCommentListRequest request = new StatementCommentListRequest(
-				currStatement.getEnrollid(), "enrollid", new Listener<JSONObject>() {
-
-					@Override
-					public void onResponse(JSONObject response) {
-						try {
-							if (response != null && response.getInt("result") == 1) {
-								comments.clear();
-								Gson gson = new Gson();
-								Type token = new TypeToken<ArrayList<CommentEntity>>(){}.getType();
-								comments.addAll((ArrayList<CommentEntity>) gson.fromJson(response.getJSONArray("comments").toString(), token));
-								if (adapter == null) {
-									adapter = new CommentDetailAdapter(comments);
-									lv_infolist.setAdapter(adapter);
-								}
-								else {
-									adapter.notifyDataSetChanged();
-								}
-							}
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					}
-				});
-		apiQueue.add(request);
-	}
-	
 	private class CommentDetailAdapter extends BaseAdapter{
 		private ArrayList<CommentEntity> comments;
 		private ViewHolder holder;
@@ -321,9 +352,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 		
 	}
 	
-	public static Intent getIntent2Me(Context context,AcStatementEntity entity){
+	public static Intent getIntent2Me(Context context,int enrollid){
 		Intent intent = new Intent(context, CommentDetailActivity.class);
-		intent.putExtra("statement", entity);
+		intent.putExtra("enrollid", enrollid);
 		return intent;
 	}
 }

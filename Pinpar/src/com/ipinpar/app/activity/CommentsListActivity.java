@@ -24,6 +24,7 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.entity.NotificationEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.NotificationRequest;
+import com.ipinpar.app.network.api.ReadNotificationRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CommentsListActivity extends PPBaseActivity {
@@ -43,8 +44,17 @@ public class CommentsListActivity extends PPBaseActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				NotificationEntity entity = comments.get(position);
-				
-				
+				if ("comment".equals(entity.getType()) && "enrollid".equals(entity.getFrom_idtype())) {
+					startActivity(CommentDetailActivity.getIntent2Me(mContext, entity.getFrom_id()));
+				}
+				ReadNotificationRequest readNotificationRequest = new ReadNotificationRequest(
+						UserManager.getInstance().getUserInfo().getUid(), entity.getId()+"", new Listener<JSONObject>() {
+
+							@Override
+							public void onResponse(JSONObject response) {
+							}
+						});
+				apiQueue.add(readNotificationRequest);
 			}
 		});
 	}

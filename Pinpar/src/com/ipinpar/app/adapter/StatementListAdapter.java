@@ -112,7 +112,7 @@ public class StatementListAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, acStatementEntity));
+				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, acStatementEntity.getEnrollid()));
 				
 			}
 		});
