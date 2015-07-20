@@ -218,7 +218,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 			switch(msg.what){
 			case 0:
 				wattingDialog.show();
-				ongoingAcsRequest = new ActivityListRequest("1","","100","1","5", new Listener<JSONObject>() {
+				ongoingAcsRequest = new ActivityListRequest("1","","100","1","20", new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

@@ -62,7 +62,7 @@
         AppKey="1837215814"
         AppSecret="935bc51b56a5e2ce5eaf4737959ddb4a"
         RedirectUrl="http://www.ipinpar.com"
-        ShareByAppClient="true"
+        ShareByAppClient="false"
         Enable="true" />
 
     <!--  
@@ -84,6 +84,15 @@
         ShareByAppClient="false"
         Enable="true" />
     
+    <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
+	<QQ
+        Id="3"
+        SortId="3"
+        AppId="1104631598"
+        AppKey="izh8PnDi2chMlWBl"
+        ShareByAppClient="true"
+        Enable="true" />
+    
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
     
@@ -97,35 +106,26 @@
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
     <Wechat
-        Id="3"
-        SortId="3"
-        AppId="wx8ec4b0eea22f5a9b"
-        AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
-        BypassApproval="true"
-        Enable="true" />
-    
-    <WechatMoments
         Id="4"
         SortId="4"
         AppId="wx8ec4b0eea22f5a9b"
         AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
-        BypassApproval="true"
+        BypassApproval="false"
         Enable="true" />
-        
-	<WechatFavorite
+    
+    <WechatMoments
         Id="5"
         SortId="5"
         AppId="wx8ec4b0eea22f5a9b"
         AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
+        BypassApproval="false"
         Enable="true" />
-    
-	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
-	<QQ
+        
+	<WechatFavorite
         Id="6"
         SortId="6"
-        AppId="1104631598"
-        AppKey="izh8PnDi2chMlWBl"
-        ShareByAppClient="true"
+        AppId="wx8ec4b0eea22f5a9b"
+        AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
         Enable="true" />
     
 	<!--  
