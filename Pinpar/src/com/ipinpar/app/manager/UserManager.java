@@ -2,6 +2,7 @@ package com.ipinpar.app.manager;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
+import com.ipinpar.app.db.dao.AgreeDao;
 import com.ipinpar.app.db.dao.EnrollInfoDao;
 import com.ipinpar.app.db.dao.UserDao;
 import com.ipinpar.app.entity.UserEntity;
@@ -46,6 +47,9 @@ public class UserManager {
 	private boolean isLogin;
 	
 	public void logOut(){
+		if (isLogin) {
+			AgreeDao.getInstance().clearAgree(userInfo.getUid());
+		}
 		userInfo = null;
 		isLogin = false;
 		UserDao.getInstance().clearUsers();

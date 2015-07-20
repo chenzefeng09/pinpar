@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -45,7 +46,7 @@ public class CommentsListActivity extends PPBaseActivity {
 				// TODO Auto-generated method stub
 				NotificationEntity entity = comments.get(position);
 				if ("comment".equals(entity.getType()) && "enrollid".equals(entity.getFrom_idtype())) {
-					startActivity(CommentDetailActivity.getIntent2Me(mContext, entity.getFrom_id()));
+					startActivity(CommentDetailActivity.getIntent2Me(mContext, entity.getFrom_id(),"enrollid"));
 				}
 				ReadNotificationRequest readNotificationRequest = new ReadNotificationRequest(
 						UserManager.getInstance().getUserInfo().getUid(), entity.getId()+"", new Listener<JSONObject>() {
@@ -161,6 +162,12 @@ public class CommentsListActivity extends PPBaseActivity {
 			else {
 				viewHoler = (ViewHoler) convertView.getTag();
 			}
+			viewHoler.iv_icon.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+				}
+			});
 			viewHoler.tv_comment_action.setText(commentEntity.getNote());
 			viewHoler.tv_name.setText(commentEntity.getAuthor());
 			ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+commentEntity.getAuthorid(), viewHoler.iv_icon);

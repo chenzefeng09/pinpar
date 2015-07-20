@@ -1,5 +1,6 @@
 package com.ipinpar.app.activity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -189,33 +190,40 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 //								textView.setText(editText.getText().toString().trim());
 //								hobbys.add(editText.getText().toString().trim());
 //								fl_intrest.addView(textView);
-								AddFriendRequest request = new AddFriendRequest(currUser.getUid(),
-										peer_uid, "", editText.getText().toString().trim(), new Listener<JSONObject>() {
+								AddFriendRequest request;
+								try {
+									request = new AddFriendRequest(currUser.getUid(),
+											peer_uid, "", editText.getText().toString().trim(), new Listener<JSONObject>() {
 
-											@Override
-											public void onResponse(
-													JSONObject response) {
-												try {
-													if (response != null && response.getInt("result") == 1) {
-														Toast.makeText(mContext, "添加好友成功", 1000).show();
-														FriendEntity friendEntity = new FriendEntity();
-														friendEntity.setImgsrc(currUser.getImgsrc());
-														friendEntity.setUid(currUser.getUid());
-														friendEntity.setUsername(currUser.getUsername());
-														FriendDao.getInstance().insertUser(friendEntity);
-														btn_add_friend.setText("发消息");
+												@Override
+												public void onResponse(
+														JSONObject response) {
+													try {
+														if (response != null && response.getInt("result") == 1) {
+															Toast.makeText(mContext, "添加好友成功", 1000).show();
+															FriendEntity friendEntity = new FriendEntity();
+															friendEntity.setImgsrc(currUser.getImgsrc());
+															friendEntity.setUid(currUser.getUid());
+															friendEntity.setUsername(currUser.getUsername());
+															FriendDao.getInstance().insertUser(friendEntity);
+															btn_add_friend.setText("发消息");
+														}
+														else {
+															Toast.makeText(mContext, "添加好友失败，请重试", 1000).show();
+														}
+													} catch (JSONException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
 													}
-													else {
-														Toast.makeText(mContext, "添加好友失败，请重试", 1000).show();
-													}
-												} catch (JSONException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
+													
 												}
-												
-											}
-										});
-								apiQueue.add(request);
+											});
+									apiQueue.add(request);
+
+								} catch (UnsupportedEncodingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 						})
 					    .setNegativeButton("取消", null).show();
@@ -225,6 +233,8 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 				Intent intent = new Intent(mContext, ChatActivity.class);
 				intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
 				intent.putExtra("userId", friendEntity.getUid()+"");
+				intent.putExtra("peer_name", friendEntity.getUsername());
+
 				startActivity(intent);
 			}
 			break;

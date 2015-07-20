@@ -38,7 +38,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/common_tab_bg"
-            android:onClick="emptyHistory" >
+            android:onClick="emptyHistory" 
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -308,6 +309,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:orientation="vertical" >
 
                         <RelativeLayout
@@ -338,6 +340,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                                                android:visibility="gone"
                         android:orientation="vertical" >
 
                         <RelativeLayout
@@ -368,6 +371,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
+                    android:visibility="gone"
                     android:layout_marginTop="6dp"
                     android:weightSum="4" >
 

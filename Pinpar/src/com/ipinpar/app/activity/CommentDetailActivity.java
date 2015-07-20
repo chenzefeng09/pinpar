@@ -15,6 +15,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ import com.ipinpar.app.entity.ReplyEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.ExperienceDiaryRequest;
 import com.ipinpar.app.network.api.PublishCommentRequest;
 import com.ipinpar.app.network.api.ReplyCommentRequest;
 import com.ipinpar.app.network.api.StatementCommentListRequest;
@@ -58,13 +60,18 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private int reply_commentid;
 	private int reply_to_uid;
 	private String replyPrefix;
-	private int currenrollid;
+	private int fromid;
+	private String fromidtype;
+	private String nameString,contentString,peer_uidString;
+	private long timeLong;
+	private int agreecount,commentcount;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_comments_list);
-		currenrollid =getIntent().getIntExtra("enrollid",0);
+		fromid =getIntent().getIntExtra("fromid",0);
+		fromidtype = getIntent().getStringExtra("fromidtype");
 		userImage =(CircularImageView) findViewById(R.id.statement_image);
 		name = (TextView) findViewById(R.id.statement_user_name);
 		time = (TextView) findViewById(R.id.statement_time);
@@ -80,12 +87,17 @@ public class CommentDetailActivity extends PPBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		refreshStatement();
+		if ("enrollid".equals(fromidtype)) {
+			refreshStatement();
+		}
+		else if ("sid".equals(fromidtype)) {
+			refreshExperienceDiary();
+		}
 	}
 	
 	private void refreshStatement(){
 		showProgressDialog();
-		StatementDetailRequest request = new StatementDetailRequest(currenrollid, new Listener<JSONObject>() {
+		StatementDetailRequest request = new StatementDetailRequest(fromid, new Listener<JSONObject>() {
 
 			@Override
 			public void onResponse(JSONObject response) {
@@ -96,8 +108,42 @@ public class CommentDetailActivity extends PPBaseActivity {
 						Gson gson = new Gson();
 						AcStatementEntity statementEntity = gson.fromJson(response.toString(), AcStatementEntity.class);
 						currStatement = statementEntity;
+						nameString = currStatement.getUsername();
+						timeLong = Long.parseLong(currStatement.getCreatetime());
+						contentString = currStatement.getDeclaration();
+						agreecount = currStatement.getAgreecount();
+						commentcount = currStatement.getCommentcount();
+						peer_uidString = currStatement.getUid()+"";
 						setupViews();
 						refreshData();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		apiQueue.add(request);
+	}
+	
+	private void refreshExperienceDiary(){
+		ExperienceDiaryRequest request = new ExperienceDiaryRequest(fromid, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				dissmissProgressDialog();
+				try {
+					if (response != null && response.getInt("result") == 1) {
+						contentString = response.getString("title");
+						agreecount = response.getInt("agreecount");
+						commentcount = response.getInt("commentcount");
+						nameString = response.getString("username");
+						peer_uidString = response.getInt("uid")+"";
+						timeLong = response.getLong("createtime");
+						setupViews();
+						refreshData();
+
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -111,7 +157,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private void refreshData(){
 		showProgressDialog();
 		StatementCommentListRequest request = new StatementCommentListRequest(
-				currenrollid, "enrollid", new Listener<JSONObject>() {
+				fromid, fromidtype, new Listener<JSONObject>() {
 
 					@Override
 					public void onResponse(JSONObject response) {
@@ -142,22 +188,22 @@ public class CommentDetailActivity extends PPBaseActivity {
 	
 	private void setupViews(){
 		ImageLoader.getInstance().displayImage(
-				"http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+currStatement.getUid(),
+				"http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+peer_uidString,
 				userImage);
-		name.setText(currStatement.getUsername());
+		name.setText(nameString);
 		
-		long timel = Long.parseLong(currStatement.getCreatetime())*1000;
+		long timel = timeLong*1000;
 		time.setText(DateFormat.format("yyyy/MM/dd    kk:mm", timel));
-		content.setText(currStatement.getDeclaration());
-		support.setText(currStatement.getAgreecount()+"");
-		comment.setText(currStatement.getCommentcount()+"");
+		content.setText(contentString);
+		support.setText(agreecount+"");
+		comment.setText(commentcount+"");
 		support.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				if (UserManager.getInstance().isLogin()) {
-					AgreeManager.getInstance().agree(currStatement.getEnrollid(),
-							"enrollid",new AgreeResultListener() {
+					AgreeManager.getInstance().agree(fromid,
+							fromidtype,new AgreeResultListener() {
 						
 						@Override
 						public void onAgreeResult(boolean agree) {
@@ -204,7 +250,13 @@ public class CommentDetailActivity extends PPBaseActivity {
 										try {
 											if (response != null && response.getInt("result") == 1) {
 												Toast.makeText(mContext, "回复评论成功", 1000).show();
+												InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+												imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
+												et_input.setText("");
 												refreshData();
+											}
+											else {
+												Toast.makeText(mContext, "发送失败", 1000).show();
 											}
 										} catch (JSONException e) {
 											// TODO Auto-generated catch block
@@ -223,8 +275,8 @@ public class CommentDetailActivity extends PPBaseActivity {
 					PublishCommentRequest request;
 					try {
 						request = new PublishCommentRequest(
-								currStatement.getEnrollid(), 
-								"enrollid", UserManager.getInstance().getUserInfo().getUid(),
+								fromid, 
+								fromidtype, UserManager.getInstance().getUserInfo().getUid(),
 								reply, new Listener<JSONObject>() {
 
 									@Override
@@ -232,8 +284,15 @@ public class CommentDetailActivity extends PPBaseActivity {
 										dissmissProgressDialog();
 										try {
 											if (response != null && response.getInt("result") == 1) {
+												InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+												imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
+												et_input.setText("");
 												Toast.makeText(mContext, "评论成功", 1000).show();
 												refreshData();
+											}
+											else {
+												Toast.makeText(mContext, "发送失败", 1000).show();
+
 											}
 										} catch (JSONException e) {
 											// TODO Auto-generated catch block
@@ -317,6 +376,14 @@ public class CommentDetailActivity extends PPBaseActivity {
 					et_input.setText(replyPrefix);
 				}
 			});
+			holder.iv_icon.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+				}
+			});
 			return convertView;
 		}
 		
@@ -352,9 +419,11 @@ public class CommentDetailActivity extends PPBaseActivity {
 		
 	}
 	
-	public static Intent getIntent2Me(Context context,int enrollid){
+	public static Intent getIntent2Me(Context context,int fromid,String fromidtype){
 		Intent intent = new Intent(context, CommentDetailActivity.class);
-		intent.putExtra("enrollid", enrollid);
+		intent.putExtra("fromid", fromid);
+		intent.putExtra("fromidtype", fromidtype);
+
 		return intent;
 	}
 }

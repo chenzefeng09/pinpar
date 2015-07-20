@@ -54,6 +54,6 @@
         android:layout_height="1dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:src="#ababab"
+        android:src="#f1f1f1"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

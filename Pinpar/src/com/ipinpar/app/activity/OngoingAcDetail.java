@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
+import com.amap.api.services.core.ac;
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
@@ -33,7 +35,9 @@ import com.ipinpar.app.entity.AcImageEntity;
 import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityStatementListEntity;
+import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.network.api.ActivityDetailRequest;
 import com.ipinpar.app.network.api.StatementListRequest;
 import com.ipinpar.app.view.RollViewPager;
@@ -86,7 +90,10 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private TextView tvAcContact;
 	private TextView tvAcInterestedNum;
 	private TextView tvAcRegistedNum;
-	
+	private View LL_interested;
+	private ImageView iv_interested;
+	private ActivityEntity currActivity;
+
 	private ListView statementListView;
 	private ScrollView statementScrollView;
 	
@@ -147,12 +154,12 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcContact = (TextView) findViewById(R.id.tv_acContact);
 		tvAcInterestedNum = (TextView) findViewById(R.id.tv_interested_detail_num);
 		tvAcRegistedNum = (TextView) findViewById(R.id.tv_regist_detail_num);
-		
+		iv_interested = (ImageView) findViewById(R.id.iv_interested);
 		statementListView = (ListView) findViewById(R.id.lv_detail_the_statement);
 		statementScrollView = (ScrollView) findViewById(R.id.sv_activity_detail_desc);
 		
 		llRegist = (LinearLayout) findViewById(R.id.LL_regist);
-		
+		LL_interested = findViewById(R.id.LL_interested);
 	}
 	
 	public void setView(){
@@ -213,6 +220,45 @@ public class OngoingAcDetail extends PPBaseActivity {
                 return false;  
             }  
         });  
+		LL_interested.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (UserManager.getInstance().isLogin()) {
+					if (AgreeManager.getInstance().isAgreed(currActivity.getAcid(), "acid")) {
+						AgreeManager.getInstance().agree(
+								currActivity.getAcid(), 
+								"acid", new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (!agree) {
+											currActivity.setAgreecount(currActivity.getAgreecount() - 1);
+											iv_interested.setImageResource(R.drawable.experience_diary_like);
+										}
+									}
+								}, apiQueue);
+					}
+					else {
+						AgreeManager.getInstance().agree(
+								currActivity.getAcid(), 
+								"acid", new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											currActivity.setAgreecount(currActivity.getAgreecount() + 1);
+											iv_interested.setImageResource(R.drawable.experience_diary_like_click);
+										}
+									}
+								}, apiQueue);
+					}
+				}
+				else {
+					startActivity(new Intent(mContext, LoginActivity.class));
+				}
+			}
+		});
 	}
 	
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -389,6 +435,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 				wattingDialog.show();
 				ongoingAcDetailRequest = new ActivityDetailRequest(acid+"", new Listener<JSONObject>() {
 					
+
 					@Override
 					public void onResponse(JSONObject response) {
 						// TODO Auto-generated method stub
@@ -397,7 +444,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 						
 						//获取返回的活动
 						ActivityEntity activity = gson.fromJson(response.toString(), ActivityEntity.class);
-						
+						currActivity = activity;
 						latitude = activity.getLatitude();
 						longitude = activity.getLongitude();
 						

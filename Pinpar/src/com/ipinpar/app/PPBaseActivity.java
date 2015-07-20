@@ -71,6 +71,17 @@ public class PPBaseActivity extends FragmentActivity{
 			wattingDialog.dismiss();
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		
+		if (wattingDialog != null && wattingDialog.isShowing()) {
+			wattingDialog.dismiss();
+			finish();
+		}
+		super.onBackPressed();
+	}
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

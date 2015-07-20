@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.CommentsListActivity;
+import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.activity.NotificationListActivity;
 import com.ipinpar.app.activity.SupportListActivity;
 import com.ipinpar.app.entity.NotificationEntity;
@@ -58,83 +59,81 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener{
 	}
 	
 	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
+	public void onResume() {
 		// TODO Auto-generated method stub
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-			if (UserManager.getInstance().isLogin()) {
-				NotificationRequest request = new NotificationRequest(
-						UserManager.getInstance().getUserInfo().getUid(), 1, 100,
-						 new Listener<JSONObject>() {
+		super.onResume();
+		if (UserManager.getInstance().isLogin()) {
+			NotificationRequest request = new NotificationRequest(
+					UserManager.getInstance().getUserInfo().getUid(), 1, 100,
+					 new Listener<JSONObject>() {
 
-							@Override
-							public void onResponse(JSONObject response) {
-								// TODO Auto-generated method stub
-								try {
-									if (response != null && response.getInt("result") == 1) {
-										notifications.clear();
-										int new_total = Integer.parseInt(response.getString("newtotal"));
-										int total = Integer.parseInt(response.getString("total"));
-										JSONArray jsonArray = response.getJSONArray("data");
-										for(int i=0;i<jsonArray.length();i++){
-											JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-											NotificationEntity notificationEntity = new NotificationEntity();
-											notificationEntity.setAuthor(jsonObject.getString("author"));
-											notificationEntity.setAuthorid(jsonObject.getInt("authorid"));
-											notificationEntity.setDateline(jsonObject.getLong("dateline"));
-											notificationEntity.setFrom_id(jsonObject.getInt("from_id"));
-											notificationEntity.setFrom_idtype(jsonObject.getString("from_idtype"));
-											notificationEntity.setFrom_num(jsonObject.getInt("from_num"));
-											notificationEntity.setId(jsonObject.getInt("id"));
-											notificationEntity.setIs_new(jsonObject.getBoolean("new"));
-											notificationEntity.setStatus(jsonObject.getInt("status"));
-											notificationEntity.setType(jsonObject.getString("type"));
-											notificationEntity.setUid(jsonObject.getInt("uid"));
-											notifications.add(notificationEntity);
-										}
-										int commentcount = 0;
-										int supportcount = 0;
-										int notificationcount = 0;
-										for(NotificationEntity notificationEntity:notifications){
-											if ("agree".equals(notificationEntity.getType())) {
-												if (notificationEntity.getIs_new()) {
-													supportcount++;
-												}
-											}
-											else if ("comment".equals(notificationEntity.getType())) {
-												if (notificationEntity.getIs_new()) {
-													commentcount++;
-												}
-											}
-											else if ("friend".equals(notificationEntity.getType())) {
-												if (notificationEntity.getIs_new()) {
-													notificationcount++;
-												}
-												
-											}
-											else if ("invite".equals(notificationEntity.getType())) {
-												if (notificationEntity.getIs_new()) {
-													notificationcount++;
-												}											}
-										}
-										
-										tv_newcomment.setText(commentcount+"个新评论");
-										tv_newsupport.setText(supportcount+"个新支持");
-										if (supportcount == 0) {
-											tv_newsupport.setVisibility(View.GONE);
-										}
-										if (commentcount == 0) {
-											tv_newcomment.setVisibility(View.GONE);
-										}
+						@Override
+						public void onResponse(JSONObject response) {
+							// TODO Auto-generated method stub
+							try {
+								if (response != null && response.getInt("result") == 1) {
+									notifications.clear();
+									int new_total = Integer.parseInt(response.getString("newtotal"));
+									int total = Integer.parseInt(response.getString("total"));
+									JSONArray jsonArray = response.getJSONArray("data");
+									for(int i=0;i<jsonArray.length();i++){
+										JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+										NotificationEntity notificationEntity = new NotificationEntity();
+										notificationEntity.setAuthor(jsonObject.getString("author"));
+										notificationEntity.setAuthorid(jsonObject.getInt("authorid"));
+										notificationEntity.setDateline(jsonObject.getLong("dateline"));
+										notificationEntity.setFrom_id(jsonObject.getInt("from_id"));
+										notificationEntity.setFrom_idtype(jsonObject.getString("from_idtype"));
+										notificationEntity.setFrom_num(jsonObject.getInt("from_num"));
+										notificationEntity.setId(jsonObject.getInt("id"));
+										notificationEntity.setIs_new(jsonObject.getBoolean("new"));
+										notificationEntity.setStatus(jsonObject.getInt("status"));
+										notificationEntity.setType(jsonObject.getString("type"));
+										notificationEntity.setUid(jsonObject.getInt("uid"));
+										notifications.add(notificationEntity);
 									}
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									int commentcount = 0;
+									int supportcount = 0;
+									int notificationcount = 0;
+									for(NotificationEntity notificationEntity:notifications){
+										if ("agree".equals(notificationEntity.getType())) {
+											if (notificationEntity.getIs_new()) {
+												supportcount++;
+											}
+										}
+										else if ("comment".equals(notificationEntity.getType())) {
+											if (notificationEntity.getIs_new()) {
+												commentcount++;
+											}
+										}
+										else if ("friend".equals(notificationEntity.getType())) {
+											if (notificationEntity.getIs_new()) {
+												notificationcount++;
+											}
+											
+										}
+										else if ("invite".equals(notificationEntity.getType())) {
+											if (notificationEntity.getIs_new()) {
+												notificationcount++;
+											}											}
+									}
+									
+									tv_newcomment.setText(commentcount+"个新评论");
+									tv_newsupport.setText(supportcount+"个新支持");
+									if (supportcount == 0) {
+										tv_newsupport.setVisibility(View.GONE);
+									}
+									if (commentcount == 0) {
+										tv_newcomment.setVisibility(View.GONE);
+									}
 								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						});
-				apiQueue.add(request);
-			}
+						}
+					});
+			apiQueue.add(request);
 		}
 	}
 
@@ -143,13 +142,28 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.rl_notification:
-			startActivity(new Intent(mContext, NotificationListActivity.class));
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, NotificationListActivity.class));
+			}
+			else {
+				startActivity(new Intent(mContext, LoginActivity.class));
+			}
 			break;
 		case R.id.rl_support:
-			startActivity(new Intent(mContext, SupportListActivity.class));
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, SupportListActivity.class));
+			}
+			else {
+				startActivity(new Intent(mContext, LoginActivity.class));
+			}
 			break;
 		case R.id.rl_comment:
-			startActivity(new Intent(mContext, CommentsListActivity.class));
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(mContext, CommentsListActivity.class));
+			}
+			else {
+				startActivity(new Intent(mContext, LoginActivity.class));
+			}
 			break;
 
 		default:

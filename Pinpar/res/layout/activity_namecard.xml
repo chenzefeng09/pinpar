@@ -62,7 +62,8 @@
                 android:layout_marginLeft="78dp"
                 android:text="个性签名"
                 android:textColor="#818181"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

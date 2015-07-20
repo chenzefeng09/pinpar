@@ -51,10 +51,14 @@ private static FriendDao instance;
 				COLUMN_UID+"=?",
 				new String[]{uid+""},
 				null, null, null);
-		cursor.moveToFirst();
-		FriendEntity userEntity = fillCursor(cursor);
+		if (cursor.moveToFirst()) {
+			FriendEntity userEntity = fillCursor(cursor);
+			closeDB();
+			return userEntity;
+		}
 		closeDB();
-		return userEntity;
+		return null;
+		
 	}
 	
 	private FriendEntity fillCursor(Cursor cursor) {

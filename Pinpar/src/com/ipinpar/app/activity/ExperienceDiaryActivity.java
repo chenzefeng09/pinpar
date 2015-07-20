@@ -11,8 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,16 +25,22 @@ import com.google.gson.reflect.TypeToken;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.ExperienceDiaryDetailEntity;
+import com.ipinpar.app.manager.AgreeManager;
+import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.network.api.ExperienceDiaryRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ExperienceDiaryActivity extends PPBaseActivity {
 	
 	private ListView lv_diary;
-	private ImageView iv_icon,iv_title_bkg;
+	private ImageView iv_icon,iv_title_bkg,iv_agree,iv_comment;
 	private TextView tv_name;
+	private Button btn_agree,btn_comment;
+	private View ll_comment,ll_agree;
 	private ArrayList<ExperienceDiaryDetailEntity> experienceDetials;
-	
+	private int expid;
+	private int agreecount,commentcount;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -41,6 +49,65 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 		int sid = getIntent().getIntExtra("sid", 0);
 		int uid = getIntent().getIntExtra("uid", 0);
 		int activityid = getIntent().getIntExtra("activityid", 0);
+		btn_agree = (Button) findViewById(R.id.btn_agree);
+		btn_comment = (Button) findViewById(R.id.btn_comment);
+		lv_diary = (ListView) findViewById(R.id.lv_diary);
+		iv_icon = (ImageView) findViewById(R.id.iv_icon);
+		iv_title_bkg = (ImageView) findViewById(R.id.iv_title_bkg);
+		tv_name = (TextView) findViewById(R.id.tv_name);
+		iv_agree = (ImageView) findViewById(R.id.iv_agree);
+		iv_comment = (ImageView) findViewById(R.id.iv_comment);
+		ll_comment = findViewById(R.id.ll_comment);
+		ll_agree = findViewById(R.id.ll_agree);
+		
+		ll_agree.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (UserManager.getInstance().isLogin()) {
+					showProgressDialog();
+					if (AgreeManager.getInstance().isAgreed(expid, "sid")) {
+						AgreeManager.getInstance().agree(
+								expid, 
+								"sid", new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										dissmissProgressDialog();
+										if (!agree) {
+											iv_agree.setImageResource(R.drawable.experience_diary_like);
+											btn_agree.setText((--agreecount)+"");
+										}
+									}
+								}, apiQueue);
+					}
+					else {
+						AgreeManager.getInstance().agree(
+								expid, 
+								"sid", new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										dissmissProgressDialog();
+										if (agree) {
+											iv_agree.setImageResource(R.drawable.experience_diary_like_click);
+											btn_agree.setText((++agreecount)+"");										}
+									}
+								}, apiQueue);
+					}
+				}
+				else {
+					mContext.startActivity(new Intent(mContext, LoginActivity.class));
+				}
+			}
+		});
+		ll_comment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, expid,"sid"));
+			}
+		});
 		showProgressDialog();
 		if (sid != 0){
 			ExperienceDiaryRequest request = new ExperienceDiaryRequest(sid, new Listener<JSONObject>() {
@@ -54,6 +121,14 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							ImageLoader.getInstance().displayImage(response.getString("img"), iv_title_bkg);
 							ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+response.getInt("uid"), iv_icon);
 							tv_name.setText(response.getString("title"));
+							agreecount = response.getInt("agreecount");
+							commentcount = response.getInt("commentcount");
+							expid = response.getInt("sid");
+							if (AgreeManager.getInstance().isAgreed(expid, "sid")) {
+								iv_agree.setImageResource(R.drawable.experience_diary_like_click);
+							}
+							btn_agree.setText(agreecount+"");
+							btn_comment.setText(commentcount+"");
 							Gson gson = new Gson();
 							Type type = new TypeToken<ArrayList<ExperienceDiaryDetailEntity>>(){}.getType();
 							experienceDetials = gson.fromJson(response.getJSONArray("details").toString(), type);
@@ -78,6 +153,14 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							ImageLoader.getInstance().displayImage(response.getString("img"), iv_title_bkg);
 							ImageLoader.getInstance().displayImage("http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="+response.getInt("uid"), iv_icon);
 							tv_name.setText(response.getString("title"));
+							expid = response.getInt("sid");
+							if (AgreeManager.getInstance().isAgreed(expid, "sid")) {
+								iv_agree.setImageResource(R.drawable.experience_diary_like_click);
+							}
+							agreecount = response.getInt("agreecount");
+							commentcount = response.getInt("commentcount");
+							btn_agree.setText(agreecount+"");
+							btn_comment.setText(commentcount+"");
 							Gson gson = new Gson();
 							Type type = new TypeToken<ArrayList<ExperienceDiaryDetailEntity>>(){}.getType();
 							experienceDetials = gson.fromJson(response.getJSONArray("details").toString(), type);
@@ -92,11 +175,9 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 			});
 			apiQueue.add(request);
 		}
-		lv_diary = (ListView) findViewById(R.id.lv_diary);
-		iv_icon = (ImageView) findViewById(R.id.iv_icon);
-		iv_title_bkg = (ImageView) findViewById(R.id.iv_title_bkg);
-		tv_name = (TextView) findViewById(R.id.tv_name);
+		
 	}
+	
 	
 	
 	private class DiaryDetailAdapter extends BaseAdapter{

@@ -18,6 +18,7 @@ import com.ipinpar.app.Constant;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.CommentDetailActivity;
 import com.ipinpar.app.activity.LoginActivity;
+import com.ipinpar.app.activity.NameCardActivity;
 import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
@@ -117,11 +118,11 @@ public class StatementListAdapter extends BaseAdapter{
 		viewHolder.content.setText(acStatementEntity.getDeclaration());
 		viewHolder.support.setText(acStatementEntity.getAgreecount()+"");
 		viewHolder.comment.setText(acStatementEntity.getCommentcount()+"");
-		viewHolder.RL_comment.setOnClickListener(new OnClickListener() {
+		convertView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, acStatementEntity.getEnrollid()));
+				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, acStatementEntity.getEnrollid(),"enrollid"));
 			}
 		});
 		
@@ -146,7 +147,7 @@ public class StatementListAdapter extends BaseAdapter{
 					}
 					else {
 						AgreeManager.getInstance().agree(
-								UserManager.getInstance().getUserInfo().getUid(), 
+								acStatementEntity.getEnrollid(), 
 								"enrollid", new AgreeResultListener() {
 									
 									@Override
@@ -170,6 +171,13 @@ public class StatementListAdapter extends BaseAdapter{
 		else {
 			viewHolder.iv_statement_support.setImageResource(R.drawable.ac_support);
 		}
+		viewHolder.userImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mContext.startActivity(NameCardActivity.getIntent2Me(mContext, Integer.parseInt(acStatementEntity.getUid())));
+			}
+		});
 		return convertView;
 	}
 	
