@@ -432,7 +432,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			
 			case 1:
 				
-				statementListAdapter = new StatementListAdapter(mContext,acStatementList);
+				statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
 				statementListView.setAdapter(statementListAdapter);
 				
 				break;

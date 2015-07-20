@@ -52,6 +52,10 @@ public class PPDBHelper extends SQLiteOpenHelper {
 				+ "sex integer,"
 				+ "unit text"
 				+ ")");
+		db.execSQL("CREATE TABLE IF NOT exists agree(uid integer,"
+				+ "fromidtype text,"
+				+ "fromid integer, PRIMARY KEY(uid,fromidtype,fromid)"
+				+ ")");
 	}
 
 	@Override

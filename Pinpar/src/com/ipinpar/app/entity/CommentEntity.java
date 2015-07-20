@@ -1,5 +1,7 @@
 package com.ipinpar.app.entity;
 
+import java.util.ArrayList;
+
 public class CommentEntity {
 	private int agreecount;
 	private String author;
@@ -11,7 +13,8 @@ public class CommentEntity {
 	private int commenttype;
 	private int flag;
 	private int from_id;
-	private int from_idtype;
+	private String from_idtype;
+	private ArrayList<ReplyEntity> replys;
 	public int getAgreecount() {
 		return agreecount;
 	}
@@ -72,11 +75,17 @@ public class CommentEntity {
 	public void setFrom_id(int from_id) {
 		this.from_id = from_id;
 	}
-	public int getFrom_idtype() {
+	public String getFrom_idtype() {
 		return from_idtype;
 	}
-	public void setFrom_idtype(int from_idtype) {
+	public void setFrom_idtype(String from_idtype) {
 		this.from_idtype = from_idtype;
+	}
+	public ArrayList<ReplyEntity> getReplys() {
+		return replys;
+	}
+	public void setReplys(ArrayList<ReplyEntity> replys) {
+		this.replys = replys;
 	}
 
 }
