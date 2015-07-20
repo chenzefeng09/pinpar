@@ -234,7 +234,8 @@ public class OngoingAcDetail extends PPBaseActivity {
 									public void onAgreeResult(boolean agree) {
 										if (!agree) {
 											currActivity.setAgreecount(currActivity.getAgreecount() - 1);
-											iv_interested.setImageResource(R.drawable.experience_diary_like);
+											tvAcInterestedNum.setText(currActivity.getAgreecount()+"");
+											iv_interested.setImageResource(R.drawable.ac_detail_interested);
 										}
 									}
 								}, apiQueue);
@@ -248,6 +249,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 									public void onAgreeResult(boolean agree) {
 										if (agree) {
 											currActivity.setAgreecount(currActivity.getAgreecount() + 1);
+											tvAcInterestedNum.setText(currActivity.getAgreecount()+"");
 											iv_interested.setImageResource(R.drawable.experience_diary_like_click);
 										}
 									}
@@ -357,7 +359,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcDetail.setText(acticityEntity.getDetail());
 		tvAcContact.setText(acticityEntity.getPhone());
 		
-		tvAcInterestedNum.setText(acticityEntity.getReadcount()+"");
+		tvAcInterestedNum.setText(acticityEntity.getAgreecount()+"");
 		tvAcRegistedNum.setText(acticityEntity.getIncount()+"");
 	}
 	
@@ -456,7 +458,11 @@ public class OngoingAcDetail extends PPBaseActivity {
 						for(int i=0;i<acImageList.size();i++){
 							imageUrls.add(acImageList.get(i).getImg());
 						}
-						
+						if (UserManager.getInstance().isLogin()) {
+							if (AgreeManager.getInstance().isAgreed(currActivity.getAcid(), "acid")) {
+								iv_interested.setImageResource(R.drawable.experience_diary_like_click);
+							}
+						}
 						shareTitle = activity.getSname() + activity.getAcname();
 						shareContent = activity.getDetail();
 						shareImageUrl = changeShareImageUrl(acImageList.get(0).getImg());
