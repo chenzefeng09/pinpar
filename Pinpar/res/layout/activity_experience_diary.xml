@@ -18,13 +18,13 @@
             <RelativeLayout
                 android:id="@+id/rl_top"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="240dp"
                 android:background="@color/white" >
 
                 <ImageView
                     android:id="@+id/iv_title_bkg"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
+                    android:layout_height="240dp"
                     android:layout_marginBottom="20dp"
                     android:scaleType="centerCrop" />
 

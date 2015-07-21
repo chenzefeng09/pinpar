@@ -4,12 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-     <RelativeLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/title_theme"
-         >
+        android:background="@color/title_theme" >
 
         <TextView
             android:id="@+id/tv_header_title"
@@ -21,175 +20,170 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>
-    
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="#7b5dd7"
-        >
-        
-        <ImageView 
+        android:background="#7b5dd7" >
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/decoration_bottom_bar"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            />
-        
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/decoration_bottom_bar" />
     </RelativeLayout>
-    
-    <RelativeLayout 
+
+    <RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        
+        android:layout_height="70dp" >
+
         <com.ipinpar.app.view.CircularImageView
             android:id="@+id/ci_comment"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/message_comment"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            />
-        
-        <TextView 
+            android:src="@drawable/message_comment" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/ci_comment"
             android:layout_marginLeft="8dp"
-            android:text="评论"/>
-        
-        <ImageView 
+            android:layout_toRightOf="@id/ci_comment"
+            android:text="评论" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/decoration_bottom_bar"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            />
-        
-        <ImageView 
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/decoration_bottom_bar" />
+
+        <ImageView
             android:id="@+id/iv_arrow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right"
-            android:adjustViewBounds="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            />
-          <TextView 
-              android:id="@+id/tv_newcomment"
+            android:adjustViewBounds="true"
+            android:src="@drawable/arrow_right" />
+
+        <TextView
+            android:id="@+id/tv_newcomment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_arrow1"
             android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/iv_arrow1"
             android:text=""
-            android:textColor="@color/goldenrod"/>
-        
+            android:textColor="@color/goldenrod" />
     </RelativeLayout>
-    
-        <RelativeLayout 
-                    android:id="@+id/rl_support"
-            
+
+    <RelativeLayout
+        android:id="@+id/rl_support"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        
-        <com.ipinpar.app.view.CircularImageView 
+        android:layout_height="70dp" >
+
+        <com.ipinpar.app.view.CircularImageView
             android:id="@+id/ci_suppport"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/message_supportor"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            />
-        
-        <TextView 
+            android:src="@drawable/message_supportor" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/ci_suppport"
             android:layout_marginLeft="8dp"
-            android:text="支持"/>
-        
-        <ImageView 
+            android:layout_toRightOf="@id/ci_suppport"
+            android:text="支持" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/decoration_bottom_bar"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            />
-        
-        <ImageView 
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/decoration_bottom_bar" />
+
+        <ImageView
             android:id="@+id/iv_arrow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right"
-            android:adjustViewBounds="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            />
-          <TextView 
-              android:id="@+id/tv_newsupport"
+            android:adjustViewBounds="true"
+            android:src="@drawable/arrow_right" />
+
+        <TextView
+            android:id="@+id/tv_newsupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_arrow2"
             android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/iv_arrow2"
             android:text=""
-            android:textColor="@color/goldenrod"/>
-        
+            android:textColor="@color/goldenrod" />
     </RelativeLayout>
-    
-               <RelativeLayout 
-                                       android:id="@+id/rl_notification"
+
+    <RelativeLayout
+        android:id="@+id/rl_notification"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        
-        <com.ipinpar.app.view.CircularImageView 
+        android:layout_height="70dp" >
+
+        <com.ipinpar.app.view.CircularImageView
             android:id="@+id/ci_notification"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/message_notifation"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            />
-        
-        <TextView 
+            android:src="@drawable/message_notifation" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/ci_notification"
             android:layout_marginLeft="8dp"
-            android:text="通知"/>
-        
-          <TextView 
-              android:id="@+id/tv_newsup"
+            android:layout_toRightOf="@id/ci_notification"
+            android:text="通知" />
+
+        <TextView
+            android:id="@+id/tv_newsup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:layout_marginTop="8dp"
             android:text=""
-            android:textSize="12sp"
-            android:textColor="@color/lightgrey"/>
-        
+            android:textColor="@color/lightgrey"
+            android:textSize="12sp" />
     </RelativeLayout>
-    
-    <ImageView 
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:src="#dcdcdc"
         android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
-    
+        android:layout_marginRight="12dp"
+        android:src="#dcdcdc" />
+
+    <ListView
+        android:id="@+id/lv_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp" >
+    </ListView>
 
 </LinearLayout>

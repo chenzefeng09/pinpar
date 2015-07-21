@@ -98,7 +98,6 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		llPastActivities= (LinearLayout) view.findViewById(R.id.LL_title_past);
 		
 		ongoingActicitiesListView = (PullToRefreshListView) view.findViewById(R.id.ongoing_activities_list);
-		
 		if(activityListAdapter!=null){
 			ongoingActicitiesListView.setAdapter(activityListAdapter);
 		}

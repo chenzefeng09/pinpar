@@ -4,13 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.json.JSONException;
@@ -26,17 +23,14 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.Log;
-import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,7 +39,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
-import com.google.gson.JsonObject;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.manager.UserManager;
@@ -55,9 +48,6 @@ import com.ipinpar.app.network.api.UploadIconRequest;
 import com.ipinpar.app.service.ForegroundService;
 import com.ipinpar.app.util.BitmapUtil;
 import com.ipinpar.app.util.TakePictureUtil;
-import com.ipinpar.app.network.api.PhotoMultipartRequest;
-import com.ipinpar.app.service.ForegroundService;
-import com.ipinpar.app.util.BitmapUtil;
 import com.ipinpar.app.view.FlowLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -145,11 +135,29 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 							tv_sex.setText("女");
 
 						}
-						for (String hobbyEntity : hobbys) {
-							TextView textView = (TextView) LayoutInflater.from(
+						for (final String hobbyEntity : hobbys) {
+							final TextView textView = (TextView) LayoutInflater.from(
 									mContext).inflate(
 									R.layout.view_hobbys_textview, null);
 							textView.setText(hobbyEntity);
+							textView.setOnLongClickListener(new OnLongClickListener() {
+								
+								@Override
+								public boolean onLongClick(View v) {
+									// TODO Auto-generated method stub
+									new AlertDialog.Builder(mContext).setMessage("是否删除该兴趣？")
+									.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+										
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											fl_intrest.removeView(textView);
+											hobbys.remove(hobbyEntity);
+										}
+									}).setNegativeButton("取消",null)
+									.create().show();;
+									return false;
+								}
+							});
 							fl_intrest.addView(textView);
 						}
 					} else {
@@ -359,12 +367,32 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
-							TextView textView = (TextView) LayoutInflater.from(
+							final TextView textView = (TextView) LayoutInflater.from(
 									mContext).inflate(
 									R.layout.view_hobbys_textview, null);
 							textView.setText(editText.getText().toString()
 									.trim());
-							hobbys.add(editText.getText().toString().trim());
+							final String hobbyEntity = editText.getText().toString().trim();
+							hobbys.add(hobbyEntity);
+							textView.setOnLongClickListener(new OnLongClickListener() {
+								
+								@Override
+								public boolean onLongClick(View v) {
+									// TODO Auto-generated method stub
+									new AlertDialog.Builder(mContext).setMessage("是否删除该兴趣？")
+									.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+										
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											fl_intrest.removeView(textView);
+											hobbys.remove(hobbyEntity);
+										}
+									}).setNegativeButton("取消",null)
+									.create().show();
+									return false;
+								}
+							});
+							
 							fl_intrest.addView(textView);
 						}
 					}).setNegativeButton("取消", null).show();

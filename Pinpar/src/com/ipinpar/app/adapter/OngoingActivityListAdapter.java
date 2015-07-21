@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +21,12 @@ import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
+import com.ipinpar.app.util.BitmapFillet;
+import com.ipinpar.app.util.DisplayUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class OngoingActivityListAdapter extends BaseAdapter{
 	
@@ -29,7 +34,7 @@ public class OngoingActivityListAdapter extends BaseAdapter{
 	private ArrayList<ActivityEntity> aList = new ArrayList<ActivityEntity>();
 	private RequestQueue queue;
 	private DisplayImageOptions options;
-	
+	private Bitmap roundcoverbitmap;
 //	public OngoingActivityListAdapter(Context mContext) {
 //		this.mContext = mContext;
 //	}
@@ -115,8 +120,65 @@ public class OngoingActivityListAdapter extends BaseAdapter{
 			viewHolder.iv_acticity_praise.setImageResource(R.drawable.ac_detail_interested);
 		}
 		
-		ImageLoader.getInstance().displayImage(acEntity.getImgs().get(0).getImg(), viewHolder.ivBackground,options);
-		ImageLoader.getInstance().displayImage("drawable://"+R.drawable.activity_img_cover, viewHolder.ivBackgroundCover,options);
+		ImageLoader.getInstance().displayImage(acEntity.getImgs().get(0).getImg(),
+				viewHolder.ivBackground, options, new ImageLoadingListener() {
+			
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingFailed(String imageUri, View view,
+					FailReason failReason) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				final ImageView imageView = (ImageView) view;
+				imageView.setImageBitmap(BitmapFillet.fillet(BitmapFillet.TOP, loadedImage,
+						DisplayUtil.dip2px(9)));
+			}
+			
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+//		ImageLoader.getInstance().displayImage(acEntity.getImgs().get(0).getImg(), viewHolder.ivBackground,options);
+		
+		ImageLoader.getInstance().displayImage("drawable://"+R.drawable.activity_img_cover, viewHolder.ivBackgroundCover,options,new ImageLoadingListener() {
+			
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingFailed(String imageUri, View view,
+					FailReason failReason) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				final ImageView imageView = (ImageView) view;
+				imageView.setImageBitmap(BitmapFillet.fillet(BitmapFillet.TOP, loadedImage,
+						DisplayUtil.dip2px(9)));
+			}
+			
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		viewHolder.tvAcShortName.setText(acEntity.getSname());
 		viewHolder.tvAcName.setText(acEntity.getAcname());
