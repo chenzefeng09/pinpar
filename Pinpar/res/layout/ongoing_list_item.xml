@@ -180,7 +180,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="25dp"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/activity_praise"/>
+                android:src="@drawable/activity_praise"/>
             
             <TextView 
                 android:id="@+id/tv_praise_num"

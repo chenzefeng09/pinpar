@@ -55,7 +55,6 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
 				.cacheOnDisk(true)
 				.cacheInMemory(true)
-				.displayer(new FadeInBitmapDisplayer(50))
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.imageScaleType(ImageScaleType.EXACTLY) // default
 				.build();
@@ -63,7 +62,7 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 				this)
 				.memoryCache(new UsingFreqLimitedMemoryCache(16 * 1024 * 1024))
 				.diskCache(
-						new UnlimitedDiskCache(getExternalCacheDir(),
+						new UnlimitedDiskCache(getCacheDir(),
 								null,
 								new HashCodeFileNameGenerator()))
 				.defaultDisplayImageOptions(defaultOptions).build();

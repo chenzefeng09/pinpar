@@ -92,7 +92,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		backView = view.findViewById(R.id.backlayout);
 		backView.setBackgroundColor(Color.WHITE);
 		
-		activityListAdapter = new OngoingActivityListAdapter(mContext,activityList);
+		activityListAdapter = new OngoingActivityListAdapter(mContext,activityList,apiQueue);
 		
 		wattingDialog = new ProgressDialog(mContext, SCROLL_STATE_TOUCH_SCROLL);
 		llPastActivities= (LinearLayout) view.findViewById(R.id.LL_title_past);
