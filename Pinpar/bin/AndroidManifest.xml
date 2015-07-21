@@ -56,7 +56,7 @@
         <!-- 高德地图key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="请输入您的用户Key"/>
+            android:value="b81c94788f6a7113c34193c8fb03ba94"/>
         
         <!-- ShareSDK用到的Activity -->
         

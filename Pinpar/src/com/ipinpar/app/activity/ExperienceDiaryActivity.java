@@ -44,8 +44,7 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 	
 	private ImageView shareView;
 	private String shareTitle;
-	private String shareContent;
-//	private String shareImageUrl;
+	private String shareImageUrl;
 	
 	private int shareSid;
 	
@@ -146,6 +145,7 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							
 							//分享中用到到字段
 							shareTitle = response.getString("title");
+							shareImageUrl = changeShareImageUrl(response.getString("img"));
 							shareSid = sid;
 							
 						}
@@ -183,9 +183,8 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							
 							//分享中用到到字段
 							shareTitle = response.getString("title");
-//							shareImageUrl = changeShareImageUrl(acImageList.get(0).getImg());
-							shareSid = experienceDetials.get(0).getSid();
-							
+							shareImageUrl = changeShareImageUrl(response.getString("img"));
+							shareSid = sid;
 							
 							DiaryDetailAdapter adapter = new DiaryDetailAdapter(experienceDetials);
 							lv_diary.setAdapter(adapter);
@@ -214,6 +213,17 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 		});
 	}
 	
+	/*
+	 * 将ImageURL中的“_bcut”或者“_b”字符串替换成“_s”
+	 * */
+	public String changeShareImageUrl(String source){
+		if((source.indexOf("_bcut") != -1)){
+			return source.replace("_bcut", "_s");
+		}else{
+			return source.replace("_b", "_s");
+		}
+	}
+	
 	private void showShare() {
 		 OnekeyShare oks = new OnekeyShare();
 		 //关闭sso授权
@@ -238,10 +248,11 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 		 // siteUrl是分享此内容的网站地址，仅在QQ空间使用
 		 oks.setSiteUrl("http://m.ipinpar.com/summary.jsp?sid="+shareSid);
 		 //图片的网络路径，新浪微博、人人、QQ空间和Linked-in
-//		 oks.setImageUrl(shareImageUrl);
+		 oks.setImageUrl(shareImageUrl);
 		// 启动分享GUI
 		 oks.show(this);
 	}
+	
 	
 	
 	

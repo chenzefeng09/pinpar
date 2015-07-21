@@ -9,8 +9,8 @@
         android:background="@color/title_theme">
         <Button 
             android:id="@+id/btn_back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:background="@drawable/btn_back"/>

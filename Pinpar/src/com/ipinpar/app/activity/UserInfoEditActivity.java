@@ -392,7 +392,6 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 									return false;
 								}
 							});
-							
 							fl_intrest.addView(textView);
 						}
 					}).setNegativeButton("取消", null).show();

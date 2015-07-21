@@ -93,7 +93,7 @@
 		            android:layout_height="30dp"
 		            android:layout_centerHorizontal="true"
 		            android:layout_below="@id/RL_top_sliding"
-		            android:layout_marginTop="3dp"
+		            android:layout_marginTop="15dp"
 		            android:background="@drawable/ac_detail"/>
 			    
 		         <LinearLayout 
@@ -102,7 +102,7 @@
 		             android:layout_height="wrap_content"
 		             android:orientation="horizontal"
 		             android:layout_below="@id/iv_ac_detail"
-		             android:layout_marginTop="3dp"
+		             android:layout_marginTop="25dp"
 		             android:layout_marginLeft="10dp">
 		             <TextView 
 				        android:id="@+id/tv_acName_tip"
@@ -122,7 +122,8 @@
 		             <ImageView 
 		                 android:id="@+id/iv_ac_detail_inviting"
 		                 android:layout_width="40dp"
-		                 android:layout_height="fill_parent"
+		                 android:layout_height="15dp"
+		                 android:layout_gravity="center_vertical"
 		                 android:layout_marginLeft="3dp"
 		                 android:background="@drawable/ac_stamp_inviting"/>
 		         </LinearLayout>
@@ -152,15 +153,13 @@
 				        android:textColor="@color/activity_detail"/>
 		         </LinearLayout>
 		         
-		         <LinearLayout 
-		             android:id="@+id/LL_acAddress"
+		         <RelativeLayout 
+		             android:id="@+id/RL_pastinviting_acAddress"
 		             android:layout_width="fill_parent"
 		             android:layout_height="wrap_content"
-		             android:orientation="horizontal"
 		             android:layout_below="@id/LL_acShop"
 		             android:layout_marginTop="3dp"
-		             android:layout_marginLeft="10dp"
-		             android:layout_marginRight="5dp">
+		             android:layout_marginLeft="10dp">
 	                 <TextView 
 				        android:id="@+id/tv_acAddress_tip"
 				        android:layout_width="wrap_content"
@@ -169,12 +168,12 @@
 				        android:textSize="14sp"
 				        android:textColor="@color/activity_detail_tip"/>
 		             <TextView 
-		                android:id="@+id/tv_acAddress"
+		                android:id="@+id/tv_acAddress_city"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
 		                android:layout_marginLeft="5dp"
+		                android:layout_toRightOf="@id/tv_acAddress_tip"
 		                android:text="@string/activity_fill_string"
-		                android:ellipsize="middle"
 		                android:textSize="14sp"
 				        android:textColor="@color/activity_detail"/>
 		             
@@ -183,16 +182,28 @@
 		                 android:layout_width="20dp"
 		                 android:layout_height="16dp"
 		                 android:layout_marginLeft="3dp"
+		                 android:layout_toRightOf="@id/tv_acAddress_city"
 		                 android:layout_gravity="center_vertical"
 		                 android:background="@drawable/ac_map"/>
-		         </LinearLayout>
+		             <TextView 
+		                android:id="@+id/tv_acAddress"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_marginLeft="5dp"
+		                android:layout_toRightOf="@id/tv_acAddress_tip"
+		                android:layout_below="@id/tv_acAddress_city"
+		                android:text="@string/activity_fill_string"
+		                android:textSize="14sp"
+				        android:textColor="@color/activity_detail"/>
+		             
+		         </RelativeLayout>
 		         
 		         <LinearLayout 
 		             android:id="@+id/LL_acTime"
 		             android:layout_width="fill_parent"
 		             android:layout_height="wrap_content"
 		             android:orientation="horizontal"
-		             android:layout_below="@id/LL_acAddress"
+		             android:layout_below="@id/RL_pastinviting_acAddress"
 		             android:layout_marginTop="3dp"
 		             android:layout_marginLeft="10dp">
 		             <TextView 
@@ -341,7 +352,7 @@
 		             android:layout_marginBottom="5dp"
 		             android:layout_marginLeft="10dp"
 		             android:layout_centerHorizontal="true"
-		             android:background="@color/activity_contact_bg">
+		             android:background="@drawable/rounded_text_grey_bg">
 		             <ImageView 
 		                 android:id="@+id/iv_acContact"
 		                 android:layout_width="20dp"
@@ -388,7 +399,7 @@
 				        android:layout_width="fill_parent"
 				        android:layout_below="@+id/iv_ac_the_statement_bottom_bar"
 			            android:layout_height="30dp"
-			            android:layout_marginTop="3dp"
+			            android:layout_marginTop="15dp"
 			            android:background="@drawable/ac_the_statement"/>
 			        
 			        
@@ -396,6 +407,7 @@
 			            android:id="@+id/lv_inviting_detail_the_statement"
 			            android:layout_width="fill_parent"
 			            android:layout_height="match_parent"
+			            android:layout_marginTop="15dp"
 			            android:layout_below="@id/iv_ac_the_statement">
 			            
 			        </ListView>
@@ -410,13 +422,13 @@
 	    <RelativeLayout 
 	        android:id="@+id/RL_ac_detail_nav"
 	        android:layout_width="fill_parent"
-	        android:layout_height="35dp"
+	        android:layout_height="40dp"
 	        android:layout_alignParentTop="true"
 	        android:background="@drawable/ac_navbg">
 	        <Button 
 	            android:id="@+id/btn_back"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
+	            android:layout_width="35dp"
+	            android:layout_height="35dp"
 	            android:layout_alignParentLeft="true"
 	            android:layout_marginLeft="15dp"
 	            android:layout_alignParentBottom="true"
@@ -424,8 +436,8 @@
 	        
 	        <Button 
 	            android:id="@+id/btn_share"
-	            android:layout_width="25dp"
-	            android:layout_height="25dp"
+	            android:layout_width="35dp"
+	            android:layout_height="35dp"
 	            android:layout_alignParentRight="true"
 	            android:layout_marginRight="15dp"
 	            android:layout_alignParentBottom="true"

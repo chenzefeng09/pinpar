@@ -8,7 +8,8 @@
     <RelativeLayout 
         android:id="@+id/RL_memberexperi_list_item_format"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp">
 	    <com.ipinpar.app.view.CircularImageView
 	       android:id="@+id/memberexperi_image"
 	       android:layout_width="@dimen/memberexperi_imagesize"
@@ -155,7 +156,8 @@
 	        android:layout_toRightOf="@id/memberexperi_image"
 	        android:layout_below="@id/LL_support_and_comment"
 	        android:layout_marginRight="10dp"
-	        android:background="@color/activity_luck_reason_bg">
+	        android:paddingBottom="5dp"
+	        android:background="@drawable/rounded_text_grey_bg">
 	       <TextView 
 		        android:id="@+id/tv_luck_reason_tip"
 		        android:layout_width="wrap_content"

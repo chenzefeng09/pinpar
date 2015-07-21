@@ -199,6 +199,19 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 												notificationcount++;
 											}
 										}
+										else if ("invite".equals(notificationEntity.getType())) {
+											if (notificationEntity.getIs_new()) {
+												notificationcount++;
+											}											}
+									}
+									
+									tv_newcomment.setText(commentcount+"个新评论");
+									tv_newsupport.setText(supportcount+"个新支持");
+									if (supportcount == 0) {
+										tv_newsupport.setVisibility(View.GONE);
+									}
+									if (commentcount == 0) {
+										tv_newcomment.setVisibility(View.GONE);
 									}
 
 									tv_newcomment

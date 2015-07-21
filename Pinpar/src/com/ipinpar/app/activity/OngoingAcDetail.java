@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -73,13 +74,14 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private Button btnBack;
 	private Button btnShare;
 	
-	private LinearLayout llActicityMap;
+	private RelativeLayout rlActicityMap;
 	private String latitude;
 	private String longitude;
 	
 	private TextView tvAcName;
 	private TextView tvAcShop;
 	private TextView tvAcAddress;
+	private TextView tvAcAddressCity;
 	private TextView tvAcTimeBegin;
 	private TextView tvAcTimeEnd;
 	private TextView tvAcRegistEnd;
@@ -139,11 +141,12 @@ public class OngoingAcDetail extends PPBaseActivity {
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnShare = (Button) findViewById(R.id.btn_share);
 		
-		llActicityMap = (LinearLayout) findViewById(R.id.LL_ongoing_acAddress);
+		rlActicityMap = (RelativeLayout) findViewById(R.id.RL_ongoing_acAddress);
 		
 		tvAcName = (TextView) findViewById(R.id.tv_acName);
 		tvAcShop = (TextView) findViewById(R.id.tv_acShop);
 		tvAcAddress = (TextView) findViewById(R.id.tv_acAddress);
+		tvAcAddressCity = (TextView) findViewById(R.id.tv_acAddress_city);
 		tvAcTimeBegin = (TextView) findViewById(R.id.tv_acTimeBegin);
 		tvAcTimeEnd = (TextView) findViewById(R.id.tv_acTimeEnd);
 		tvAcRegistEnd = (TextView) findViewById(R.id.tv_acRegistEnd);
@@ -162,7 +165,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 	}
 	
 	public void setView(){
-		llActicityMap.setOnClickListener(new OnClickListener() {
+		rlActicityMap.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -249,7 +252,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 										if (agree) {
 											currActivity.setAgreecount(currActivity.getAgreecount() + 1);
 											tvAcInterestedNum.setText(currActivity.getAgreecount()+"");
-											iv_interested.setImageResource(R.drawable.experience_diary_like_click);
+											iv_interested.setImageResource(R.drawable.activity_praise);
 										}
 									}
 								}, apiQueue);
@@ -368,6 +371,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcName.setText(acticityEntity.getAcname());
 		tvAcShop.setText(acticityEntity.getSname());
 		tvAcAddress.setText(acticityEntity.getAddressdetail());
+		tvAcAddressCity.setText(acticityEntity.getAddress2()+acticityEntity.getAddress3());
 		
 		long timeBegin = Long.parseLong(acticityEntity.getActivebegintime())*1000;
 		long timeEnd = Long.parseLong(acticityEntity.getActiveendtime())*1000;
@@ -377,7 +381,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
 		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeRegistedEnd));
 		
-		tvAcAllowedNum.setText(acticityEntity.getAgreecount()+"");
+		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");
 		tvAcForm.setText(acticityEntity.getDescription());
 		tvAcDetail.setText(acticityEntity.getDetail());
 		tvAcContact.setText(acticityEntity.getPhone());
@@ -501,8 +505,12 @@ public class OngoingAcDetail extends PPBaseActivity {
 						}
 						if (UserManager.getInstance().isLogin()) {
 							if (AgreeManager.getInstance().isAgreed(currActivity.getAcid(), "acid")) {
-								iv_interested.setImageResource(R.drawable.experience_diary_like_click);
+								iv_interested.setImageResource(R.drawable.activity_praise);
+							}else{
+								iv_interested.setImageResource(R.drawable.ac_detail_interested);
 							}
+						}else{
+							iv_interested.setImageResource(R.drawable.ac_detail_interested);
 						}
 						shareTitle = activity.getSname() + activity.getAcname();
 						shareContent = activity.getDetail();

@@ -19,8 +19,8 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.manager.AgreeManager;
-import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.util.BitmapFillet;
 import com.ipinpar.app.util.DisplayUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -95,6 +95,7 @@ public class OngoingActivityListAdapter extends BaseAdapter{
 			viewHolder.ivBackgroundCover = (ImageView) convertView.findViewById(R.id.iv_activity_desc_cover);
 			viewHolder.tvAcShortName =  (TextView) convertView.findViewById(R.id.tv_first_text_desc);
 			viewHolder.tvAcName = (TextView) convertView.findViewById(R.id.tv_second_text_desc);
+			viewHolder.tvViewCount = (TextView) convertView.findViewById(R.id.tv_viewcount);
 			viewHolder.tvAcAddress = (TextView) convertView.findViewById(R.id.tv_activity_address);
 			viewHolder.tvAcTimeBegin = (TextView) convertView.findViewById(R.id.tv_activity_time_begin);
 			viewHolder.tvAcTimeEnd = (TextView) convertView.findViewById(R.id.tv_activity_time_end);
@@ -113,11 +114,11 @@ public class OngoingActivityListAdapter extends BaseAdapter{
 				viewHolder.iv_acticity_praise.setImageResource(R.drawable.activity_praise);
 			}
 			else {
-				viewHolder.iv_acticity_praise.setImageResource(R.drawable.ac_detail_interested);
+				viewHolder.iv_acticity_praise.setImageResource(R.drawable.ac_ongoing_list_interested);
 			}
 		}
 		else {
-			viewHolder.iv_acticity_praise.setImageResource(R.drawable.ac_detail_interested);
+			viewHolder.iv_acticity_praise.setImageResource(R.drawable.ac_ongoing_list_interested);
 		}
 		
 		ImageLoader.getInstance().displayImage(acEntity.getImgs().get(0).getImg(),
@@ -182,6 +183,7 @@ public class OngoingActivityListAdapter extends BaseAdapter{
 		
 		viewHolder.tvAcShortName.setText(acEntity.getSname());
 		viewHolder.tvAcName.setText(acEntity.getAcname());
+		viewHolder.tvViewCount.setText(acEntity.getReadcount()+"");
 		viewHolder.tvAcAddress.setText(acEntity.getAddress2()+"-"+acEntity.getAddress3());
 		
 		long timeBegin = Long.parseLong(acEntity.getActivebegintime())*1000;
@@ -240,6 +242,7 @@ public class OngoingActivityListAdapter extends BaseAdapter{
 		ImageView ivBackgroundCover;
 		TextView tvAcShortName;
 		TextView tvAcName;
+		TextView tvViewCount;
 		TextView tvAcAddress;
 		TextView tvAcTimeBegin;
 		TextView tvAcTimeEnd;
