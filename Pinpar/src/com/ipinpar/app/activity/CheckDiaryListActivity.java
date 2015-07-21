@@ -26,6 +26,9 @@ import com.ipinpar.app.PPApplication;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.ExperienceDiaryEntity;
+import com.ipinpar.app.manager.AgreeManager;
+import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.network.api.ExperienceDiaryListRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -135,12 +138,27 @@ public class CheckDiaryListActivity extends PPBaseActivity {
 				holder.view_like = convertView.findViewById(R.id.view_like);
 				holder.view_comment = convertView.findViewById(R.id.view_comment);
 				holder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+				holder.iv_comment = (ImageView) convertView.findViewById(R.id.iv_comment);
+				holder.iv_like = (ImageView) convertView.findViewById(R.id.iv_like);
+
 				convertView.setTag(holder);
 			}
 			else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+			if (UserManager.getInstance().isLogin()) {
+				if (AgreeManager.getInstance().isAgreed(experienceDiaryEntity.getSid(), "sid")) {
+					holder.iv_like.setImageResource(R.drawable.experience_diary_like_click);
+				}
+				else {
+					holder.iv_like.setImageResource(R.drawable.experience_diary_like);
+
+				}
+			}
+			else {
+				holder.iv_like.setImageResource(R.drawable.experience_diary_like);
+			}
 			holder.tv_time.setText(format.format(new Date(experienceDiaryEntity.getCreatetime()*1000)));
 			holder.tv_name.setText(PPApplication.getInstance().getFormatString(R.string.experience_list_name,experienceDiaryEntity.getUsername()));
 			holder.tv_title.setText(experienceDiaryEntity.getTitle());
@@ -160,14 +178,50 @@ public class CheckDiaryListActivity extends PPBaseActivity {
 				
 				@Override
 				public void onClick(View v) {
-					
+					if (UserManager.getInstance().isLogin()) {
+						showProgressDialog();
+						if (AgreeManager.getInstance().isAgreed(experienceDiaryEntity.getSid(), "sid")) {
+							AgreeManager.getInstance().agree(
+									experienceDiaryEntity.getSid(), 
+									"sid", new AgreeResultListener() {
+										
+										@Override
+										public void onAgreeResult(boolean agree) {
+											dissmissProgressDialog();
+											if (!agree) {
+												experienceDiaryEntity.setAgreecount(experienceDiaryEntity.getAgreecount() - 1);
+												notifyDataSetChanged();
+											}
+										}
+									}, apiQueue);
+						}
+						else {
+							AgreeManager.getInstance().agree(
+									experienceDiaryEntity.getSid(), 
+									"sid", new AgreeResultListener() {
+										
+										@Override
+										public void onAgreeResult(boolean agree) {
+											dissmissProgressDialog();
+											if (agree) {
+												experienceDiaryEntity.setAgreecount(experienceDiaryEntity.getAgreecount() + 1);
+												notifyDataSetChanged();
+											}
+										}
+									}, apiQueue);
+						}
+					}
+					else {
+						mContext.startActivity(new Intent(mContext, LoginActivity.class));
+					}
 				}
 			});
 			holder.view_comment.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					
+					mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, 
+							experienceDiaryEntity.getSid(),"sid"));
 				}
 			});
 			return convertView;
@@ -175,7 +229,7 @@ public class CheckDiaryListActivity extends PPBaseActivity {
 		
 		private class ViewHolder{
 			public TextView tv_like,tv_comment,tv_title,tv_name,tv_time;
-			public ImageView iv_activity_desc,iv_icon;
+			public ImageView iv_activity_desc,iv_icon,iv_like,iv_comment;
 			public View RL_activity_description,view_like,view_comment;
 		}
 		

@@ -7,7 +7,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
@@ -31,7 +33,7 @@ public class MarkerActivity extends PPBaseActivity{
 		mapView = (MapView) findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState); // 此方法必须重写
 		aMap = mapView.getMap();
-		
+//		aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
 		latitude = getIntent().getStringExtra("latitude");
 		longitude = getIntent().getStringExtra("longitude");
 		
@@ -40,9 +42,10 @@ public class MarkerActivity extends PPBaseActivity{
 		
 		latlng = new LatLng(dLatitude, dLongitude);
 		
+		aMap.moveCamera(CameraUpdateFactory.newCameraPosition( new CameraPosition(latlng,18,0,0)));
+		
 		markerOption = new MarkerOptions();
 		markerOption.position(latlng);
-		
 		
 		aMap.addMarker(markerOption);
 		

@@ -394,12 +394,12 @@ public class MessageAdapter extends BaseAdapter{
 				}
 
 			}*/
-			
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+message.getFrom(), holder.iv_avatar);
 
 		// 群聊时，显示接收的消息的发送人的名称
 		if ((chatType == ChatType.GroupChat || chatType == chatType.ChatRoom) && message.direct == EMMessage.Direct.RECEIVE){
@@ -552,10 +552,10 @@ public class MessageAdapter extends BaseAdapter{
 	private void setUserAvatar(EMMessage message, ImageView imageView){
 	    if(message.direct == Direct.SEND){
 	        //显示自己头像
-	    	ImageLoader.getInstance().displayImage(EMChatManager.getInstance().getCurrentUser(), imageView);
+	    	ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+EMChatManager.getInstance().getCurrentUser(), imageView);
 //	        UserUtils.setUserAvatar(context, EMChatManager.getInstance().getCurrentUser(), imageView);
 	    }else{
-	    	ImageLoader.getInstance().displayImage(message.getFrom(), imageView);
+	    	ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+message.getFrom(), imageView);
 
 //	        UserUtils.setUserAvatar(context, message.getFrom(), imageView);
 	    }

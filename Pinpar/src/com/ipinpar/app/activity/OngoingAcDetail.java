@@ -17,9 +17,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -33,6 +35,8 @@ import com.ipinpar.app.entity.AcImageEntity;
 import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityStatementListEntity;
+import com.ipinpar.app.manager.AgreeManager;
+import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityDetailRequest;
 import com.ipinpar.app.network.api.StatementListRequest;
@@ -70,13 +74,14 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private Button btnBack;
 	private Button btnShare;
 	
-	private LinearLayout llActicityMap;
+	private RelativeLayout rlActicityMap;
 	private String latitude;
 	private String longitude;
 	
 	private TextView tvAcName;
 	private TextView tvAcShop;
 	private TextView tvAcAddress;
+	private TextView tvAcAddressCity;
 	private TextView tvAcTimeBegin;
 	private TextView tvAcTimeEnd;
 	private TextView tvAcRegistEnd;
@@ -86,7 +91,10 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private TextView tvAcContact;
 	private TextView tvAcInterestedNum;
 	private TextView tvAcRegistedNum;
-	
+	private View LL_interested;
+	private ImageView iv_interested;
+	private ActivityEntity currActivity;
+
 	private ListView statementListView;
 	private ScrollView statementScrollView;
 	
@@ -133,11 +141,12 @@ public class OngoingAcDetail extends PPBaseActivity {
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnShare = (Button) findViewById(R.id.btn_share);
 		
-		llActicityMap = (LinearLayout) findViewById(R.id.LL_ongoing_acAddress);
+		rlActicityMap = (RelativeLayout) findViewById(R.id.RL_ongoing_acAddress);
 		
 		tvAcName = (TextView) findViewById(R.id.tv_acName);
 		tvAcShop = (TextView) findViewById(R.id.tv_acShop);
 		tvAcAddress = (TextView) findViewById(R.id.tv_acAddress);
+		tvAcAddressCity = (TextView) findViewById(R.id.tv_acAddress_city);
 		tvAcTimeBegin = (TextView) findViewById(R.id.tv_acTimeBegin);
 		tvAcTimeEnd = (TextView) findViewById(R.id.tv_acTimeEnd);
 		tvAcRegistEnd = (TextView) findViewById(R.id.tv_acRegistEnd);
@@ -147,16 +156,16 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcContact = (TextView) findViewById(R.id.tv_acContact);
 		tvAcInterestedNum = (TextView) findViewById(R.id.tv_interested_detail_num);
 		tvAcRegistedNum = (TextView) findViewById(R.id.tv_regist_detail_num);
-		
+		iv_interested = (ImageView) findViewById(R.id.iv_interested);
 		statementListView = (ListView) findViewById(R.id.lv_detail_the_statement);
 		statementScrollView = (ScrollView) findViewById(R.id.sv_activity_detail_desc);
 		
 		llRegist = (LinearLayout) findViewById(R.id.LL_regist);
-		
+		LL_interested = findViewById(R.id.LL_interested);
 	}
 	
 	public void setView(){
-		llActicityMap.setOnClickListener(new OnClickListener() {
+		rlActicityMap.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -194,6 +203,60 @@ public class OngoingAcDetail extends PPBaseActivity {
 				// TODO Auto-generated method stub
 				if (UserManager.getInstance().isLogin()) {
 					startActivity(new Intent(mContext, EnrollStatement.class));
+				}
+				else {
+					startActivity(new Intent(mContext, LoginActivity.class));
+				}
+			}
+		});
+		
+		statementListView.setOnTouchListener(new View.OnTouchListener() {  
+            
+            @Override  
+            public boolean onTouch(View v, MotionEvent event) {  
+                if(event.getAction() == MotionEvent.ACTION_UP){  
+                	statementScrollView.requestDisallowInterceptTouchEvent(false);  
+                }else{  
+                	statementScrollView.requestDisallowInterceptTouchEvent(true);  
+                }  
+                return false;  
+            }  
+        });  
+		LL_interested.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (UserManager.getInstance().isLogin()) {
+					if (AgreeManager.getInstance().isAgreed(currActivity.getAcid(), "acid")) {
+						AgreeManager.getInstance().agree(
+								currActivity.getAcid(), 
+								"acid", new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (!agree) {
+											currActivity.setAgreecount(currActivity.getAgreecount() - 1);
+											tvAcInterestedNum.setText(currActivity.getAgreecount()+"");
+											iv_interested.setImageResource(R.drawable.ac_detail_interested);
+										}
+									}
+								}, apiQueue);
+					}
+					else {
+						AgreeManager.getInstance().agree(
+								currActivity.getAcid(), 
+								"acid", new AgreeResultListener() {
+									
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											currActivity.setAgreecount(currActivity.getAgreecount() + 1);
+											tvAcInterestedNum.setText(currActivity.getAgreecount()+"");
+											iv_interested.setImageResource(R.drawable.activity_praise);
+										}
+									}
+								}, apiQueue);
+					}
 				}
 				else {
 					startActivity(new Intent(mContext, LoginActivity.class));
@@ -245,7 +308,6 @@ public class OngoingAcDetail extends PPBaseActivity {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-    
 	private void initDot() {
 		//滚动的个数应该和图片的个数相等
 		//清空点所在集合
@@ -309,6 +371,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcName.setText(acticityEntity.getAcname());
 		tvAcShop.setText(acticityEntity.getSname());
 		tvAcAddress.setText(acticityEntity.getAddressdetail());
+		tvAcAddressCity.setText(acticityEntity.getAddress2()+acticityEntity.getAddress3());
 		
 		long timeBegin = Long.parseLong(acticityEntity.getActivebegintime())*1000;
 		long timeEnd = Long.parseLong(acticityEntity.getActiveendtime())*1000;
@@ -318,12 +381,12 @@ public class OngoingAcDetail extends PPBaseActivity {
 		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
 		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeRegistedEnd));
 		
-		tvAcAllowedNum.setText(acticityEntity.getAgreecount()+"");
+		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");
 		tvAcForm.setText(acticityEntity.getDescription());
 		tvAcDetail.setText(acticityEntity.getDetail());
 		tvAcContact.setText(acticityEntity.getPhone());
 		
-		tvAcInterestedNum.setText(acticityEntity.getReadcount()+"");
+		tvAcInterestedNum.setText(acticityEntity.getAgreecount()+"");
 		tvAcRegistedNum.setText(acticityEntity.getIncount()+"");
 	}
 	
@@ -419,6 +482,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 				wattingDialog.show();
 				ongoingAcDetailRequest = new ActivityDetailRequest(acid+"", new Listener<JSONObject>() {
 					
+
 					@Override
 					public void onResponse(JSONObject response) {
 						// TODO Auto-generated method stub
@@ -427,7 +491,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 						
 						//获取返回的活动
 						ActivityEntity activity = gson.fromJson(response.toString(), ActivityEntity.class);
-						
+						currActivity = activity;
 						latitude = activity.getLatitude();
 						longitude = activity.getLongitude();
 						
@@ -439,6 +503,18 @@ public class OngoingAcDetail extends PPBaseActivity {
 						for(int i=0;i<acImageList.size();i++){
 							imageUrls.add(acImageList.get(i).getImg());
 						}
+						if (UserManager.getInstance().isLogin()) {
+							if (AgreeManager.getInstance().isAgreed(currActivity.getAcid(), "acid")) {
+								iv_interested.setImageResource(R.drawable.activity_praise);
+							}else{
+								iv_interested.setImageResource(R.drawable.ac_detail_interested);
+							}
+						}else{
+							iv_interested.setImageResource(R.drawable.ac_detail_interested);
+						}
+						shareTitle = activity.getSname() + activity.getAcname();
+						shareContent = activity.getDetail();
+						shareImageUrl = changeShareImageUrl(acImageList.get(0).getImg());
 						
 						shareTitle = activity.getSname() + activity.getAcname();
 						shareContent = activity.getDetail();

@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- 主界面导航栏文字 -->
-    <string name="main_tab_home">首页</string>
+    <string name="main_tab_home">品趴</string>
     <string name="main_tab_message">消息</string>
     <string name="main_tab_me">我</string>
 
@@ -51,16 +51,16 @@
 
     <!-- 活动详细界面字符资源 -->
     <string name="activity_fill_string">填充字符串</string>
-    <string name="activity_item_name">活动项目:</string>
-    <string name="activity_shop">活动店铺:</string>
-    <string name="activity_address">活动地点:</string>
-    <string name="activity_time">活动时间:</string>
+    <string name="activity_item_name">体验内容:</string>
+    <string name="activity_shop">店铺名称:</string>
+    <string name="activity_address">店铺地址:</string>
+    <string name="activity_time">体验时间:</string>
     <string name="activity_time_split">~</string>
     <string name="activity_regist_end">报名截止:</string>
     <string name="activity_allowed_num">体验名额:</string>
-    <string name="activity_form">活动方式:</string>
-    <string name="activity_detail">活动详情:</string>
-    <string name="activity_contact">如有疑问请联系:</string>
+    <string name="activity_form">体验方式:</string>
+    <string name="activity_detail">体验详情:</string>
+    <string name="activity_contact">一键咨询:</string>
     <string name="activity_interested_num">132</string>
     <string name="activity_interested">感兴趣</string>
     <string name="activity_interested_people">人感兴趣</string>

@@ -371,9 +371,10 @@ public class ChatActivity extends PPBaseActivity implements OnClickListener, EME
 				PowerManager.SCREEN_DIM_WAKE_LOCK, "demo");
 		// 判断单聊还是群聊
 		chatType = getIntent().getIntExtra("chatType", CHATTYPE_SINGLE);
+		String peer_name = getIntent().getStringExtra("peer_name");
 
 			toChatUsername = getIntent().getStringExtra("userId");
-				((TextView) findViewById(R.id.name)).setText(toChatUsername);
+				((TextView) findViewById(R.id.name)).setText(peer_name);
         
 		// for chatroom type, we only init conversation and create view adapter on success
 		if(chatType != CHATTYPE_CHATROOM){
@@ -1351,7 +1352,7 @@ public class ChatActivity extends PPBaseActivity implements OnClickListener, EME
 
 						if (filename != "delete_expression") { // 不是删除键，显示表情
 							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
-							Class clz = Class.forName("com.easemob.chatuidemo.utils.SmileUtils");
+							Class clz = Class.forName("com.ipinpar.app.util.SmileUtils");
 							Field field = clz.getField(filename);
 							mEditTextContent.append(SmileUtils.getSmiledText(ChatActivity.this,
 									(String) field.get(null)));

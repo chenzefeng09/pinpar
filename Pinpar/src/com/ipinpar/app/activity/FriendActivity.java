@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ipinpar.app.Constant;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.db.dao.FriendDao;
@@ -149,14 +150,12 @@ public class FriendActivity extends PPBaseActivity {
 					Intent intent = new Intent(mContext, ChatActivity.class);
 					intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
 					intent.putExtra("userId", friendENtity.getUid()+"");
+					intent.putExtra("peer_name", friendENtity.getUsername());
 					startActivity(intent);
 				}
 			});
 			holder.tv_name.setText(friendENtity.getUsername());
-			ImageLoader.getInstance().displayImage(friendENtity.getImgsrc(), holder.iv_icon,options);
-			if (TextUtils.isEmpty(friendENtity.getImgsrc())) {
-				holder.iv_icon.setImageResource(R.drawable.defaultavatarmale);
-			}
+			ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+friendENtity.getUid(), holder.iv_icon,options);
 			return convertView;
 		}
 		

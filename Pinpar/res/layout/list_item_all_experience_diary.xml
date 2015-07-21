@@ -73,15 +73,24 @@
             android:id="@+id/view_like"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_weight="1" >
+            
+            <ImageView 
+                android:id="@+id/iv_like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/experience_diary_like"/>
 
             <TextView
                 android:id="@+id/tv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableLeft="@drawable/experience_diary_like"
-                android:drawablePadding="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_like"
                 android:gravity="center"
                 android:text="喜欢"
                 android:textColor="#8f72e6" />
@@ -92,14 +101,23 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" >
+            
+              <ImageView 
+                android:id="@+id/iv_comment"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ac_comment"/>
 
             <TextView
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableLeft="@drawable/ac_comment"
-                android:drawablePadding="8dp"
+                android:layout_marginLeft="8dp"
+                                android:layout_centerVertical="true"
+                
+                android:layout_toRightOf="@id/iv_comment"
                 android:gravity="center"
                 android:text="评论"
                 android:textColor="#8f72e6" />

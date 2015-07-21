@@ -85,6 +85,7 @@
         Enable="true" />
     
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
+    <!--  
 	<QQ
         Id="3"
         SortId="3"
@@ -92,7 +93,7 @@
         AppKey="izh8PnDi2chMlWBl"
         ShareByAppClient="true"
         Enable="true" />
-    
+    -->
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
     
@@ -106,24 +107,24 @@
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
     <Wechat
-        Id="4"
-        SortId="4"
+        Id="3"
+        SortId="3"
         AppId="wx8ec4b0eea22f5a9b"
         AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
         BypassApproval="false"
         Enable="true" />
     
     <WechatMoments
-        Id="5"
-        SortId="5"
+        Id="4"
+        SortId="4"
         AppId="wx8ec4b0eea22f5a9b"
         AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
         BypassApproval="false"
         Enable="true" />
         
 	<WechatFavorite
-        Id="6"
-        SortId="6"
+        Id="5"
+        SortId="5"
         AppId="wx8ec4b0eea22f5a9b"
         AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
         Enable="true" />

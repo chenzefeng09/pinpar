@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -80,6 +81,7 @@ public class NotificationListActivity extends PPBaseActivity {
 									int total = Integer.parseInt(response.getString("total"));
 									JSONArray jsonArray = response.getJSONArray("data");
 									comments.clear();
+									StringBuilder builder = new StringBuilder();
 									for(int i=0;i<jsonArray.length();i++){
 										JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 										NotificationEntity notificationEntity = new NotificationEntity();
@@ -98,8 +100,25 @@ public class NotificationListActivity extends PPBaseActivity {
 										if ("friend".equals(notificationEntity.getType())
 												|| "invite".equals(notificationEntity.getType())) {
 											comments.add(notificationEntity);
+											if (!TextUtils.isEmpty(builder.toString())) {
+												builder.append(",");
+											}
+											comments.add(notificationEntity);
+											builder.append(notificationEntity.getId());
 										}
 									}
+									ReadNotificationRequest request = new ReadNotificationRequest(
+											UserManager.getInstance().getUserInfo().getUid(),
+											builder.toString(), new Listener<JSONObject>() {
+
+												@Override
+												public void onResponse(
+														JSONObject response) {
+													// TODO Auto-generated method stub
+													
+												}
+											});
+									apiQueue.add(request);
 									int commentcount = 0;
 									int supportcount = 0;
 									int notificationcount = 0;
@@ -263,13 +282,20 @@ public class NotificationListActivity extends PPBaseActivity {
 				viewHoler.tv_time.setVisibility(View.VISIBLE);
 				viewHoler.btn_accept.setVisibility(View.GONE);
 				viewHoler.btn_refuse.setVisibility(View.GONE);
-				viewHoler.tv_time.setText(commentEntity.getNote());
+				viewHoler.tv_time.setText(formatTime(commentEntity.getDateline()));
 			}
 			else {
 				viewHoler.btn_accept.setVisibility(View.GONE);
 				viewHoler.btn_refuse.setVisibility(View.GONE);
 				viewHoler.tv_time.setText(formatTime(commentEntity.getDateline()));
 			}
+			viewHoler.iv_icon.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+				}
+			});
 			return convertView;
 		}
 		

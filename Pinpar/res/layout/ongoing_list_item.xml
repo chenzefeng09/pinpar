@@ -35,6 +35,32 @@
 	            />
         </RelativeLayout>
         
+        <RelativeLayout 
+            android:id="@+id/RL_viewcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp">
+            <ImageView 
+                android:id="@+id/iv_viewcount"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/activity_item_viewnum"/>
+            <TextView 
+                android:id="@+id/tv_viewcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/iv_viewcount"
+                android:layout_centerVertical="true"
+                android:text="123"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+        
         
         <LinearLayout 
             android:id="@+id/LL_text_desc"
@@ -180,7 +206,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="25dp"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/activity_praise"/>
+                android:src="@drawable/activity_praise"/>
             
             <TextView 
                 android:id="@+id/tv_praise_num"

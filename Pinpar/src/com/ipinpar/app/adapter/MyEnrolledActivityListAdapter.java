@@ -80,6 +80,7 @@ public class MyEnrolledActivityListAdapter extends BaseAdapter{
 			viewHolder.ivActivityStateComplete = (ImageView) convertView.findViewById(R.id.iv_activity_state_complete);
 			viewHolder.tvAcShortName =  (TextView) convertView.findViewById(R.id.tv_first_text_desc);
 			viewHolder.tvAcName = (TextView) convertView.findViewById(R.id.tv_second_text_desc);
+			viewHolder.tvViewCount = (TextView) convertView.findViewById(R.id.tv_viewcount);
 			viewHolder.tvAcDynamicTitle =  (TextView) convertView.findViewById(R.id.tv_dynamic_title);
 			viewHolder.ivEssentialStatement = (ImageView) convertView.findViewById(R.id.iv_essential_statement);
 			viewHolder.tvAcDynamicDescription = (TextView) convertView.findViewById(R.id.tv_dynamic_description);
@@ -107,6 +108,7 @@ public class MyEnrolledActivityListAdapter extends BaseAdapter{
 			
 			viewHolder.tvAcShortName.setText(acEntity.getSname());
 			viewHolder.tvAcName.setText(acEntity.getAcname());
+			viewHolder.tvViewCount.setText(acEntity.getReadcount()+"");
 			viewHolder.tvAcDynamicTitle.setText(acEntity.getDynamic().get(0).getTitle());
 			viewHolder.tvAcDynamicDescription.setText(acEntity.getDynamic().get(0).getDescription());
 			
@@ -120,6 +122,7 @@ public class MyEnrolledActivityListAdapter extends BaseAdapter{
 			
 			viewHolder.tvAcShortName.setText(acEntity.getSname());
 			viewHolder.tvAcName.setText(acEntity.getAcname());
+			viewHolder.tvViewCount.setText(acEntity.getReadcount()+"");
 			viewHolder.tvAcDynamicTitle.setText(acEntity.getDynamic().get(0).getTitle());
 			viewHolder.tvAcDynamicDescription.setText(acEntity.getDynamic().get(0).getDescription());
 			
@@ -131,6 +134,7 @@ public class MyEnrolledActivityListAdapter extends BaseAdapter{
 			
 			viewHolder.tvAcShortName.setText(acEntity.getSname());
 			viewHolder.tvAcName.setText(acEntity.getAcname());
+			viewHolder.tvViewCount.setText(acEntity.getReadcount()+"");
 			viewHolder.tvAcAddress.setText(acEntity.getAddress2()+"-"+acEntity.getAddress3());
 			
 			long timeBegin = Long.parseLong(acEntity.getActivebegintime())*1000;
@@ -151,6 +155,7 @@ public class MyEnrolledActivityListAdapter extends BaseAdapter{
 		ImageView ivActivityStateComplete;
 		TextView tvAcShortName;
 		TextView tvAcName;
+		TextView tvViewCount;
 		TextView tvAcDynamicTitle;
 		ImageView ivEssentialStatement;
 		TextView tvAcDynamicDescription;

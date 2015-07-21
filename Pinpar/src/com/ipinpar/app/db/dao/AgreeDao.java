@@ -1,6 +1,5 @@
 package com.ipinpar.app.db.dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import android.content.ContentValues;
@@ -61,6 +60,12 @@ private static AgreeDao instance;
 		closeDB();
 		cursor.close();
 		return agreeEntities;
+	}
+	
+	public void clearAgree(int uid){
+		openDB();
+		sqLiteDatabase.delete(TABLE_NAME, COLUMN_UID+"=?", new String[]{uid+""});
+		closeDB();
 	}
 
 	private AgreeEntity fillCursor(Cursor cursor) {

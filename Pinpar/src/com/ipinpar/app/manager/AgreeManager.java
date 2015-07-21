@@ -5,7 +5,7 @@ import java.util.HashSet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
@@ -15,7 +15,7 @@ import com.ipinpar.app.network.api.AgreeRequest;
 
 public class AgreeManager {
 	
-	private HashSet<AgreeEntity> userAgrees;
+	private static HashSet<AgreeEntity> userAgrees;
 	private static AgreeManager instance;
 	private AgreeManager() {
 		if (UserManager.getInstance().isLogin()) {
@@ -31,6 +31,10 @@ public class AgreeManager {
 					instance = new AgreeManager();
 				}
 			}
+		}
+		if (userAgrees == null && UserManager.getInstance().isLogin()) {
+			userAgrees = AgreeDao.getInstance().listAgree(
+					UserManager.getInstance().getUserInfo().getUid());
 		}
 		return instance;
 	}
@@ -60,10 +64,6 @@ public class AgreeManager {
 									}
 								}
 								else if (response !=null && response.getInt("result") == 0) {
-									userAgrees.remove(entity);
-									AgreeDao.getInstance().disagree(
-											UserManager.getInstance().getUserInfo().getUid(), 
-											fromid, fromidtype);
 									if (listener != null) {
 										listener.onAgreeResult(true);
 									}
@@ -78,6 +78,10 @@ public class AgreeManager {
 									}
 								}
 								else {
+									userAgrees.remove(entity);
+									AgreeDao.getInstance().disagree(
+											UserManager.getInstance().getUserInfo().getUid(), 
+											fromid, fromidtype);
 									if (listener != null) {
 										listener.onAgreeResult(false);
 									}
@@ -96,6 +100,7 @@ public class AgreeManager {
 
 						@Override
 						public void onResponse(JSONObject response) {
+							Log.e("agree result", response.toString());
 							try {
 								if (response !=null && response.getInt("result") == 1) {
 									userAgrees.add(entity);
@@ -107,10 +112,6 @@ public class AgreeManager {
 									}
 								}
 								else if (response !=null && response.getInt("result") == 0) {
-									userAgrees.add(entity);
-									AgreeDao.getInstance().agree(
-											UserManager.getInstance().getUserInfo().getUid(), 
-											fromid, fromidtype);
 									if (listener != null) {
 										listener.onAgreeResult(false);
 									}
@@ -125,6 +126,10 @@ public class AgreeManager {
 									}
 								}
 								else {
+									userAgrees.add(entity);
+									AgreeDao.getInstance().agree(
+											UserManager.getInstance().getUserInfo().getUid(), 
+											fromid, fromidtype);
 									if (listener != null) {
 										listener.onAgreeResult(true);
 									}

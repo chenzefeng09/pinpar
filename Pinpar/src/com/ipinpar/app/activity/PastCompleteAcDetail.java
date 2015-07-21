@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -74,13 +75,14 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 	private Button btnBack;
 	private Button btnShare;
 	
-	private LinearLayout llActicityMap;
+	private RelativeLayout rlActicityMap;
 	private String latitude;
 	private String longitude;
 	
 	private TextView tvAcName;
 	private TextView tvAcShop;
 	private TextView tvAcAddress;
+	private TextView tvAcAddressCity;
 	private TextView tvAcTimeBegin;
 	private TextView tvAcTimeEnd;
 	private TextView tvAcRegistEnd;
@@ -136,11 +138,12 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnShare = (Button) findViewById(R.id.btn_share);
 		
-		llActicityMap = (LinearLayout) findViewById(R.id.LL_acAddress);
+		rlActicityMap = (RelativeLayout) findViewById(R.id.RL_pastcomplete_acAddress);
 		
 		tvAcName = (TextView) findViewById(R.id.tv_acName);
 		tvAcShop = (TextView) findViewById(R.id.tv_acShop);
 		tvAcAddress = (TextView) findViewById(R.id.tv_acAddress);
+		tvAcAddressCity = (TextView) findViewById(R.id.tv_acAddress_city);
 		tvAcTimeBegin = (TextView) findViewById(R.id.tv_acTimeBegin);
 		tvAcTimeEnd = (TextView) findViewById(R.id.tv_acTimeEnd);
 		tvAcRegistEnd = (TextView) findViewById(R.id.tv_acRegistEnd);
@@ -158,7 +161,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 	}
 	
 	public void setView(){
-		llActicityMap.setOnClickListener(new OnClickListener() {
+		rlActicityMap.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -318,6 +321,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 		tvAcName.setText(acticityEntity.getAcname());
 		tvAcShop.setText(acticityEntity.getSname());
 		tvAcAddress.setText(acticityEntity.getAddressdetail());
+		tvAcAddressCity.setText(acticityEntity.getAddress2()+acticityEntity.getAddress3());
 		
 		long timeBegin = Long.parseLong(acticityEntity.getActivebegintime())*1000;
 		long timeEnd = Long.parseLong(acticityEntity.getActiveendtime())*1000;
@@ -327,7 +331,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
 		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeRegistedEnd));
 		
-		tvAcAllowedNum.setText(acticityEntity.getAgreecount()+"");
+		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");
 		tvAcForm.setText(acticityEntity.getDescription());
 		tvAcDetail.setText(acticityEntity.getDetail());
 		tvAcContact.setText(acticityEntity.getPhone());
