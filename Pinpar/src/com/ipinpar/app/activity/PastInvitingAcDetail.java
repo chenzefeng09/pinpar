@@ -89,12 +89,15 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 	private ListView statementListView;
 	private ScrollView statementScrollView;
 	
+	private View RL_view_more_statements;
+	
 	private String shareTitle;
 	private String shareContent;
 	private String shareImageUrl;
 	
 	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
-	
+	private static String PAGENUM = "1";
+	private static String OFFSET = "20";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +149,8 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 		
 		statementListView = (ListView) findViewById(R.id.lv_inviting_detail_the_statement);
 		statementScrollView = (ScrollView) findViewById(R.id.sv_activity_detail_desc);
+		
+		RL_view_more_statements = findViewById(R.id.RL_inviting_view_more_statement);
 	}
 	
 	public void setView(){
@@ -179,6 +184,18 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 				showShare();
 			}
 		});
+		RL_view_more_statements.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.putExtra("activityID", acid);
+				intent.setClass(mContext, StatementsListActivity.class);
+				startActivity(intent);
+			}
+		});
+		statementListView.setFooterDividersEnabled(false);
 		statementListView.setOnTouchListener(new View.OnTouchListener() {  
             
             @Override  
@@ -444,7 +461,10 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 
 				invitingAcStatementListRequest = new StatementListRequest(
 						acid+"", 
-						PAST_COMPLETE_ACTIVITY_STATEMENT,new Listener<JSONObject>() {
+						PAST_COMPLETE_ACTIVITY_STATEMENT,
+//						PAGENUM,
+//						OFFSET,
+						new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {
@@ -460,6 +480,17 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 							acStatementList.addAll(acStatementListEntity.getDeclarations());
 							
 							handlerInvitingAcStatementListRequest.sendEmptyMessage(1);
+							
+							if(acStatementList.size() < 3){
+								RL_view_more_statements.setVisibility(View.INVISIBLE);
+							}
+							
+							if(acStatementList.size() > 2){
+								Message msg = new Message();
+								msg.obj = acStatementList;
+								msg.what = 0;
+								handlerStateChanged.sendMessage(msg);
+							}
 						}
 					}
 					
@@ -483,6 +514,34 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 			}
 		}
 		
+	};
+	
+	Handler handlerStateChanged = new Handler(){
+
+		ArrayList<AcStatementEntity> tempAcStatementList = new ArrayList<AcStatementEntity>();
+		
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what){
+			case 0:
+				tempAcStatementList.addAll((ArrayList<AcStatementEntity>)msg.obj);
+				acStatementList.clear();
+				acStatementList.add(tempAcStatementList.get(0));
+				acStatementList.add(tempAcStatementList.get(1));
+				
+				setListViewHeightBasedOnChildren(statementListView);
+				
+				handlerStateChanged.sendEmptyMessage(1);
+				break;
+			case 1:
+				statementListAdapter.notifyDataSetChanged();
+				break;
+			default:
+				break;
+			}
+		}
 	};
 
 }

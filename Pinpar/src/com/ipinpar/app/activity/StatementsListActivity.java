@@ -56,6 +56,9 @@ public class StatementsListActivity extends PPBaseActivity {
 	private ListView statementListView;
 	
 	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
+	private static String PAGENUM = "1";
+	private static String OFFSET = "50";
+	private String maxAcId;
 	
 	
 	@Override
@@ -122,6 +125,8 @@ public class StatementsListActivity extends PPBaseActivity {
 				statementsListRequest = new StatementListRequest(
 						acid+"",
 						PAST_COMPLETE_ACTIVITY_STATEMENT,
+//						PAGENUM,
+//						OFFSET,
 						new Listener<JSONObject>() {
 					
 					@Override

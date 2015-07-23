@@ -100,11 +100,15 @@ public class OngoingAcDetail extends PPBaseActivity {
 	
 	private LinearLayout llRegist;
 	
+	private View RL_view_more_statements;
+	
 	private String shareTitle;
 	private String shareContent;
 	private String shareImageUrl;
 	
 	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
+	private static String PAGENUM = "1";
+	private static String OFFSET = "40";
 	
 	
 
@@ -160,11 +164,13 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcInterestedNum = (TextView) findViewById(R.id.tv_interested_detail_num);
 		tvAcRegistedNum = (TextView) findViewById(R.id.tv_regist_detail_num);
 		iv_interested = (ImageView) findViewById(R.id.iv_interested);
-		statementListView = (ListView) findViewById(R.id.lv_detail_the_statement);
+		statementListView = (ListView) findViewById(R.id.lv_ongoing_detail_the_statement);
 		statementScrollView = (ScrollView) findViewById(R.id.sv_activity_detail_desc);
 		
 		llRegist = (LinearLayout) findViewById(R.id.LL_regist);
 		LL_interested = findViewById(R.id.LL_interested);
+		
+		RL_view_more_statements = findViewById(R.id.RL_ongoing_view_more_statement);
 	}
 	
 	public void setView(){
@@ -212,7 +218,19 @@ public class OngoingAcDetail extends PPBaseActivity {
 				}
 			}
 		});
+		RL_view_more_statements.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.putExtra("activityID", acid);
+				intent.setClass(mContext, StatementsListActivity.class);
+				startActivity(intent);
+			}
+		});
 		
+		statementListView.setFooterDividersEnabled(false);
 		statementListView.setOnTouchListener(new View.OnTouchListener() {  
             
             @Override  
@@ -558,6 +576,8 @@ public class OngoingAcDetail extends PPBaseActivity {
 				ongoingAcStatementListRequest = new StatementListRequest(
 						acid+"",
 						PAST_COMPLETE_ACTIVITY_STATEMENT,
+//						PAGENUM,
+//						OFFSET,
 						new Listener<JSONObject>() {
 					
 					@Override
@@ -574,6 +594,17 @@ public class OngoingAcDetail extends PPBaseActivity {
 							acStatementList.addAll(acStatementListEntity.getDeclarations());
 							
 							handlerOngoingAcStatementListRequest.sendEmptyMessage(1);
+							
+							if(acStatementList.size() < 3){
+								RL_view_more_statements.setVisibility(View.INVISIBLE);
+							}
+							
+							if(acStatementList.size() > 2){
+								Message msg = new Message();
+								msg.obj = acStatementList;
+								msg.what = 0;
+								handlerStateChanged.sendMessage(msg);
+							}
 						}
 					}
 					
@@ -597,6 +628,34 @@ public class OngoingAcDetail extends PPBaseActivity {
 			}
 		}
 		
+	};
+	
+	Handler handlerStateChanged = new Handler(){
+
+		ArrayList<AcStatementEntity> tempAcStatementList = new ArrayList<AcStatementEntity>();
+		
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what){
+			case 0:
+				tempAcStatementList.addAll((ArrayList<AcStatementEntity>)msg.obj);
+				acStatementList.clear();
+				acStatementList.add(tempAcStatementList.get(0));
+				acStatementList.add(tempAcStatementList.get(1));
+				
+				setListViewHeightBasedOnChildren(statementListView);
+				
+				handlerStateChanged.sendEmptyMessage(1);
+				break;
+			case 1:
+				statementListAdapter.notifyDataSetChanged();
+				break;
+			default:
+				break;
+			}
+		}
 	};
 
 }

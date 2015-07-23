@@ -183,7 +183,7 @@
 	        android:layout_marginRight="8dp"
 	        android:text="@string/past_dynamic_description"
 	        android:textSize="14sp"
-	        android:textColor="@color/black"/>
+	        android:textColor="#8c8c8c"/>
     </RelativeLayout>
     
 
