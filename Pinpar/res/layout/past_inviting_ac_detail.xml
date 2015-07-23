@@ -310,6 +310,7 @@
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
 		                android:layout_marginLeft="5dp"
+		                android:lineSpacingExtra="2dp"
 		                android:text="@string/activity_fill_string"
 		                android:textSize="14sp"
 				        android:textColor="@color/activity_detail"/>
@@ -337,50 +338,59 @@
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
 		                android:layout_marginLeft="5dp"
+		                android:lineSpacingExtra="2dp"
 		                android:text="@string/activity_fill_string"
 		                android:textSize="14sp"
 				        android:textColor="@color/activity_detail"/>
 		         </LinearLayout>
 		         
-		          <LinearLayout 
+		          <RelativeLayout 
 		             android:id="@+id/LL_acContact"
-		             android:layout_width="wrap_content"
+		             android:layout_width="fill_parent"
 		             android:layout_height="wrap_content"
-		             android:orientation="horizontal"
 		             android:layout_below="@id/LL_acDetail"
 		             android:layout_marginTop="3dp"
-		             android:layout_marginBottom="5dp"
+		             android:layout_marginBottom="10dp"
 		             android:layout_marginLeft="10dp"
+		             android:layout_marginRight="10dp"
 		             android:layout_centerHorizontal="true"
 		             android:background="@drawable/rounded_text_grey_bg">
-		             <ImageView 
-		                 android:id="@+id/iv_acContact"
-		                 android:layout_width="20dp"
-		                 android:layout_height="20dp"
-		                 android:layout_marginLeft="5dp"
-		                 android:layout_marginTop="3dp"
-		                 android:layout_marginBottom="3dp"
-		                 android:background="@drawable/ac_telephone"/>
-		             <TextView 
-				        android:id="@+id/tv_acContact_tip"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:layout_marginLeft="3dp"
-				        android:layout_gravity="center_vertical"
-				        android:text="@string/activity_contact"
-				        android:textSize="14sp"
-				        android:textColor="@color/activity_detail_tip"/>
-		             <TextView 
-		                android:id="@+id/tv_acContact"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:layout_marginLeft="5dp"
-		                android:layout_marginRight="5dp"
-		                android:layout_gravity="center_vertical"
-		                android:text="@string/activity_fill_string"
-		                android:textSize="14sp"
-				        android:textColor="@color/activity_detail"/>
-		         </LinearLayout>
+		             <LinearLayout 
+		                 android:id="@+id/LL_inner_acContact"
+		                 android:layout_width="wrap_content"
+		                 android:layout_height="wrap_content"
+		                 android:layout_centerHorizontal="true"
+		                 android:orientation="horizontal">
+		                 <ImageView 
+			                 android:id="@+id/iv_acContact"
+			                 android:layout_width="20dp"
+			                 android:layout_height="20dp"
+			                 android:layout_marginLeft="5dp"
+			                 android:layout_marginTop="3dp"
+			                 android:layout_marginBottom="3dp"
+			                 android:background="@drawable/ac_telephone"/>
+			             <TextView 
+					        android:id="@+id/tv_acContact_tip"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_marginLeft="3dp"
+					        android:layout_gravity="center_vertical"
+					        android:text="@string/activity_contact"
+					        android:textSize="14sp"
+					        android:textColor="@color/activity_detail_tip"/>
+			             <TextView 
+			                android:id="@+id/tv_acContact"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="5dp"
+			                android:layout_marginRight="5dp"
+			                android:layout_gravity="center_vertical"
+			                android:text="@string/activity_fill_string"
+			                android:textSize="14sp"
+					        android:textColor="@color/activity_detail"/>
+		             </LinearLayout>
+		             
+		         </RelativeLayout>
 		         
 		          <RelativeLayout 
 			        android:id="@+id/RL_detail_the_statement"

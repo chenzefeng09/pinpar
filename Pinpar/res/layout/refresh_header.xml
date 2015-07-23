@@ -19,7 +19,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" >
 
             <!-- 箭头 -->
@@ -29,7 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_pulltorefresh_arrow" />
+                android:src="@drawable/refresh_refresh"
+                android:visibility="gone" />
 
             <!-- 进度条 -->
 
@@ -44,33 +45,6 @@
 
         <!-- 提示、最近更新 -->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" >
-
-            <!-- 提示 -->
-
-            <TextView
-                android:id="@+id/pull_to_refresh_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pull_to_refresh_pull_label"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <!-- 最近更新 -->
-
-            <TextView
-                android:id="@+id/pull_to_refresh_updated_at"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pull_to_refresh_lastest"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

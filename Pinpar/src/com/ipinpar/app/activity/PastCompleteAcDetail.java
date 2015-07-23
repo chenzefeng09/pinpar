@@ -14,8 +14,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -35,6 +35,7 @@ import com.ipinpar.app.entity.AcImageEntity;
 import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityStatementListEntity;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityDetailRequest;
 import com.ipinpar.app.network.api.StatementListRequest;
 import com.ipinpar.app.view.RollViewPager;
@@ -102,6 +103,8 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 	private String shareContent;
 	private String shareImageUrl;
 	
+	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
+	private static String PAST_COMPLETE_ACTIVITY_MEMBEREXPERI = "2";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -329,7 +332,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 		tvAcTimeEnd.setText(DateFormat.format("kk:mm", timeEnd));
 		
 		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
-		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeRegistedEnd));
+		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd", timeRegistedEnd));
 		
 		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");
 		tvAcForm.setText(acticityEntity.getDescription());
@@ -486,7 +489,9 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 
-				completeAcMemberExperiListRequest = new StatementListRequest("25","25","2", new Listener<JSONObject>() {
+				completeAcMemberExperiListRequest = new StatementListRequest(
+						acid+"",
+						PAST_COMPLETE_ACTIVITY_MEMBEREXPERI, new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {
@@ -536,7 +541,9 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 
-				completeAcStatementListRequest = new StatementListRequest("",acid+"", new Listener<JSONObject>() {
+				completeAcStatementListRequest = new StatementListRequest(
+						acid+"", 
+						PAST_COMPLETE_ACTIVITY_STATEMENT, new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

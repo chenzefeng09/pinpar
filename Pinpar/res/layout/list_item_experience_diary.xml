@@ -24,6 +24,7 @@
         android:layout_toRightOf="@id/iv_diary_type"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        android:layout_marginRight="12dp"
         />
     
     <TextView 

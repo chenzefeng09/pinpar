@@ -187,10 +187,10 @@ public class CommentsListActivity extends PPBaseActivity {
 				return date.format(new Date(dateline*1000));
 			}
 			else if (deltatime/(60*60)>0) {
-				return deltatime/(60*60)+"小时之前";
+				return deltatime/(60*60)+"小时前";
 			}
 			else if (deltatime/(60)>0) {
-				return deltatime/(60)+"分钟之前";
+				return deltatime/(60)+"分钟前";
 			}
 			else {
 				return deltatime+"秒之前";

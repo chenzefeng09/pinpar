@@ -10,27 +10,25 @@ import com.ipinpar.app.util.MD5Util;
 public class StatementListRequest extends BaseJsonRequest{
 	private static final String PROTOCOL ="30010";
 	
-	public StatementListRequest(String uid,String acid,
+	public StatementListRequest(String acid,
 			Listener<JSONObject> listener) {
 		super(Method.GET,
-				String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s",
+				String.format("api.pinpa?protocol=%s&b=%s&c=%s",
 						PROTOCOL,
-						uid,
 						acid,
-						MD5Util.MD5(PROTOCOL+uid+acid+"pinpa")
+						MD5Util.MD5(PROTOCOL+acid+"pinpa")
 						),
 				null, listener);
 	}
 	
-	public StatementListRequest(String uid,String acid,
+	public StatementListRequest(String acid,
 			String pageNum,String pageCount,
 			Listener<JSONObject> listener) {
 		super(Method.GET,
 				String.format("api.pinpa?protocol=%s&a=%s",
 						PROTOCOL,
-						uid,
 						acid,
-						MD5Util.MD5(PROTOCOL+uid+acid+"pinpa"),
+						MD5Util.MD5(PROTOCOL+acid+"pinpa"),
 						pageNum,
 						pageCount
 						),
@@ -38,12 +36,11 @@ public class StatementListRequest extends BaseJsonRequest{
 	}
 	
 	//根据type值可以决定返回的是最强宣言或者趴友经历（1、最强宣言；2、趴友经历）
-	public StatementListRequest(String uid,String acid,String type,
+	public StatementListRequest(String acid,String type,
 			Listener<JSONObject> listener) {
 		super(Method.GET,
-				String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&d=%s",
+				String.format("api.pinpa?protocol=%s&b=%s&c=%s&d=%s",
 						PROTOCOL,
-						uid,
 						acid,
 						MD5Util.MD5(PROTOCOL+acid+"pinpa"),
 						type
@@ -51,13 +48,12 @@ public class StatementListRequest extends BaseJsonRequest{
 				null, listener);
 	}
 	
-	public StatementListRequest(String uid,String acid,String type,
+	public StatementListRequest(String acid,String type,
 			String pageNum,String pageCount,
 			Listener<JSONObject> listener) {
 		super(Method.GET,
-				String.format("api.pinpa?protocol=%s&a=%s",
+				String.format("api.pinpa?protocol=%s&b=%s&c=%s&d=%s&pageNum=%s&pageCount=%s",
 						PROTOCOL,
-						uid,
 						acid,
 						MD5Util.MD5(PROTOCOL+acid+type+"pinpa"),
 						type,

@@ -13,6 +13,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.RelativeLayout;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,7 +36,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
 
-	private ProgressDialog wattingDialog;
+//	private ProgressDialog wattingDialog;
+	private RelativeLayout rlMyInvitedNoTip;
 	
 	//请求往期的活动
 	private MyActivityListRequest myInvitedAcsRequest;
@@ -73,7 +75,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 	
 	public void findView(){
 		
-		wattingDialog = new ProgressDialog(mContext,SCROLL_STATE_TOUCH_SCROLL);
+//		wattingDialog = new ProgressDialog(mContext,SCROLL_STATE_TOUCH_SCROLL);
+		rlMyInvitedNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyInvitedActivityListAdapter(mContext,activityList);
 		
@@ -176,7 +179,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
-				wattingDialog.show();
+//				wattingDialog.show();
+				//1、uid 2、type(报名的、受邀的、感兴趣的) 3、pagenum 4、pagecount
 				myInvitedAcsRequest = new MyActivityListRequest(
 						UserManager.getInstance().getUserInfo().getUid()+"",
 						"2","1","10", new Listener<JSONObject>() {
@@ -193,7 +197,11 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 						activityList.clear();
 						activityList.addAll(acList.getActives());
 						
-						wattingDialog.dismiss();
+						if(activityList.size() == 0){
+							rlMyInvitedNoTip.setVisibility(View.VISIBLE);
+						}
+						
+//						wattingDialog.dismiss();
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
 					}

@@ -211,3 +211,4 @@ public class DisplayUtil {
 				+ (listView.getDividerHeight() * (adapter.getCount() - 1));
 	}
 }
+

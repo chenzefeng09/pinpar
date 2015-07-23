@@ -1,9 +1,8 @@
 package com.ipinpar.app.widget;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,8 +15,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.ipinpar.app.R;
 
@@ -36,10 +33,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 	private final static int RATIO = 3;
 	private LayoutInflater inflater;
 	private LinearLayout headView;
-	private TextView tipsTextview;
-	private TextView lastUpdatedTextView;
 	private ImageView arrowImageView;
-	private ProgressBar progressBar;
 	private RotateAnimation animation;
 	private RotateAnimation reverseAnimation;
 	// 用于保证startY的值在一个完整的touch事件中只被记录一次
@@ -75,12 +69,6 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 				.findViewById(R.id.pull_to_refresh_image);
 		arrowImageView.setMinimumWidth(70);
 		arrowImageView.setMinimumHeight(50);
-		progressBar = (ProgressBar) headView
-				.findViewById(R.id.pull_to_refresh_progress);
-		tipsTextview = (TextView) headView
-				.findViewById(R.id.pull_to_refresh_text);
-		lastUpdatedTextView = (TextView) headView
-				.findViewById(R.id.pull_to_refresh_updated_at);
 		measureView(headView);
 		headContentHeight = headView.getMeasuredHeight();
 		headView.setPadding(0, -1 * headContentHeight, 0, 0);
@@ -237,50 +225,39 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 	public void changeHeaderViewByState() {
 		switch (state) {
 		case RELEASE_To_REFRESH:
-			arrowImageView.setVisibility(View.VISIBLE);
-			progressBar.setVisibility(View.GONE);
-			tipsTextview.setVisibility(View.VISIBLE);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
+			arrowImageView.setVisibility(View.GONE);
 			arrowImageView.clearAnimation();
-			arrowImageView.startAnimation(animation);
-			tipsTextview.setText(R.string.pull_to_refresh_release_label);
+//			arrowImageView.startAnimation(animation);
 			break;
 		case PULL_To_REFRESH:
-			progressBar.setVisibility(View.GONE);
-			tipsTextview.setVisibility(View.VISIBLE);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
-			arrowImageView.setVisibility(View.VISIBLE);
+			arrowImageView.setVisibility(View.GONE);
 			// 是由RELEASE_To_REFRESH状态转变来的
 			if (isBack) {
 				isBack = false;
 				arrowImageView.clearAnimation();
 				arrowImageView.startAnimation(reverseAnimation);
 
-				tipsTextview.setText(R.string.pull_to_refresh_pull_label);
 			} else {
-				tipsTextview.setText(R.string.pull_to_refresh_pull_label);
 			}
 			break;
 
 		case REFRESHING:
 
 			headView.setPadding(0, 0, 0, 0);
-
-			progressBar.setVisibility(View.VISIBLE);
-			arrowImageView.clearAnimation();
-			arrowImageView.setVisibility(View.GONE);
-			tipsTextview.setText(R.string.pull_to_refresh_on_refreshing);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
+			arrowImageView.setVisibility(View.VISIBLE);
+			AnimationDrawable animationDrawable = (AnimationDrawable) arrowImageView.getDrawable();  
+            animationDrawable.start();  
+//			arrowImageView.clearAnimation();
+//			arrowImageView.setVisibility(View.GONE);
 			break;
 		case DONE:
 			headView.setPadding(0, -1 * headContentHeight, 0, 0);
 
-			progressBar.setVisibility(View.GONE);
 			arrowImageView.clearAnimation();
-			arrowImageView.setImageResource(R.drawable.ic_pulltorefresh_arrow);
-			tipsTextview.setText(R.string.pull_to_refresh_pull_label);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
+			arrowImageView.setImageResource(R.drawable.refresh_refresh);
+			arrowImageView.setVisibility(View.GONE);
+//			arrowImageView.setImageDrawable(new ColorDrawable(0x00000000));;
 			break;
 		}
 	}
@@ -296,11 +273,6 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	public void onRefreshComplete() {
 		state = DONE;
-		lastUpdatedTextView
-				.setText(getContext()
-						.getString(R.string.pull_to_refresh_lastest)
-						+ Calendar.getInstance(Locale.CHINA).getTime()
-								.toLocaleString());
 		changeHeaderViewByState();
 	}
 

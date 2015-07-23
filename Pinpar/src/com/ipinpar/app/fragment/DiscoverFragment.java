@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,7 +37,7 @@ import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 
-public class DiscoverFragment extends PPBaseFragment implements OnScrollListener{
+public class DiscoverFragment extends PPBaseFragment{
 
 	
 	private Context mContext;
@@ -46,7 +45,6 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 	private View view;
 	
 	private LinearLayout llPastActivities;
-	private ProgressDialog wattingDialog;
 	
 	//请求进行中的活动
 	private ActivityListRequest ongoingAcsRequest;
@@ -56,6 +54,13 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 	
 	private PullToRefreshListView ongoingActicitiesListView;
 	private OngoingActivityListAdapter activityListAdapter;
+	
+	//分页相关
+	private static String ONGOING_ACLIST_STATUS = "1";
+	
+	private static String PAGENUM = "1";
+	private static String OFFSET = "1";
+	private String maxAcId;
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -94,11 +99,9 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		
 		activityListAdapter = new OngoingActivityListAdapter(mContext,activityList,apiQueue);
 		
-		wattingDialog = new ProgressDialog(mContext, SCROLL_STATE_TOUCH_SCROLL);
 		llPastActivities= (LinearLayout) view.findViewById(R.id.LL_title_past);
 		
 		ongoingActicitiesListView = (PullToRefreshListView) view.findViewById(R.id.ongoing_activities_list);
-		
 		if(activityListAdapter!=null){
 			ongoingActicitiesListView.setAdapter(activityListAdapter);
 		}
@@ -114,18 +117,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		
 	}
 
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// TODO Auto-generated method stub
-	}
 
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-		// TODO Auto-generated method stub
-
-	}
-	
 	private OnClickListener onPastActivityClickListener = new OnClickListener() {
 		
 		@Override
@@ -147,19 +139,7 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 				// 判断滚动到底部
 				if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
 					
-//					if(reqPackId.equals("-2")){
-//					
-//						//分页数先向上取整
-//						Log.d("当前本地总的记录数为：", DataManager.Instance().courseList.size()+"");
-//						reqPageNum = (int)Math.ceil((double)DataManager.Instance().courseList.size()/20) + 1;
-//						curPageNum = reqPageNum;
-//						Message msg = new Message();
-//						msg.arg1 = reqPageNum;
-//						msg.what = 5;
-//						handler.sendMessage(msg);
-//					}else{
-//						Toast.makeText(mContext, "已经加载全部内容", Toast.LENGTH_SHORT).show();
-//					}
+					handlerOngoingAcsRequest.sendEmptyMessage(1);
 					
 				}
 				break;
@@ -190,21 +170,9 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 		public void onRefresh() {
 			// Do work to refresh the list here.
 			
-//			if (NetWorkState.isConnectingToInternet()) {// 开始刷新
-//							
-//				handler.sendEmptyMessage(1);
-//				
-//				GetDataTask();
-//			} else {// 刷新失败
-//				handlerRefreshList.sendEmptyMessage(4);
-//				handlerRefreshList.sendEmptyMessage(9);
-//				handlerRefreshList.sendEmptyMessage(13);
-//			}
-			
 			if(NetWorkState.isConnectingToInternet()){
 				handlerOngoingAcsRequest.sendEmptyMessage(0);
 			}
-			
 			
 		}
 	};
@@ -217,22 +185,30 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
-				wattingDialog.show();
-				ongoingAcsRequest = new ActivityListRequest("1","","100","1","20", new Listener<JSONObject>() {
+				ongoingAcsRequest = new ActivityListRequest(
+						ONGOING_ACLIST_STATUS,
+						PAGENUM,
+						OFFSET, new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {
 						// TODO Auto-generated method stub
-						Log.d("onResponse:","进入onResponse！");
 						
 						Gson gson = new Gson();
 						
 						ActivityListEntity acList = gson.fromJson(response.toString(), ActivityListEntity.class);
 						
-						activityList.clear();
-						activityList.addAll(acList.getActives());
+						if(activityList.size()>0){
+							maxAcId = activityList.get(activityList.size()-1).getAcid()+"";
+						}else{
+							maxAcId = "0";
+						}
 						
-						wattingDialog.dismiss();
+						Message msg = new Message();
+						msg.obj = acList.getActives();
+						msg.what = 2;
+						handlerStateChanged.sendMessage(msg);
+						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
 					}
@@ -241,6 +217,36 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 				ongoingAcsRequest.setTag(TAG);
 				apiQueue.add(ongoingAcsRequest);
 			break;
+			
+			case 1:
+				ongoingAcsRequest = new ActivityListRequest(
+						ONGOING_ACLIST_STATUS,
+						maxAcId,
+						PAGENUM,
+						OFFSET, new Listener<JSONObject>() {
+					
+					@Override
+					public void onResponse(JSONObject response) {
+						// TODO Auto-generated method stub
+						
+						Gson gson = new Gson();
+						
+						ActivityListEntity acList = gson.fromJson(response.toString(), ActivityListEntity.class);
+						
+						activityList.addAll(acList.getActives());
+						if(activityList.size()>0){
+							maxAcId = activityList.get(activityList.size()-1).getAcid()+"";
+						}else{
+							maxAcId = "0";
+						}
+						handlerStateChanged.sendEmptyMessage(0);
+						handlerStateChanged.sendEmptyMessage(1);
+					}
+					
+				});
+				ongoingAcsRequest.setTag(TAG);
+				apiQueue.add(ongoingAcsRequest);
+				break;
 			
 			default:
 				
@@ -262,6 +268,10 @@ public class DiscoverFragment extends PPBaseFragment implements OnScrollListener
 				break;
 			case 1:
 				ongoingActicitiesListView.onRefreshComplete();
+				break;
+			case 2:
+				activityList.clear();
+				activityList.addAll((ArrayList<ActivityEntity>)msg.obj);
 				break;
 			default:
 				break;

@@ -3,7 +3,8 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto" 
     xmlns:app="http://schemas.android.com/apk/res-auto" 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp">
     <RelativeLayout 
         android:id="@+id/RL_activity_description"
         android:layout_width="fill_parent"

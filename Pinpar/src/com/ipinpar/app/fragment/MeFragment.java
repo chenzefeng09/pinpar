@@ -99,7 +99,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 			@Override
 			public void onResponse(JSONObject response) {
 				// TODO Auto-generated method stub
-				dissmissProgressDialog();
+//				dissmissProgressDialog();
 				try {
 					if (response != null && response.getInt("result") == 1) {
 						UserEntity userEntity = UserManager.getInstance().getUserInfo();
