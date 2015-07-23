@@ -36,6 +36,7 @@
     <!-- ShareSDK所需权限 -->
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:name="com.ipinpar.app.PPApplication"
         android:allowBackup="true"
@@ -60,6 +61,9 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="home" />
+        
+        <activity
+        android:name="com.umeng.fb.ConversationActivity"/>
 
         <!-- ShareSDK用到的Activity -->
 

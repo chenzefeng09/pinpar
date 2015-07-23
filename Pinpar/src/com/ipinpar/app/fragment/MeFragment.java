@@ -178,6 +178,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 				iv_sex.setImageResource(R.drawable.log_maleselected);
 				tv_qianming.setText("没有留下任何文字");
 				tv_edit.setText("登录");
+				tv_uname.setText("快登陆吧");
 		}
 		
 	}

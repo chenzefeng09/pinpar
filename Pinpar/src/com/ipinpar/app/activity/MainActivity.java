@@ -35,6 +35,7 @@ import com.ipinpar.app.fragment.MeFragment;
 import com.ipinpar.app.fragment.MessageFragment;
 import com.ipinpar.app.fragment.PastFragment;
 import com.ipinpar.app.util.NetWorkState;
+import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 public class MainActivity extends PPBaseActivity {
@@ -68,6 +69,8 @@ public class MainActivity extends PPBaseActivity {
 		
 		ShareSDK.initSDK(mContext);
 		UmengUpdateAgent.update(this);
+		FeedbackAgent agent = new FeedbackAgent(mContext);
+		agent.sync();
 		checkNetWork();
 		initWidgets();
 		
