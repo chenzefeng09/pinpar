@@ -144,6 +144,11 @@
     <string name="my_enrolled_title">我报名的活动</string>
     <!-- 3、"我"受邀的活动 -->
     <string name="my_invited_title">我受邀的活动</string>
+    <string name="my_interested_no">您还没有添加任何感兴趣的活动~</string>
+    <!-- 2、"我"报名的活动 -->
+    <string name="my_enrolled_no">您还没有报名任何活动~</string>
+    <!-- 3、"我"受邀的活动 -->
+    <string name="my_invited_no">您还没有收到任何邀请~</string>
     <string name="activity_default_invited_title">微薄之盐调酒体验师</string>
     
     <string name="activity_invited_envelope_desc">恭喜您！您收到了本次活动的体验邀请！请查看并确认！</string>

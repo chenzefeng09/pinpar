@@ -34,6 +34,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
 
 public class MeFragment extends PPBaseFragment implements OnClickListener{
 	
@@ -92,6 +93,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		MobclickAgent.onPageStart("PinparMeFragnemt"); //统计页面
 		if (UserManager.getInstance().isLogin()) {
 			
 		GetUserInfoRequest request = new GetUserInfoRequest(UserManager.getInstance().getUserInfo().getUid()+"", new Listener<JSONObject>() {
@@ -99,7 +101,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 			@Override
 			public void onResponse(JSONObject response) {
 				// TODO Auto-generated method stub
-				dissmissProgressDialog();
+//				dissmissProgressDialog();
 				try {
 					if (response != null && response.getInt("result") == 1) {
 						UserEntity userEntity = UserManager.getInstance().getUserInfo();
@@ -242,6 +244,10 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 		default:
 			break;
 		}
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("PinparMeFragnemt"); 
 	}
 
 }

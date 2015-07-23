@@ -13,13 +13,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.android.volley.Response.Listener;
@@ -29,8 +27,8 @@ import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.ExperienceDiaryDetailEntity;
 import com.ipinpar.app.manager.AgreeManager;
-import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ExperienceDiaryRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -146,7 +144,7 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							//分享中用到到字段
 							shareTitle = response.getString("title");
 							shareImageUrl = changeShareImageUrl(response.getString("img"));
-							shareSid = sid;
+							shareSid = expid;
 							
 						}
 					} catch (JSONException e) {
@@ -184,7 +182,7 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 							//分享中用到到字段
 							shareTitle = response.getString("title");
 							shareImageUrl = changeShareImageUrl(response.getString("img"));
-							shareSid = sid;
+							shareSid = expid;
 							
 							DiaryDetailAdapter adapter = new DiaryDetailAdapter(experienceDetials);
 							lv_diary.setAdapter(adapter);
@@ -234,7 +232,7 @@ public class ExperienceDiaryActivity extends PPBaseActivity {
 		 // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
 		 oks.setTitle(shareTitle);
 		 // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-		 oks.setTitleUrl("http://www.ipinpar.com");
+		 oks.setTitleUrl("http://m.ipinpar.com/summary.jsp?sid="+shareSid);
 		 // text是分享文本，所有平台都需要这个字段
 		 oks.setText("小伙伴们来看看这篇体验心得吧～");
 		 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数

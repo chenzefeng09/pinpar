@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +15,12 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
-import com.ipinpar.app.adapter.MyEnrolledActivityListAdapter;
 import com.ipinpar.app.adapter.MyInvitedActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
@@ -35,7 +34,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
 
-	private ProgressDialog wattingDialog;
+//	private ProgressDialog wattingDialog;
+	private RelativeLayout rlMyInvitedNoTip;
 	
 	//请求往期的活动
 	private MyActivityListRequest myInvitedAcsRequest;
@@ -73,7 +73,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 	
 	public void findView(){
 		
-		wattingDialog = new ProgressDialog(mContext,SCROLL_STATE_TOUCH_SCROLL);
+//		wattingDialog = new ProgressDialog(mContext,SCROLL_STATE_TOUCH_SCROLL);
+		rlMyInvitedNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyInvitedActivityListAdapter(mContext,activityList);
 		
@@ -176,7 +177,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
-				wattingDialog.show();
+//				wattingDialog.show();
+				//1、uid 2、type(报名的、受邀的、感兴趣的) 3、pagenum 4、pagecount
 				myInvitedAcsRequest = new MyActivityListRequest(
 						UserManager.getInstance().getUserInfo().getUid()+"",
 						"2","1","10", new Listener<JSONObject>() {
@@ -193,7 +195,11 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 						activityList.clear();
 						activityList.addAll(acList.getActives());
 						
-						wattingDialog.dismiss();
+						if(activityList.size() == 0){
+							rlMyInvitedNoTip.setVisibility(View.VISIBLE);
+						}
+						
+//						wattingDialog.dismiss();
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
 					}

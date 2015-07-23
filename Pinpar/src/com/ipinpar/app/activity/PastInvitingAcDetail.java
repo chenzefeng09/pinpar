@@ -93,6 +93,8 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 	private String shareContent;
 	private String shareImageUrl;
 	
+	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -281,7 +283,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 		tvAcTimeEnd.setText(DateFormat.format("kk:mm", timeEnd));
 		
 		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
-		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeRegistedEnd));
+		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd", timeRegistedEnd));
 		
 		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");
 		tvAcForm.setText(acticityEntity.getDescription());
@@ -440,7 +442,9 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 
-				invitingAcStatementListRequest = new StatementListRequest("",acid+"", new Listener<JSONObject>() {
+				invitingAcStatementListRequest = new StatementListRequest(
+						acid+"", 
+						PAST_COMPLETE_ACTIVITY_STATEMENT,new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

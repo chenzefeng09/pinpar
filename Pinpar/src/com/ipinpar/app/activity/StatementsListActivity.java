@@ -55,6 +55,9 @@ public class StatementsListActivity extends PPBaseActivity {
 	
 	private ListView statementListView;
 	
+	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -116,7 +119,10 @@ public class StatementsListActivity extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 				wattingDialog.show();
-				statementsListRequest = new StatementListRequest("",acid+"", new Listener<JSONObject>() {
+				statementsListRequest = new StatementListRequest(
+						acid+"",
+						PAST_COMPLETE_ACTIVITY_STATEMENT,
+						new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

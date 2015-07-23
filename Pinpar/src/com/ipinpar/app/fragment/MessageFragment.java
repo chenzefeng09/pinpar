@@ -47,6 +47,7 @@ import com.ipinpar.app.network.api.NotificationRequest;
 import com.ipinpar.app.util.PreferenceUtils;
 import com.ipinpar.app.util.SmileUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	private View rl_notification, rl_support, rl_comment;
@@ -120,6 +121,8 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+	    MobclickAgent.onPageStart("PinparMessageFragment"); //统计页面
+
 		if (UserManager.getInstance().isLogin()) {
 			NotificationRequest request = new NotificationRequest(UserManager
 					.getInstance().getUserInfo().getUid(), 1, 100,
@@ -407,5 +410,11 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	
+
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("PinparActivityListFragment"); 
 	}
 }

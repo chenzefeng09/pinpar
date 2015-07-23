@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class PPBaseActivity extends FragmentActivity{
@@ -50,6 +51,14 @@ public class PPBaseActivity extends FragmentActivity{
 		if (backview != null) {
 			backview.setOnClickListener(clickBack);
 		}
+		MobclickAgent.onResume(mContext);
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(mContext);
 	}
 	
 	public void setTitleText(String title){

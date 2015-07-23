@@ -104,6 +104,9 @@ public class OngoingAcDetail extends PPBaseActivity {
 	private String shareContent;
 	private String shareImageUrl;
 	
+	private static String PAST_COMPLETE_ACTIVITY_STATEMENT = "1";
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -379,7 +382,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcTimeEnd.setText(DateFormat.format("kk:mm", timeEnd));
 		
 		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
-		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeRegistedEnd));
+		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd", timeRegistedEnd));
 		
 		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");
 		tvAcForm.setText(acticityEntity.getDescription());
@@ -411,7 +414,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		 // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
 		 oks.setTitle(shareTitle);
 		 // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-		 oks.setTitleUrl("http://www.ipinpar.com");
+		 oks.setTitleUrl("http://m.ipinpar.com/active.jsp?acid="+acid);
 		 // text是分享文本，所有平台都需要这个字段
 		 oks.setText(shareContent);
 		 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -552,7 +555,10 @@ public class OngoingAcDetail extends PPBaseActivity {
 			switch(msg.what){
 			case 0:
 
-				ongoingAcStatementListRequest = new StatementListRequest("",acid+"", new Listener<JSONObject>() {
+				ongoingAcStatementListRequest = new StatementListRequest(
+						acid+"",
+						PAST_COMPLETE_ACTIVITY_STATEMENT,
+						new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {

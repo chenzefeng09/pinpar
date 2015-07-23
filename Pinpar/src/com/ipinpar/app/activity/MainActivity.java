@@ -35,6 +35,7 @@ import com.ipinpar.app.fragment.MeFragment;
 import com.ipinpar.app.fragment.MessageFragment;
 import com.ipinpar.app.fragment.PastFragment;
 import com.ipinpar.app.util.NetWorkState;
+import com.umeng.update.UmengUpdateAgent;
 
 public class MainActivity extends PPBaseActivity {
 	
@@ -66,7 +67,7 @@ public class MainActivity extends PPBaseActivity {
 		mContext = this;
 		
 		ShareSDK.initSDK(mContext);
-		
+		UmengUpdateAgent.update(this);
 		checkNetWork();
 		initWidgets();
 		

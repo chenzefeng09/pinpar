@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.umeng.analytics.MobclickAgent;
 
 public class PPApplication extends Application implements UncaughtExceptionHandler{
 	public static final String TAG = PPApplication.class.getSimpleName();
@@ -83,6 +83,7 @@ public class PPApplication extends Application implements UncaughtExceptionHandl
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		// TODO Auto-generated method stub
+		MobclickAgent.onKillProcess(this);
 		System.exit(0);
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
