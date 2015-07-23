@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.ipinpar.app">
+    android:orientation="horizontal"
+    android:background="@color/white" xmlns:app="http://schemas.android.com/apk/res/com.ipinpar.app">
     
     <com.ipinpar.app.view.CircleImageView
         android:id="@+id/iv_icon"
@@ -37,6 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
         android:background="@drawable/list_item_chat_bkg"
+        android:visibility="gone"
         />
     
     <ImageView 

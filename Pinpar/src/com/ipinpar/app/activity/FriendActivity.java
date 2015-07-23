@@ -136,13 +136,13 @@ public class FriendActivity extends PPBaseActivity {
 				holder = new ViewHolder();
 				holder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
 				holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-				holder.tv_chat = (TextView) convertView.findViewById(R.id.tv_chat);
+//				holder.tv_chat = (TextView) convertView.findViewById(R.id.tv_chat);
 				convertView.setTag(holder);
 			}
 			else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.tv_chat.setOnClickListener(new OnClickListener() {
+			convertView.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -154,6 +154,13 @@ public class FriendActivity extends PPBaseActivity {
 					startActivity(intent);
 				}
 			});
+			holder.iv_icon.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					startActivity(NameCardActivity.getIntent2Me(mContext, friendENtity.getUid()));
+				}
+			});
 			holder.tv_name.setText(friendENtity.getUsername());
 			ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+friendENtity.getUid(), holder.iv_icon,options);
 			return convertView;
@@ -162,7 +169,7 @@ public class FriendActivity extends PPBaseActivity {
 		private  class ViewHolder{
 			public ImageView iv_icon;
 			public TextView tv_name;
-			public TextView tv_chat;
+//			public TextView tv_chat;
 		}
 		
 	}

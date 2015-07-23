@@ -118,7 +118,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp" >
 
                     <TextView
                         android:id="@+id/tv_my_faverite_activity"
@@ -150,9 +151,9 @@
 
         <com.ipinpar.app.view.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/app_icon" 
             app:border_width="2dp"
             app:border_color="@color/white"/>

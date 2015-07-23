@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
                 android:layout_below="@id/rl_top"
-        layout="@layout/statement_list_item"/>
+        layout="@layout/statement_list_item_2"/>
     
     <ImageView 
         android:id="@+id/iv_1"
@@ -95,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/white"
         android:divider="@null"
         android:dividerHeight="0dp">
     </ListView>

@@ -81,7 +81,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 					dissmissProgressDialog();
 					try {
 						if (response != null && response.getInt("result") == 1) {
-							fl_intrest.removeAllViews();
+							
 							UserEntity userEntity = new UserEntity();
 							userEntity.setUid(response.getInt("uid"));
 							userEntity.setUsername(response.getString("username"));
@@ -89,6 +89,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 							userEntity.setSignature(response.getString("signature"));
 							userEntity.setImgsrc(response.getString("imgsrc"));
 							try {
+								hobbys.clear();
 								for(String string :response.getString("hobbys").split(",")){
 									if (!TextUtils.isEmpty(string)) {
 										hobbys.add(string);
@@ -99,6 +100,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 								e.printStackTrace();
 							}
 							ImageLoader.getInstance().displayImage(response.getString("imgsrc"), iv_icon);
+							fl_intrest.removeAllViews();
 							for(String hobbyEntity :hobbys){
 								TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.view_hobbys_textview, null);
 								textView.setText(hobbyEntity);
