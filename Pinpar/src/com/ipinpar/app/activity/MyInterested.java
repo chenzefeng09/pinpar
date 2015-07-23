@@ -15,7 +15,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -34,9 +33,6 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
 
-//	private ProgressDialog wattingDialog;
-	private RelativeLayout rlMyInterestedNoTip;
-	
 	//请求往期的活动
 	private MyActivityListRequest myInterestedAcsRequest;
 	
@@ -45,6 +41,11 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 	
 	private PullToRefreshListView myInterestedActicitiesListView;
 	private MyInterestedActivityListAdapter activityListAdapter;
+	
+	private static String MY_INTERESTED_AC_TYPE = "3";
+	private static String PAGENUM = "1";
+	private static String OFFSET = "40";
+	private String maxAcId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,6 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 	}
 	
 	public void findView(){
-		
-//		wattingDialog = new ProgressDialog(mContext,SCROLL_STATE_TOUCH_SCROLL);
-		rlMyInterestedNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyInterestedActivityListAdapter(mContext,activityList);
 		
@@ -169,11 +167,11 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
-//				wattingDialog.show();
-				//1、uid 2、type(报名的、受邀的、感兴趣的) 3、pagenum 4、pagecount
 				myInterestedAcsRequest = new MyActivityListRequest(
 						UserManager.getInstance().getUserInfo().getUid()+"",
-						"3","1","10", new Listener<JSONObject>() {
+						MY_INTERESTED_AC_TYPE,
+						PAGENUM,
+						OFFSET, new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {
@@ -187,11 +185,6 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 						activityList.clear();
 						activityList.addAll(acList.getActives());
 						
-						if(activityList.size() == 0){
-							rlMyInterestedNoTip.setVisibility(View.VISIBLE);
-						}
-						
-//						wattingDialog.dismiss();
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
 					}

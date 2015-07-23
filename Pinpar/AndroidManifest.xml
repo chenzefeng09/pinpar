@@ -92,13 +92,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 调用新浪原生SDK，需要注册的activity -->
-        <activity
-            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
-
+        <activity 
+			android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+			android:configChanges="keyboardHidden|orientation"
+			android:windowSoftInputMode="adjustResize"
+			android:exported="false" >
+		</activity>
+		
         <!-- 调用新浪原生SDK，需要注册的回调activity -->
         <activity
             android:name="cn.sharesdk.sina.weibo.SinaActivity"
@@ -172,18 +172,22 @@
             android:name="com.ipinpar.app.activity.UserInfoEditActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
+        
+         <activity
             android:name="com.ipinpar.app.activity.MyInterested"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
+        
+         <activity
             android:name="com.ipinpar.app.activity.MyEnrolled"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
+        
+          <activity
             android:name="com.ipinpar.app.activity.MyInvited"
             android:screenOrientation="portrait" >
         </activity>
+        
         <activity
             android:name="com.ipinpar.app.activity.SettingActivity"
             android:screenOrientation="portrait" >

@@ -87,12 +87,16 @@
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <!--  
 >>>>>>> bade6d34cab16e2a29efdda9224683dc12bf8bc5
 =======
     <!--  
 >>>>>>> 5d79b63a8858b527e9ddc9b85f6106d573340e28
+=======
+    <!--  
+>>>>>>> 991230b34e47f95690f7d794c024e0ef6dff1b90
 	<QQ
         Id="3"
         SortId="3"
@@ -102,6 +106,7 @@
         Enable="true" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
     -->
@@ -109,6 +114,9 @@
 =======
     -->
 >>>>>>> 5d79b63a8858b527e9ddc9b85f6106d573340e28
+=======
+    -->
+>>>>>>> 991230b34e47f95690f7d794c024e0ef6dff1b90
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
     
@@ -149,8 +157,11 @@
         Enable="true" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5d79b63a8858b527e9ddc9b85f6106d573340e28
+=======
+>>>>>>> 991230b34e47f95690f7d794c024e0ef6dff1b90
         
 	<WechatFavorite
         Id="6"
@@ -159,11 +170,14 @@
         AppSecret="a689eb83f05d1164aa4f1a9f002dd044"
         Enable="true" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> bade6d34cab16e2a29efdda9224683dc12bf8bc5
     
 =======
 >>>>>>> 5d79b63a8858b527e9ddc9b85f6106d573340e28
+=======
+>>>>>>> 991230b34e47f95690f7d794c024e0ef6dff1b90
 	<!--  
     <Facebook
         Id="8"

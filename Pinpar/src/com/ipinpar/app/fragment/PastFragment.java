@@ -64,7 +64,7 @@ public class PastFragment extends PPBaseFragment{
 	private static String PAST_ACLIST_STATUS = "2";
 	
 	private static String PAGENUM = "1";
-	private static String OFFSET = "1";
+	private static String OFFSET = "20";
 	private String maxAcId;
 	
 	@Override

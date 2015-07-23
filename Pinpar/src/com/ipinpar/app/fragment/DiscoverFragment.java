@@ -59,7 +59,7 @@ public class DiscoverFragment extends PPBaseFragment{
 	private static String ONGOING_ACLIST_STATUS = "1";
 	
 	private static String PAGENUM = "1";
-	private static String OFFSET = "1";
+	private static String OFFSET = "20";
 	private String maxAcId;
 	
 	@Override

@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -29,13 +29,11 @@ import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 
-public class MyEnrolled extends PPBaseActivity{
+public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
 
-	private RelativeLayout rlMyEnrolledNoTip;
-	
-	//请我报名的活动
+	//请求往期的活动
 	private MyActivityListRequest myEnrolledAcsRequest;
 	
 	//保存服务器返回的正在进行中的活动
@@ -44,12 +42,11 @@ public class MyEnrolled extends PPBaseActivity{
 	private PullToRefreshListView myEnrolledActicitiesListView;
 	private MyEnrolledActivityListAdapter activityListAdapter;
 	
-	//分页相关
-	private static String MY_ENROLLED_ACTIVITY_TYPE = "1";
-	
+	private static String MY_ENROLLED_AC_TYPE = "1";
 	private static String PAGENUM = "1";
-	private static String OFFSET = "20";
+	private static String OFFSET = "40";
 	private String maxAcId;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -77,8 +74,6 @@ public class MyEnrolled extends PPBaseActivity{
 	
 	public void findView(){
 		
-		rlMyEnrolledNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
-		
 		activityListAdapter = new MyEnrolledActivityListAdapter(mContext,activityList);
 		
 		myEnrolledActicitiesListView = (PullToRefreshListView) findViewById(R.id.my_enrolled_activities_list);
@@ -105,7 +100,19 @@ public class MyEnrolled extends PPBaseActivity{
 				// 判断滚动到底部
 				if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
 					
-					handlerMyEnrolledAcsRequest.sendEmptyMessage(1);
+//					if(reqPackId.equals("-2")){
+//					
+//						//分页数先向上取整
+//						Log.d("当前本地总的记录数为：", DataManager.Instance().courseList.size()+"");
+//						reqPageNum = (int)Math.ceil((double)DataManager.Instance().courseList.size()/20) + 1;
+//						curPageNum = reqPageNum;
+//						Message msg = new Message();
+//						msg.arg1 = reqPageNum;
+//						msg.what = 5;
+//						handler.sendMessage(msg);
+//					}else{
+//						Toast.makeText(mContext, "已经加载全部内容", Toast.LENGTH_SHORT).show();
+//					}
 					
 				}
 				break;
@@ -143,6 +150,17 @@ public class MyEnrolled extends PPBaseActivity{
 		public void onRefresh() {
 			// Do work to refresh the list here.
 			
+//			if (NetWorkState.isConnectingToInternet()) {// 开始刷新
+//							
+//				handler.sendEmptyMessage(1);
+//				
+//				GetDataTask();
+//			} else {// 刷新失败
+//				handlerRefreshList.sendEmptyMessage(4);
+//				handlerRefreshList.sendEmptyMessage(9);
+//				handlerRefreshList.sendEmptyMessage(13);
+//			}
+			
 			if(NetWorkState.isConnectingToInternet()){
 				handlerMyEnrolledAcsRequest.sendEmptyMessage(0);
 			}
@@ -159,79 +177,32 @@ public class MyEnrolled extends PPBaseActivity{
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
-				//1、uid 2、type(报名的、受邀的、感兴趣的) 3、pagenum 4、pagecount
 				myEnrolledAcsRequest = new MyActivityListRequest(
 						UserManager.getInstance().getUserInfo().getUid()+"",
-						MY_ENROLLED_ACTIVITY_TYPE,
+						MY_ENROLLED_AC_TYPE,
 						PAGENUM,
 						OFFSET, new Listener<JSONObject>() {
 					
 					@Override
 					public void onResponse(JSONObject response) {
 						// TODO Auto-generated method stub
+						Log.d("onResponse:","进入onResponse！");
 						
 						Gson gson = new Gson();
 						
 						ActivityListEntity acList = gson.fromJson(response.toString(), ActivityListEntity.class);
 						
-						if(activityList.size()>0){
-							maxAcId = activityList.get(activityList.size()-1).getAcid()+"";
-						}else{
-							maxAcId = "0";
-						}
-						
-						if(activityList.size() == 0){
-							rlMyEnrolledNoTip.setVisibility(View.VISIBLE);
-						}
-						
-						Message msg = new Message();
-						msg.obj = acList.getActives();
-						msg.what = 2;
-						handlerStateChanged.sendMessage(msg);
+						activityList.clear();
+						activityList.addAll(acList.getActives());
 						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
-					
 					}
 					
 				});
 				myEnrolledAcsRequest.setTag(TAG);
 				apiQueue.add(myEnrolledAcsRequest);
 			break;
-			case 1:
-				//1、uid 2、type(报名的、受邀的、感兴趣的) 3、pagenum 4、pagecount
-				myEnrolledAcsRequest = new MyActivityListRequest(
-						UserManager.getInstance().getUserInfo().getUid()+"",
-						MY_ENROLLED_ACTIVITY_TYPE,
-						maxAcId,
-						PAGENUM,
-						OFFSET, new Listener<JSONObject>() {
-					
-					@Override
-					public void onResponse(JSONObject response) {
-						// TODO Auto-generated method stub
-						
-						Gson gson = new Gson();
-						
-						ActivityListEntity acList = gson.fromJson(response.toString(), ActivityListEntity.class);
-						
-						activityList.addAll(acList.getActives());
-						
-						if(activityList.size()>0){
-							maxAcId = activityList.get(activityList.size()-1).getAcid()+"";
-						}else{
-							maxAcId = "0";
-						}
-						
-						handlerStateChanged.sendEmptyMessage(0);
-						handlerStateChanged.sendEmptyMessage(1);
-						
-					}
-					
-				});
-				myEnrolledAcsRequest.setTag(TAG);
-				apiQueue.add(myEnrolledAcsRequest);
-				break;
 			
 			default:
 				
@@ -254,13 +225,23 @@ public class MyEnrolled extends PPBaseActivity{
 			case 1:
 				myEnrolledActicitiesListView.onRefreshComplete();
 				break;
-			case 2:
-				activityList.clear();
-				activityList.addAll((ArrayList<ActivityEntity>)msg.obj);
-				break;
 			default:
 				break;
 			}
 		}
 	};
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
