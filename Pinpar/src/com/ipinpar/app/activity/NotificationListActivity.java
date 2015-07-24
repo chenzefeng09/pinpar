@@ -292,7 +292,7 @@ public class NotificationListActivity extends PPBaseActivity {
 				
 				@Override
 				public void onClick(View v) {
-					if (commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
+					if (!UserManager.getInstance().isLogin() || commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
 						startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
 					}
 				}

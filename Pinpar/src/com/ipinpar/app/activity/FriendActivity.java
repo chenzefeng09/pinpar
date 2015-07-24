@@ -51,7 +51,7 @@ public class FriendActivity extends PPBaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				FriendEntity frEntity = friends.get(arg2);
-				if (frEntity.getUid() != UserManager.getInstance().getUserInfo().getUid()) {
+				if (!UserManager.getInstance().isLogin() || frEntity.getUid() != UserManager.getInstance().getUserInfo().getUid()) {
 					startActivity(NameCardActivity.getIntent2Me(mContext, frEntity.getUid()));
 				}
 				
@@ -160,7 +160,7 @@ public class FriendActivity extends PPBaseActivity {
 				
 				@Override
 				public void onClick(View v) {
-					if (friendENtity.getUid() != UserManager.getInstance().getUserInfo().getUid()) {
+					if (!UserManager.getInstance().isLogin() || friendENtity.getUid() != UserManager.getInstance().getUserInfo().getUid()) {
 						startActivity(NameCardActivity.getIntent2Me(mContext, friendENtity.getUid()));
 					}
 					

@@ -445,7 +445,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					if (commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
+					if (!UserManager.getInstance().isLogin() || commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
 						startActivity(NameCardActivity.getIntent2Me(mContext,
 								commentEntity.getAuthorid()));
 					}

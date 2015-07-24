@@ -60,20 +60,20 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	private MessageAdapter adapter;
 	private ArrayList<EMConversation> conversations  = new ArrayList<EMConversation>();
 	private int unreadNotification;
+	private NewMessageBroadcastReceiver msgReceiver = new NewMessageBroadcastReceiver();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_message, null);
 		initView(view);
-		initChat();
 		return view;
 	}
 
 	private void initChat() {
-		NewMessageBroadcastReceiver msgReceiver = new NewMessageBroadcastReceiver();
 		IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-		intentFilter.setPriority(3);
+		intentFilter.setPriority(7);
 		getActivity().registerReceiver(msgReceiver, intentFilter);
 	}
 	private class NewMessageBroadcastReceiver extends BroadcastReceiver {
@@ -92,26 +92,7 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 					@Override
 					public void onSuccess() {
 						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
-						if (adapter == null) {
-							Hashtable<String, EMConversation> maps = EMChatManager
-									.getInstance().getAllConversations();
-							conversations.clear();;
-							for (Entry<String, EMConversation> entry : maps.entrySet()) {
-								conversations.add(entry.getValue());
-							}
-							adapter = new MessageAdapter(conversations);
-							lv_message.setAdapter(adapter);
-						} else {
-							Hashtable<String, EMConversation> maps = EMChatManager
-									.getInstance().getAllConversations();
-							conversations.clear();;
-							for (Entry<String, EMConversation> entry : maps.entrySet()) {
-								conversations.add(entry.getValue());
-							}
-							adapter.notifyDataSetChanged();
-						}
-						MainActivity mainActivity = (MainActivity) getActivity();
-						mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+						updateMessageList();
 					}
 					
 					@Override
@@ -127,19 +108,33 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 					}
 				});
 			}
-			
-			
-//			EMMessage message = EMChatManager.getInstance().getMessage(msgId);
-//			EMConversation	conversation = EMChatManager.getInstance().getConversation(username);
-			// 如果是群聊消息，获取到group id
-//			if (message.getChatType() == ChatType.GroupChat) {
-//				username = message.getTo();
-//			}
-//			if (!username.equals(username)) {
-//				// 消息不是发给当前会话，return
-//				return;
-//			}
+			else {
+				updateMessageList();
+			}
 		}
+	}
+	
+	private void updateMessageList(){
+		if (adapter == null) {
+			Hashtable<String, EMConversation> maps = EMChatManager
+					.getInstance().getAllConversations();
+			conversations.clear();;
+			for (Entry<String, EMConversation> entry : maps.entrySet()) {
+				conversations.add(entry.getValue());
+			}
+			adapter = new MessageAdapter(conversations);
+			lv_message.setAdapter(adapter);
+		} else {
+			Hashtable<String, EMConversation> maps = EMChatManager
+					.getInstance().getAllConversations();
+			conversations.clear();;
+			for (Entry<String, EMConversation> entry : maps.entrySet()) {
+				conversations.add(entry.getValue());
+			}
+			adapter.notifyDataSetChanged();
+		}
+		MainActivity mainActivity = (MainActivity) getActivity();
+		mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
 	}
 
 	private void initView(View view) {
@@ -159,6 +154,7 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		initChat();
 	    MobclickAgent.onPageStart("PinparMessageFragment"); //统计页面
 
 		if (UserManager.getInstance().isLogin()) {
@@ -250,22 +246,25 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 									
 									tv_newcomment.setText(commentcount+"个新评论");
 									tv_newsupport.setText(supportcount+"个新支持");
+									tv_newsup.setText(notificationcount+"个新通知");
 									if (supportcount == 0) {
 										tv_newsupport.setVisibility(View.GONE);
+									}
+									else {
+										tv_newsupport.setVisibility(View.VISIBLE);
 									}
 									if (commentcount == 0) {
 										tv_newcomment.setVisibility(View.GONE);
 									}
+									else {
+										tv_newcomment.setVisibility(View.VISIBLE);
 
-									tv_newcomment
-											.setText(commentcount + "个新评论");
-									tv_newsupport
-											.setText(supportcount + "个新支持");
-									if (supportcount == 0) {
-										tv_newsupport.setVisibility(View.GONE);
 									}
-									if (commentcount == 0) {
-										tv_newcomment.setVisibility(View.GONE);
+									if (notificationcount == 0) {
+										tv_newsup.setVisibility(View.GONE);
+									}
+									else {
+										tv_newsup.setVisibility(View.VISIBLE);
 									}
 									unreadNotification = notificationcount+supportcount+commentcount;
 									MainActivity mainActivity = (MainActivity) getActivity();
@@ -284,26 +283,7 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 					@Override
 					public void onSuccess() {
 						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
-						if (adapter == null) {
-							Hashtable<String, EMConversation> maps = EMChatManager
-									.getInstance().getAllConversations();
-							conversations.clear();;
-							for (Entry<String, EMConversation> entry : maps.entrySet()) {
-								conversations.add(entry.getValue());
-							}
-							adapter = new MessageAdapter(conversations);
-							lv_message.setAdapter(adapter);
-						} else {
-							Hashtable<String, EMConversation> maps = EMChatManager
-									.getInstance().getAllConversations();
-							conversations.clear();;
-							for (Entry<String, EMConversation> entry : maps.entrySet()) {
-								conversations.add(entry.getValue());
-							}
-							adapter.notifyDataSetChanged();
-						}
-						MainActivity mainActivity = (MainActivity) getActivity();
-						mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+						updateMessageList();
 					}
 					
 					@Override
@@ -319,6 +299,10 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 					}
 				});
 			}
+			else {
+				updateMessageList();
+			}
+			
 		}
 		else {
 			lv_message.setVisibility(View.GONE);
@@ -497,5 +481,6 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	public void onPause() {
 	    super.onPause();
 	    MobclickAgent.onPageEnd("PinparActivityListFragment"); 
+	    getActivity().unregisterReceiver(msgReceiver);
 	}
 }

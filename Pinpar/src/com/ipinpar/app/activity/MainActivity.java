@@ -75,7 +75,6 @@ public class MainActivity extends PPBaseActivity {
 		setContentView(R.layout.activity_main);
 		mContext = this;
 
-		ShareSDK.initSDK(mContext);
 		UmengUpdateAgent.update(this);
 		FeedbackAgent agent = new FeedbackAgent(mContext);
 		agent.sync();
