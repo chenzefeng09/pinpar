@@ -55,8 +55,8 @@ public class SettingActivity extends PPBaseActivity implements OnClickListener{
 		}
 		else {
 			btn_logout.setText("退出当前帐号");
-			tv_invite.setVisibility(View.VISIBLE);
-			tv_change_pwd.setVisibility(View.VISIBLE);
+//			tv_invite.setVisibility(View.VISIBLE);
+//			tv_change_pwd.setVisibility(View.VISIBLE);
 		}
 	}
 	
@@ -112,32 +112,38 @@ public class SettingActivity extends PPBaseActivity implements OnClickListener{
 			UmengUpdateAgent.update(mContext);
 			break;
 		case R.id.btn_logout:
-			new AlertDialog.Builder(mContext).setMessage("确认退出登录吗？")
-			.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					if (UserManager.getInstance().isLogin()) {
-						UserManager.getInstance().logOut();
-						btn_logout.setText("登录");
-						tv_invite.setVisibility(View.GONE);
-						tv_change_pwd.setVisibility(View.GONE);
-						startActivity(new Intent(mContext, MainActivity.class));
-					}
-					else {
-						startActivity(new Intent(mContext, LoginActivity.class));
-					}
-				}
-			}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+			if (UserManager.getInstance().isLogin()) {
+				new AlertDialog.Builder(mContext).setMessage("确认退出登录吗？")
+				.setPositiveButton("确认", new DialogInterface.OnClickListener() {
 					
-				}
-			}).create().show();
-			
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						if (UserManager.getInstance().isLogin()) {
+							UserManager.getInstance().logOut();
+							btn_logout.setText("登录");
+							tv_invite.setVisibility(View.GONE);
+							tv_change_pwd.setVisibility(View.GONE);
+							startActivity(new Intent(mContext, MainActivity.class));
+						}
+						else {
+							startActivity(new Intent(mContext, LoginActivity.class));
+						}
+					}
+				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+				}).create().show();
+
+			}
+			else {
+				startActivity(new Intent(mContext, LoginActivity.class));
+			}
+						
 			break;
 
 		default:

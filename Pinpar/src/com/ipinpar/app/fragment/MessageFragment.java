@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
+import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
@@ -38,6 +39,7 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.activity.ChatActivity;
 import com.ipinpar.app.activity.CommentsListActivity;
 import com.ipinpar.app.activity.LoginActivity;
+import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.activity.NotificationListActivity;
 import com.ipinpar.app.activity.SupportListActivity;
 import com.ipinpar.app.entity.NotificationEntity;
@@ -56,15 +58,15 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	private ArrayList<NotificationEntity> notifications = new ArrayList<NotificationEntity>();
 	private ListView lv_message;
 	private MessageAdapter adapter;
-	private ArrayList<EMConversation> conversations ;
-
+	private ArrayList<EMConversation> conversations  = new ArrayList<EMConversation>();
+	private int unreadNotification;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_message, null);
 		initView(view);
-//		initChat();
+		initChat();
 		return view;
 	}
 
@@ -84,23 +86,59 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 			String msgId = intent.getStringExtra("msgid");
 			//发送方
 			String username = intent.getStringExtra("from");
-			// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
-			Hashtable<String, EMConversation> maps = EMChatManager
-					.getInstance().getAllConversations();
-			conversations = new ArrayList<EMConversation>();
-			for (Entry<String, EMConversation> entry : maps.entrySet()) {
-				conversations.add(entry.getValue());
+			if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+				EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
+					
+					@Override
+					public void onSuccess() {
+						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+						if (adapter == null) {
+							Hashtable<String, EMConversation> maps = EMChatManager
+									.getInstance().getAllConversations();
+							conversations.clear();;
+							for (Entry<String, EMConversation> entry : maps.entrySet()) {
+								conversations.add(entry.getValue());
+							}
+							adapter = new MessageAdapter(conversations);
+							lv_message.setAdapter(adapter);
+						} else {
+							Hashtable<String, EMConversation> maps = EMChatManager
+									.getInstance().getAllConversations();
+							conversations.clear();;
+							for (Entry<String, EMConversation> entry : maps.entrySet()) {
+								conversations.add(entry.getValue());
+							}
+							adapter.notifyDataSetChanged();
+						}
+						MainActivity mainActivity = (MainActivity) getActivity();
+						mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+					}
+					
+					@Override
+					public void onProgress(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onError(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
-			EMMessage message = EMChatManager.getInstance().getMessage(msgId);
-			EMConversation	conversation = EMChatManager.getInstance().getConversation(username);
+			
+			
+//			EMMessage message = EMChatManager.getInstance().getMessage(msgId);
+//			EMConversation	conversation = EMChatManager.getInstance().getConversation(username);
 			// 如果是群聊消息，获取到group id
-			if (message.getChatType() == ChatType.GroupChat) {
-				username = message.getTo();
-			}
-			if (!username.equals(username)) {
-				// 消息不是发给当前会话，return
-				return;
-			}
+//			if (message.getChatType() == ChatType.GroupChat) {
+//				username = message.getTo();
+//			}
+//			if (!username.equals(username)) {
+//				// 消息不是发给当前会话，return
+//				return;
+//			}
 		}
 	}
 
@@ -124,6 +162,8 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	    MobclickAgent.onPageStart("PinparMessageFragment"); //统计页面
 
 		if (UserManager.getInstance().isLogin()) {
+			lv_message.setVisibility(View.VISIBLE);
+			
 			NotificationRequest request = new NotificationRequest(UserManager
 					.getInstance().getUserInfo().getUid(), 1, 100,
 					new Listener<JSONObject>() {
@@ -227,6 +267,9 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 									if (commentcount == 0) {
 										tv_newcomment.setVisibility(View.GONE);
 									}
+									unreadNotification = notificationcount+supportcount+commentcount;
+									MainActivity mainActivity = (MainActivity) getActivity();
+									mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
 								}
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
@@ -235,19 +278,57 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 						}
 					});
 			apiQueue.add(request);
-			if (adapter == null) {
-				Hashtable<String, EMConversation> maps = EMChatManager
-						.getInstance().getAllConversations();
-				conversations = new ArrayList<EMConversation>();
-				for (Entry<String, EMConversation> entry : maps.entrySet()) {
-					conversations.add(entry.getValue());
-				}
-				adapter = new MessageAdapter(conversations);
-				lv_message.setAdapter(adapter);
-			} else {
-				adapter.notifyDataSetChanged();
+			if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+				EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
+					
+					@Override
+					public void onSuccess() {
+						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+						if (adapter == null) {
+							Hashtable<String, EMConversation> maps = EMChatManager
+									.getInstance().getAllConversations();
+							conversations.clear();;
+							for (Entry<String, EMConversation> entry : maps.entrySet()) {
+								conversations.add(entry.getValue());
+							}
+							adapter = new MessageAdapter(conversations);
+							lv_message.setAdapter(adapter);
+						} else {
+							Hashtable<String, EMConversation> maps = EMChatManager
+									.getInstance().getAllConversations();
+							conversations.clear();;
+							for (Entry<String, EMConversation> entry : maps.entrySet()) {
+								conversations.add(entry.getValue());
+							}
+							adapter.notifyDataSetChanged();
+						}
+						MainActivity mainActivity = (MainActivity) getActivity();
+						mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+					}
+					
+					@Override
+					public void onProgress(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onError(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		}
+		else {
+			lv_message.setVisibility(View.GONE);
+			tv_newsupport.setText("");
+			tv_newcomment.setText("");
+			tv_newsup.setText("");
+			MainActivity mainActivity = (MainActivity) getActivity();
+			mainActivity.setUnreadCount(0);
+		}
+		
 	}
 
 	private class MessageAdapter extends BaseAdapter {

@@ -211,7 +211,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (UserManager.getInstance().isLogin()) {
-					startActivity(new Intent(mContext, EnrollStatement.class));
+					startActivity(EnrollStatement.getIntent2Me(mContext, acid));
 				}
 				else {
 					startActivity(new Intent(mContext, LoginActivity.class));

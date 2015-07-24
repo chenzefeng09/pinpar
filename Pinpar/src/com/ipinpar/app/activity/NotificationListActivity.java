@@ -103,7 +103,6 @@ public class NotificationListActivity extends PPBaseActivity {
 											if (!TextUtils.isEmpty(builder.toString())) {
 												builder.append(",");
 											}
-											comments.add(notificationEntity);
 											builder.append(notificationEntity.getId());
 										}
 									}
@@ -201,7 +200,7 @@ public class NotificationListActivity extends PPBaseActivity {
 						@Override
 						public void onClick(View v) {
 							HandleAddFriendRequest request = new HandleAddFriendRequest(
-									commentEntity.getAuthorid(), 
+									commentEntity.getFrom_id(), 
 									UserManager.getInstance().getUserInfo().getUid(),
 									"agree", "", new Listener<JSONObject>() {
 
@@ -232,7 +231,7 @@ public class NotificationListActivity extends PPBaseActivity {
 						@Override
 						public void onClick(View v) {
 							HandleAddFriendRequest request = new HandleAddFriendRequest(
-									commentEntity.getAuthorid(), 
+									commentEntity.getFrom_id(), 
 									UserManager.getInstance().getUserInfo().getUid(),
 									"disagree", "", new Listener<JSONObject>() {
 
@@ -293,7 +292,9 @@ public class NotificationListActivity extends PPBaseActivity {
 				
 				@Override
 				public void onClick(View v) {
-					startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+					if (commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
+						startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+					}
 				}
 			});
 			return convertView;

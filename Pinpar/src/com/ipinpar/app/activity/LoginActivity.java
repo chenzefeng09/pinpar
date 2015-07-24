@@ -62,7 +62,7 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.tv_read_protocol:
-			
+			startActivity(PPWebView.getIntent2Me(mContext, "http://api.ipinpar.com/pinpaV2/article.jsp","用户协议"));
 			break;
 		case R.id.ib_left:
 			setResult(RESULT_CANCELED);

@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -79,6 +80,7 @@ public class CommentsListActivity extends PPBaseActivity {
 									int total = Integer.parseInt(response.getString("total"));
 									JSONArray jsonArray = response.getJSONArray("data");
 									comments.clear();
+									StringBuilder builder = new StringBuilder();
 									for(int i=0;i<jsonArray.length();i++){
 										JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 										NotificationEntity notificationEntity = new NotificationEntity();
@@ -95,9 +97,25 @@ public class CommentsListActivity extends PPBaseActivity {
 										notificationEntity.setUid(jsonObject.getInt("uid"));
 										notificationEntity.setNote(jsonObject.getString("note"));
 										if ("comment".equals(notificationEntity.getType())) {
+											if (!TextUtils.isEmpty(builder.toString())) {
+												builder.append(",");
+											}
 											comments.add(notificationEntity);
+											builder.append(notificationEntity.getId());
 										}
 									}
+									ReadNotificationRequest request = new ReadNotificationRequest(
+											UserManager.getInstance().getUserInfo().getUid(),
+											builder.toString(), new Listener<JSONObject>() {
+
+												@Override
+												public void onResponse(
+														JSONObject response) {
+													// TODO Auto-generated method stub
+													
+												}
+											});
+									apiQueue.add(request);
 									int commentcount = 0;
 									int supportcount = 0;
 									int notificationcount = 0;
@@ -165,7 +183,9 @@ public class CommentsListActivity extends PPBaseActivity {
 			viewHoler.iv_icon.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+					if (commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
+						startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+					}
 				}
 			});
 			viewHoler.tv_comment_action.setText(commentEntity.getNote());

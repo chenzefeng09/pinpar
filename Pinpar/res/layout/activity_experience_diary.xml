@@ -80,6 +80,11 @@
                 android:divider="@null"
                 android:dividerHeight="0dp" >
             </com.ipinpar.app.view.ExpandableHeightListView>
+            
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="#ffffff"/>
         </LinearLayout>
     </ScrollView>
 
@@ -114,7 +119,7 @@
                 android:background="@color/transparent"
                 android:drawablePadding="8dp"
                 android:text="赞"
-                android:textColor="#f1f1f1" />
+                android:textColor="#8f72e6" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,7 +146,7 @@
                 android:background="@color/transparent"
                 android:drawablePadding="8dp"
                 android:text="评论"
-                android:textColor="#f1f1f1" />
+                android:textColor="#8f72e6" />
         </LinearLayout>
     </LinearLayout>
 

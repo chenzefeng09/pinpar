@@ -152,9 +152,9 @@ public class EnrollUserinfo extends PPBaseActivity{
 						request = new AddEnrollInfoRequest(
 								UserManager.getInstance().getUserInfo().getUid(), 
 								username, 
-								"北京",
-								"海淀区",
-								"知春路",
+								address1,
+								address2,
+								address3,
 								idnumber, 
 								phone, 
 								sex,
@@ -240,7 +240,7 @@ public class EnrollUserinfo extends PPBaseActivity{
 	}
 	
 	public static Intent getIntent2Me(Context context,int acid,String declaration){
-		Intent intent = new Intent(context, EnrollDefaultInfoActivity.class);
+		Intent intent = new Intent(context, EnrollUserinfo.class);
 		intent.putExtra("acid", acid);
 		intent.putExtra("declaration", declaration);
 		return intent;
