@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +35,7 @@ import com.ipinpar.app.network.api.ActivityListRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
+import com.umeng.analytics.MobclickAgent;
 
 public class DiscoverFragment extends PPBaseFragment{
 
@@ -255,6 +255,15 @@ public class DiscoverFragment extends PPBaseFragment{
 		}
 		
 	};
+	
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("PinparActivityListFragment"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("PinparActivityListFragment"); 
+	}
 	
 	Handler handlerStateChanged = new Handler(){
 

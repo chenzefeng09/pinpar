@@ -34,6 +34,7 @@ public class EnrollDefaultInfoActivity extends PPBaseActivity {
 	private EnrollInfoEntity currEntity; 
 	private int acid;
 	private String declaration;
+	private TextView tv_enroll_userinfo_protocol;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -46,6 +47,7 @@ public class EnrollDefaultInfoActivity extends PPBaseActivity {
 		tv_enroll_address = (TextView) findViewById(R.id.tv_enroll_address);
 		tv_other_infos = (TextView) findViewById(R.id.tv_other_infos);
 		cb_enroll_userinfo_agree = (CheckBox) findViewById(R.id.cb_enroll_userinfo_agree);
+		tv_enroll_userinfo_protocol = (TextView) findViewById(R.id.tv_enroll_userinfo_protocol);
 		btn_submit = (Button) findViewById(R.id.btn_submit);
 		currEntity = EnrollInfoDao.getInstance().getDefaultInfo();
 		if (currEntity == null) {
@@ -78,6 +80,9 @@ public class EnrollDefaultInfoActivity extends PPBaseActivity {
 											setResult(RESULT_OK);
 											finish();
 										}
+										else if (response.getInt("result") == 102) {
+											Toast.makeText(mContext, "已报名过该活动，请等待审核~", 1000).show();
+										}
 										else {
 											Toast.makeText(mContext, "报名失败，请重试~", 1000).show();
 										}
@@ -101,6 +106,14 @@ public class EnrollDefaultInfoActivity extends PPBaseActivity {
 			public void onClick(View v) {
 				startActivityForResult(new Intent(mContext, EnrollInfoListActivity.class),
 						REQUEST_CODE_SELECT_ENROLL_INFO);
+			}
+		});
+		tv_enroll_userinfo_protocol.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(PPWebView.getIntent2Me(mContext,
+						"http://api.ipinpar.com/pinpaV2/articleEnroll.jsp", "报名协议"));
 			}
 		});
 	}

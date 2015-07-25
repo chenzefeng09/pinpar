@@ -13,13 +13,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.android.volley.Response.Listener;
@@ -29,8 +27,8 @@ import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.entity.ExperienceDiaryDetailEntity;
 import com.ipinpar.app.manager.AgreeManager;
-import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ExperienceDiaryRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

@@ -1,16 +1,25 @@
 package com.ipinpar.app.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.manager.UserManager;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 public class SettingActivity extends PPBaseActivity implements OnClickListener{
 	private TextView tv_change_pwd,et_sugest,tv_invite,tv_update;
@@ -46,8 +55,8 @@ public class SettingActivity extends PPBaseActivity implements OnClickListener{
 		}
 		else {
 			btn_logout.setText("退出当前帐号");
-			tv_invite.setVisibility(View.VISIBLE);
-			tv_change_pwd.setVisibility(View.VISIBLE);
+//			tv_invite.setVisibility(View.VISIBLE);
+//			tv_change_pwd.setVisibility(View.VISIBLE);
 		}
 	}
 	
@@ -62,25 +71,79 @@ public class SettingActivity extends PPBaseActivity implements OnClickListener{
 			
 			break;
 		case R.id.et_sugest:
-			
+			FeedbackAgent agent = new FeedbackAgent(mContext);
+			agent.startFeedbackActivity();
 			break;
 		case R.id.tv_invite:
 			
 			break;
 		case R.id.tv_update:
 			
+ 			
+			UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+				
+				@Override
+				public void onUpdateReturned(int arg0, UpdateResponse updateInfo) {
+					 switch (arg0) {
+				        case UpdateStatus.Yes: // has update
+				            UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
+				            break;
+				        case UpdateStatus.No: // has no update
+				        	String pkName = mContext.getPackageName();
+				        	 String versionName = "";
+							try {
+								versionName = getPackageManager().getPackageInfo(
+										pkName, 0).versionName;
+							} catch (NameNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+				            Toast.makeText(mContext, "您已是最新版本："+versionName, Toast.LENGTH_SHORT).show();
+				            break;
+				        case UpdateStatus.NoneWifi: // none wifi
+				            Toast.makeText(mContext, "没有wifi连接， 只在wifi下更新", Toast.LENGTH_SHORT).show();
+				            break;
+				        case UpdateStatus.Timeout: // time out
+				            Toast.makeText(mContext, "超时", Toast.LENGTH_SHORT).show();
+				            break;
+				        }
+				}
+			});
+			UmengUpdateAgent.update(mContext);
 			break;
 		case R.id.btn_logout:
 			if (UserManager.getInstance().isLogin()) {
-				UserManager.getInstance().logOut();
-				btn_logout.setText("登录");
-				tv_invite.setVisibility(View.GONE);
-				tv_change_pwd.setVisibility(View.GONE);
-				startActivity(new Intent(mContext, MainActivity.class));
+				new AlertDialog.Builder(mContext).setMessage("确认退出登录吗？")
+				.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						if (UserManager.getInstance().isLogin()) {
+							UserManager.getInstance().logOut();
+							btn_logout.setText("登录");
+							tv_invite.setVisibility(View.GONE);
+							tv_change_pwd.setVisibility(View.GONE);
+							startActivity(new Intent(mContext, MainActivity.class));
+						}
+						else {
+							startActivity(new Intent(mContext, LoginActivity.class));
+						}
+					}
+				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+				}).create().show();
+
 			}
 			else {
 				startActivity(new Intent(mContext, LoginActivity.class));
 			}
+						
 			break;
 
 		default:

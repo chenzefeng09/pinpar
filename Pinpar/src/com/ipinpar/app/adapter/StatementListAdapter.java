@@ -175,7 +175,9 @@ public class StatementListAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				mContext.startActivity(NameCardActivity.getIntent2Me(mContext, Integer.parseInt(acStatementEntity.getUid())));
+				if (!UserManager.getInstance().isLogin() || Integer.parseInt(acStatementEntity.getUid()) != UserManager.getInstance().getUserInfo().getUid()) {
+					mContext.startActivity(NameCardActivity.getIntent2Me(mContext, Integer.parseInt(acStatementEntity.getUid())));
+				}
 			}
 		});
 		return convertView;

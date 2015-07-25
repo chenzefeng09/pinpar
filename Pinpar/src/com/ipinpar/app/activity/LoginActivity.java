@@ -62,7 +62,7 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.tv_read_protocol:
-			
+			startActivity(PPWebView.getIntent2Me(mContext, "http://api.ipinpar.com/pinpaV2/article.jsp","用户协议"));
 			break;
 		case R.id.ib_left:
 			setResult(RESULT_CANCELED);
@@ -96,14 +96,14 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 												new EMCallBack() {// 回调
 													@Override
 													public void onSuccess() {
+														try {
+															EMChatManager.getInstance().updateCurrentUserNick(response.getString("username"));
+														} catch (JSONException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
 														runOnUiThread(new Runnable() {
 															public void run() {
-																try {
-																	EMChatManager.getInstance().updateCurrentUserNick(response.getString("username"));
-																} catch (JSONException e) {
-																	// TODO Auto-generated catch block
-																	e.printStackTrace();
-																}
 																EMChatManager
 																		.getInstance()
 																		.loadAllConversations();
@@ -150,6 +150,7 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 							apiQueue.add(request);
 			}
 			else {
+				dissmissProgressDialog();
 				Toast.makeText(mContext, "手机号或密码不能为空", 1000).show();
 
 			}

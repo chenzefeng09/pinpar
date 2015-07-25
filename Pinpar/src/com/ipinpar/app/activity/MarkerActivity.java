@@ -24,18 +24,24 @@ public class MarkerActivity extends PPBaseActivity{
 	private MapView mapView;
 	private String latitude,longitude;
 	private double dLatitude,dLongitude;
+	private TextView tvShopName;
+	private String shopName;
 	private LatLng latlng;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.activity_marker_map);
 		mapView = (MapView) findViewById(R.id.map);
 		mapView.onCreate(savedInstanceState); // 此方法必须重写
 		aMap = mapView.getMap();
+		tvShopName = (TextView) findViewById(R.id.tv_shopname_title);
+		
+		
 //		aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
 		latitude = getIntent().getStringExtra("latitude");
 		longitude = getIntent().getStringExtra("longitude");
+		shopName = getIntent().getStringExtra("shopname");
 		
 		dLatitude = Double.parseDouble(latitude);
 		dLongitude = Double.parseDouble(longitude);
@@ -48,6 +54,7 @@ public class MarkerActivity extends PPBaseActivity{
 		markerOption.position(latlng);
 		
 		aMap.addMarker(markerOption);
+		tvShopName.setText(shopName);
 		
 	}
 	

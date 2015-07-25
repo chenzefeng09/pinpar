@@ -4,33 +4,27 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
 import com.ipinpar.app.adapter.MyEnrolledActivityListAdapter;
-import com.ipinpar.app.adapter.MyInterestedActivityListAdapter;
-import com.ipinpar.app.adapter.PastActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
 import com.ipinpar.app.manager.UserManager;
-import com.ipinpar.app.network.api.ActivityListRequest;
 import com.ipinpar.app.network.api.MyActivityListRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
@@ -40,6 +34,8 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
 
+	private RelativeLayout rlMyEnrolledNoTip;
+	
 	//请求往期的活动
 	private MyActivityListRequest myEnrolledAcsRequest;
 	
@@ -81,6 +77,8 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 	
 	public void findView(){
 		
+		rlMyEnrolledNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
+		
 		activityListAdapter = new MyEnrolledActivityListAdapter(mContext,activityList);
 		
 		myEnrolledActicitiesListView = (PullToRefreshListView) findViewById(R.id.my_enrolled_activities_list);
@@ -96,7 +94,6 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 		myEnrolledActicitiesListView.setOnItemClickListener(onItemClickListener);
 		
 	}
-	
 	
 	private OnScrollListener onScrollListener = new OnScrollListener() {
 		
@@ -205,6 +202,10 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
+						
+						if(activityList.size() == 0){
+							rlMyEnrolledNoTip.setVisibility(View.VISIBLE);
+						}
 					}
 					
 				});

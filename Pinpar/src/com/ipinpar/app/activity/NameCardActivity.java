@@ -81,7 +81,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 					dissmissProgressDialog();
 					try {
 						if (response != null && response.getInt("result") == 1) {
-							fl_intrest.removeAllViews();
+							
 							UserEntity userEntity = new UserEntity();
 							userEntity.setUid(response.getInt("uid"));
 							userEntity.setUsername(response.getString("username"));
@@ -89,6 +89,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 							userEntity.setSignature(response.getString("signature"));
 							userEntity.setImgsrc(response.getString("imgsrc"));
 							try {
+								hobbys.clear();
 								for(String string :response.getString("hobbys").split(",")){
 									if (!TextUtils.isEmpty(string)) {
 										hobbys.add(string);
@@ -99,6 +100,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 								e.printStackTrace();
 							}
 							ImageLoader.getInstance().displayImage(response.getString("imgsrc"), iv_icon);
+							fl_intrest.removeAllViews();
 							for(String hobbyEntity :hobbys){
 								TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.view_hobbys_textview, null);
 								textView.setText(hobbyEntity);
@@ -186,13 +188,9 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO Auto-generated method stub
-//								TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.view_hobbys_textview, null);
-//								textView.setText(editText.getText().toString().trim());
-//								hobbys.add(editText.getText().toString().trim());
-//								fl_intrest.addView(textView);
 								AddFriendRequest request;
 								try {
-									request = new AddFriendRequest(currUser.getUid(),
+									request = new AddFriendRequest(UserManager.getInstance().getUserInfo().getUid(),
 											peer_uid, "", editText.getText().toString().trim(), new Listener<JSONObject>() {
 
 												@Override
@@ -200,13 +198,7 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 														JSONObject response) {
 													try {
 														if (response != null && response.getInt("result") == 1) {
-															Toast.makeText(mContext, "添加好友成功", 1000).show();
-															FriendEntity friendEntity = new FriendEntity();
-															friendEntity.setImgsrc(currUser.getImgsrc());
-															friendEntity.setUid(currUser.getUid());
-															friendEntity.setUsername(currUser.getUsername());
-															FriendDao.getInstance().insertUser(friendEntity);
-															btn_add_friend.setText("发消息");
+															Toast.makeText(mContext, "已发送好友请求", 1000).show();
 														}
 														else {
 															Toast.makeText(mContext, "添加好友失败，请重试", 1000).show();
@@ -215,7 +207,6 @@ public class NameCardActivity extends PPBaseActivity implements OnClickListener{
 														// TODO Auto-generated catch block
 														e.printStackTrace();
 													}
-													
 												}
 											});
 									apiQueue.add(request);

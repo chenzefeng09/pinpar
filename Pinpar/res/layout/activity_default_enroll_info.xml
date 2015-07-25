@@ -237,6 +237,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@id/cb_enroll_userinfo_agree"
+                            android:layout_alignTop="@id/cb_enroll_userinfo_agree"
+                            android:layout_alignBottom="@id/cb_enroll_userinfo_agree"
                             android:text="@string/enroll_userinfo_protocol"
                             android:textColor="#4f3a98"
                             android:textSize="14sp" />

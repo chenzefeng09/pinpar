@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import cn.sharesdk.framework.ShareSDK;
 
 import com.android.volley.Response.Listener;
 import com.easemob.EMCallBack;
@@ -29,6 +30,8 @@ public class SplashActivity extends PPBaseActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_splash);
 		final UserEntity entity = UserDao.getInstance().getLogedUser();
+		ShareSDK.initSDK(mContext);
+
 		if (entity != null) {
 			UserManager.getInstance().setUserInfo(entity);
 			LoginRequest request = new LoginRequest(entity.getMobile(), entity.getPassword(), new Listener<JSONObject>() {

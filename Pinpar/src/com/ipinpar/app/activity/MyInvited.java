@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.RelativeLayout;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,7 +21,6 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
-import com.ipinpar.app.adapter.MyEnrolledActivityListAdapter;
 import com.ipinpar.app.adapter.MyInvitedActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
@@ -34,6 +33,8 @@ import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 public class MyInvited extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
+	
+	private RelativeLayout rlMyEnrolledNoTip;
 
 	//请求往期的活动
 	private MyActivityListRequest myInvitedAcsRequest;
@@ -75,6 +76,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 	}
 	
 	public void findView(){
+		
+		rlMyEnrolledNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyInvitedActivityListAdapter(mContext,activityList);
 		
@@ -197,6 +200,10 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
+						
+						if(activityList.size() == 0){
+							rlMyEnrolledNoTip.setVisibility(View.VISIBLE);
+						}
 					}
 					
 				});

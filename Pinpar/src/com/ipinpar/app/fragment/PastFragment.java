@@ -39,6 +39,7 @@ import com.ipinpar.app.network.api.ActivityListRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
+import com.umeng.analytics.MobclickAgent;
 
 public class PastFragment extends PPBaseFragment{
 
@@ -291,5 +292,14 @@ public class PastFragment extends PPBaseFragment{
 			}
 		}
 	};
+	
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("PinparPastActivityFragment"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("PinparPastActivityFragment"); 
+	}
 	
 }

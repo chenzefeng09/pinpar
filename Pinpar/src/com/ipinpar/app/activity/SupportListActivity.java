@@ -185,7 +185,9 @@ public class SupportListActivity extends PPBaseActivity {
 				
 				@Override
 				public void onClick(View v) {
-					startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+					if (!UserManager.getInstance().isLogin() || commentEntity.getAuthorid() != UserManager.getInstance().getUserInfo().getUid()) {
+						startActivity(NameCardActivity.getIntent2Me(mContext, commentEntity.getAuthorid()));
+					}
 				}
 			});
 				viewHoler.tv_comment_action.setText(commentEntity.getNote());

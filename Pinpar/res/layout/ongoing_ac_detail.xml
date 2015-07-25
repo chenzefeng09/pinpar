@@ -33,7 +33,7 @@
 		                android:id="@+id/iv_interested"
 		                android:layout_width="20dp"
 		                android:layout_height="20dp"
-		                android:src="@drawable/ac_ongoing_list_interested"/>
+		                android:src="@drawable/ac_detail_interested"/>
 		            <TextView 
 		                android:id="@+id/tv_interested_tip"
 		                android:layout_width="wrap_content"

@@ -79,6 +79,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 	private RelativeLayout rlActicityMap;
 	private String latitude;
 	private String longitude;
+	private String shopName;
 	
 	private TextView tvAcName;
 	private TextView tvAcShop;
@@ -175,6 +176,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 				Intent intent = new Intent();
 				intent.putExtra("latitude", latitude);
 				intent.putExtra("longitude", longitude);
+				intent.putExtra("shopname", shopName);
 				intent.setClass(mContext, MarkerActivity.class);
 				startActivity(intent);
 			}
@@ -328,6 +330,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 	public void initActicityDetail(ActivityEntity acticityEntity){
 		tvAcName.setText(acticityEntity.getAcname());
 		tvAcShop.setText(acticityEntity.getSname());
+		shopName = acticityEntity.getSname();
 		tvAcAddress.setText(acticityEntity.getAddressdetail());
 		tvAcAddressCity.setText(acticityEntity.getAddress2()+acticityEntity.getAddress3());
 		
@@ -522,7 +525,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			
 			case 1:
 				
-				memberExperiListAdapter = new MemberExperiListAdapter(mContext,acMemberExperiList);
+				memberExperiListAdapter = new MemberExperiListAdapter(mContext,acMemberExperiList,apiQueue);
 				memberExperiListView.setAdapter(memberExperiListAdapter);
 				
 				setListViewHeightBasedOnChildren(memberExperiListView);

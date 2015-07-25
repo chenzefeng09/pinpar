@@ -5,71 +5,100 @@
     android:layout_height="match_parent"
     tools:context="com.ipinpar.app.activity.MainActivity" >
 
-    <include layout="@layout/app_header"/>
-    
-    <RelativeLayout 
+    <include layout="@layout/app_header" />
+
+    <RelativeLayout
         android:id="@+id/backlayout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent" >
+
         <RadioGroup
-	     android:id="@+id/tab_radiogroup"
-	     android:layout_width="fill_parent"
-	     android:layout_height="52dp"
-	     android:orientation="horizontal"
-	     android:background="#efefef"
-	     android:layout_alignParentBottom="true"
-	     android:paddingTop="4dp"
-	     android:gravity="center">
-	     
-	     <RadioButton
-	         android:id="@+id/btn_discover"
-	         android:layout_width="wrap_content"
-	         android:layout_height="48dp"
-	         android:button="@null"
-	         android:drawableTop="@drawable/tab_discovery_selector"
-	         android:text="@string/main_tab_home"
-             android:textSize="12sp"
-             android:textColor="@drawable/main_tab_selector"
-	         android:gravity="center_horizontal"
-	         android:layout_weight="1"
-	         android:background="#efefef" />
-	     
-	      <RadioButton
-	         android:id="@+id/btn_message"
-	         android:layout_width="wrap_content"
-	         android:layout_height="48dp"
-	         android:button="@null"
-	         android:drawableTop="@drawable/tab_message_selector"
-	         android:text="@string/main_tab_message"
-             android:textSize="12sp"
-             android:textColor="@drawable/main_tab_selector"
-	         android:gravity="center_horizontal"
-	         android:layout_weight="1"
-	         android:background="#efefef"/>
-	      
-	      <RadioButton
-	         android:id="@+id/btn_me"
-	         android:layout_width="wrap_content"
-	         android:layout_height="48dp"
-	         android:button="@null"
-	         android:drawableTop="@drawable/tab_me_selector"
-	         android:text="@string/main_tab_me"
-             android:textSize="12sp"
-             android:textColor="@drawable/main_tab_selector"
-	         android:gravity="center_horizontal"
-	         android:layout_weight="1"
-	         android:background="#efefef"/>
-		</RadioGroup>
-		
+            android:id="@+id/tab_radiogroup"
+            android:layout_width="fill_parent"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:background="#efefef"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="4dp" >
+
+            <RadioButton
+                android:id="@+id/btn_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="#efefef"
+                android:button="@null"
+                android:drawableTop="@drawable/tab_discovery_selector"
+                android:gravity="center_horizontal"
+                android:text="@string/main_tab_home"
+                android:textColor="@drawable/main_tab_selector"
+                android:textSize="12sp" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1" >
+                
+                <FrameLayout 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    >
+                    
+                     <RadioButton
+                    android:id="@+id/btn_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:background="#efefef"
+                    android:button="@null"
+                    android:layout_gravity="center"
+                    android:drawableTop="@drawable/tab_message_selector"
+                    android:gravity="center_horizontal"
+                    android:text="@string/main_tab_message"
+                    android:textColor="@drawable/main_tab_selector"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_unread_count"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/unreadmsg_bkg_2"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:text="11"
+                    android:textSize="12sp"
+                    android:textColor="@color/white" />
+                </FrameLayout>
+
+               
+            </FrameLayout>
+
+            <RadioButton
+                android:id="@+id/btn_me"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="#efefef"
+                android:button="@null"
+                android:drawableTop="@drawable/tab_me_selector"
+                android:gravity="center_horizontal"
+                android:text="@string/main_tab_me"
+                android:textColor="@drawable/main_tab_selector"
+                android:textSize="12sp" />
+        </RadioGroup>
+
         <com.ipinpar.app.view.MainViewPager
-	        android:id="@+id/containerBody"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:layout_gravity="center"
-	        android:background="#ffffff"
-	        android:flipInterval="30"
-	        android:persistentDrawingCache="animation"
-	        android:layout_above="@id/tab_radiogroup" />
-        
+            android:id="@+id/containerBody"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/tab_radiogroup"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:flipInterval="30"
+            android:persistentDrawingCache="animation" />
     </RelativeLayout>
+
 </RelativeLayout>

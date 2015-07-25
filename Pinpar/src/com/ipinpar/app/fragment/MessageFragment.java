@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.json.JSONArray;
@@ -24,12 +25,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
+import com.easemob.EMCallBack;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
 import com.ipinpar.app.Constant;
@@ -38,8 +42,10 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.activity.ChatActivity;
 import com.ipinpar.app.activity.CommentsListActivity;
 import com.ipinpar.app.activity.LoginActivity;
+import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.activity.NotificationListActivity;
 import com.ipinpar.app.activity.SupportListActivity;
+import com.ipinpar.app.adapter.MessageAdapter;
 import com.ipinpar.app.entity.NotificationEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.GetUserInfoRequest;
@@ -47,6 +53,7 @@ import com.ipinpar.app.network.api.NotificationRequest;
 import com.ipinpar.app.util.PreferenceUtils;
 import com.ipinpar.app.util.SmileUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	private View rl_notification, rl_support, rl_comment;
@@ -55,52 +62,197 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	private ArrayList<NotificationEntity> notifications = new ArrayList<NotificationEntity>();
 	private ListView lv_message;
 	private MessageAdapter adapter;
-	private ArrayList<EMConversation> conversations ;
+	private ArrayList<EMConversation> conversations  = new ArrayList<EMConversation>();
+	private int unreadNotification;
+	
+	//处理聊天新消息
+	private NewMessageBroadcastReceiver msgReceiver = new NewMessageBroadcastReceiver();
+	private IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+	private EMEventListener messageEnventListener = new EMEventListener() {
+		
+		@Override
+		public void onEvent(EMNotifierEvent event) {
 
+			switch (event.getEvent()) {	
+			case EventNewMessage: // 接收新消息
+			{
+			EMMessage message = (EMMessage) event.getData();
+			if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+				EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
+					@Override
+					public void onSuccess() {
+						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+						updateMessageList();
+					}
+					
+					@Override
+					public void onProgress(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						updateMessageList();
+					}
+					
+					@Override
+					public void onError(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						updateMessageList();
+					}
+				});
+			}
+			else {
+				updateMessageList();
+			}
+				break;
+			}
+			case EventDeliveryAck:{//接收已发送回执
+				
+				break;
+			}
+			
+			case EventNewCMDMessage:{//接收透传消息
+				
+				break;
+			}
+			
+			case EventReadAck:{//接收已读回执
+				
+				break;
+			}
+			case EventOfflineMessage: {//接收离线消息
+				List<EMMessage> messages = (List<EMMessage>) event.getData();
+				if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+					EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
+						@Override
+						public void onSuccess() {
+							// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+							updateMessageList();
+						}
+						
+						@Override
+						public void onProgress(int arg0, String arg1) {
+							// TODO Auto-generated method stub
+							updateMessageList();
+						}
+						
+						@Override
+						public void onError(int arg0, String arg1) {
+							// TODO Auto-generated method stub
+							updateMessageList();
+						}
+					});
+				}
+				else {
+					updateMessageList();
+				}
+				break;
+			}
+
+			case EventConversationListChanged: {//通知会话列表通知event注册（在某些特殊情况，SDK去删除会话的时候会收到回调监听）
+			    
+			    break;
+			}
+			
+			default:
+				break;
+			}
+		}
+	};
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_message, null);
 		initView(view);
-//		initChat();
+		initChat();
 		return view;
 	}
 
 	private void initChat() {
-		NewMessageBroadcastReceiver msgReceiver = new NewMessageBroadcastReceiver();
-		IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-		intentFilter.setPriority(3);
-		getActivity().registerReceiver(msgReceiver, intentFilter);
+//		intentFilter.setPriority(Integer.MAX_VALUE);
+//		getActivity().registerReceiver(msgReceiver, intentFilter);
+		
+		EMChatManager.getInstance().registerEventListener(messageEnventListener);
 	}
 	private class NewMessageBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-		    // 注销广播
-			abortBroadcast();
 
 			// 消息id（每条消息都会生成唯一的一个id，目前是SDK生成）
 			String msgId = intent.getStringExtra("msgid");
 			//发送方
 			String username = intent.getStringExtra("from");
-			// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
-			Hashtable<String, EMConversation> maps = EMChatManager
-					.getInstance().getAllConversations();
-			conversations = new ArrayList<EMConversation>();
-			for (Entry<String, EMConversation> entry : maps.entrySet()) {
-				conversations.add(entry.getValue());
+			Toast.makeText(mContext, "收到新消息from:"+username, 1000).show();
+			if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+				EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
+					@Override
+					public void onSuccess() {
+						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+						updateMessageList();
+					}
+					
+					@Override
+					public void onProgress(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						updateMessageList();
+					}
+					
+					@Override
+					public void onError(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						updateMessageList();
+					}
+				});
 			}
-			EMMessage message = EMChatManager.getInstance().getMessage(msgId);
-			EMConversation	conversation = EMChatManager.getInstance().getConversation(username);
-			// 如果是群聊消息，获取到group id
-			if (message.getChatType() == ChatType.GroupChat) {
-				username = message.getTo();
+			else {
+				updateMessageList();
 			}
-			if (!username.equals(username)) {
-				// 消息不是发给当前会话，return
-				return;
-			}
+			 // 注销广播
+			abortBroadcast();
 		}
+	}
+	
+	public void refreshUnread(){
+		refreshNotification();
+		updateMessageList();
+	}
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		// TODO Auto-generated method stub
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			refreshNotification();
+		}
+	}
+	
+	private void updateMessageList(){
+		getActivity().runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (adapter == null) {
+					Hashtable<String, EMConversation> maps = EMChatManager
+							.getInstance().getAllConversations();
+					conversations.clear();;
+					for (Entry<String, EMConversation> entry : maps.entrySet()) {
+						conversations.add(entry.getValue());
+					}
+					adapter = new MessageAdapter(conversations);
+					lv_message.setAdapter(adapter);
+				} else {
+					Hashtable<String, EMConversation> maps = EMChatManager
+							.getInstance().getAllConversations();
+					conversations.clear();;
+					for (Entry<String, EMConversation> entry : maps.entrySet()) {
+						conversations.add(entry.getValue());
+					}
+					adapter.notifyDataSetChanged();
+				}
+				MainActivity mainActivity = (MainActivity) getActivity();
+				mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+			}
+		});
+		
 	}
 
 	private void initView(View view) {
@@ -120,7 +272,14 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+	    MobclickAgent.onPageStart("PinparMessageFragment"); //统计页面
+	    refreshNotification();
+	}
+	
+	private void refreshNotification(){
 		if (UserManager.getInstance().isLogin()) {
+			lv_message.setVisibility(View.VISIBLE);
+			
 			NotificationRequest request = new NotificationRequest(UserManager
 					.getInstance().getUserInfo().getUid(), 1, 100,
 					new Listener<JSONObject>() {
@@ -207,23 +366,29 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 									
 									tv_newcomment.setText(commentcount+"个新评论");
 									tv_newsupport.setText(supportcount+"个新支持");
+									tv_newsup.setText(notificationcount+"个新通知");
 									if (supportcount == 0) {
 										tv_newsupport.setVisibility(View.GONE);
+									}
+									else {
+										tv_newsupport.setVisibility(View.VISIBLE);
 									}
 									if (commentcount == 0) {
 										tv_newcomment.setVisibility(View.GONE);
 									}
+									else {
+										tv_newcomment.setVisibility(View.VISIBLE);
 
-									tv_newcomment
-											.setText(commentcount + "个新评论");
-									tv_newsupport
-											.setText(supportcount + "个新支持");
-									if (supportcount == 0) {
-										tv_newsupport.setVisibility(View.GONE);
 									}
-									if (commentcount == 0) {
-										tv_newcomment.setVisibility(View.GONE);
+									if (notificationcount == 0) {
+										tv_newsup.setVisibility(View.GONE);
 									}
+									else {
+										tv_newsup.setVisibility(View.VISIBLE);
+									}
+									unreadNotification = notificationcount+supportcount+commentcount;
+									MainActivity mainActivity = (MainActivity) getActivity();
+									mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
 								}
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
@@ -232,18 +397,45 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 						}
 					});
 			apiQueue.add(request);
-			if (adapter == null) {
-				Hashtable<String, EMConversation> maps = EMChatManager
-						.getInstance().getAllConversations();
-				conversations = new ArrayList<EMConversation>();
-				for (Entry<String, EMConversation> entry : maps.entrySet()) {
-					conversations.add(entry.getValue());
-				}
-				adapter = new MessageAdapter(conversations);
-				lv_message.setAdapter(adapter);
-			} else {
-				adapter.notifyDataSetChanged();
+			if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+				EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
+					
+					@Override
+					public void onSuccess() {
+						// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								updateMessageList();
+							}
+						});
+					}
+					
+					@Override
+					public void onProgress(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onError(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
+			else {
+				updateMessageList();
+			}
+		}
+		else {
+			lv_message.setVisibility(View.GONE);
+			tv_newsupport.setText("");
+			tv_newcomment.setText("");
+			tv_newsup.setText("");
+			MainActivity mainActivity = (MainActivity) getActivity();
+			mainActivity.setUnreadCount(0);
 		}
 	}
 
@@ -407,5 +599,12 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	
+
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("PinparActivityListFragment"); 
+//	    getActivity().unregisterReceiver(msgReceiver);
 	}
 }

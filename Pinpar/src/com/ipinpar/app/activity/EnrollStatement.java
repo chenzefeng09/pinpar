@@ -98,11 +98,8 @@ public class EnrollStatement extends PPBaseActivity{
 				if (EnrollInfoDao.getInstance().getDefaultInfo() != null) {
 					startActivity(EnrollDefaultInfoActivity.getIntent2Me(mContext, acid, ed_enroll_statement_content.getText().toString().trim()));
 				}
-//				else if (EnrollInfoDao.getInstance().hasInfo()) {
-//					startActivity(EnrollInfoListActivity.getIntent2Me(mContext, acid, ed_enroll_statement_content.getText().toString().trim()));
-//				}
 				else {
-					startActivity(new Intent(mContext, EnrollUserinfo.class));
+					startActivity(EnrollUserinfo.getIntent2Me(mContext, acid, ed_enroll_statement_content.getText().toString().trim()));
 					finish();
 				}
 			}

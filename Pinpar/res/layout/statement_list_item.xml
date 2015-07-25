@@ -100,7 +100,7 @@
 	                android:layout_toLeftOf="@id/tv_support_tip"
 	                android:layout_marginTop="2dp"
 	                android:layout_marginBottom="2dp"
-	                android:background="@drawable/ac_support"/>
+	                android:src="@drawable/ac_support"/>
 	            
 	            <TextView 
 	                android:id="@+id/tv_statement_support_num"
@@ -136,7 +136,7 @@
 	                android:layout_marginTop="2dp"
 	                android:layout_marginBottom="2dp"
 	                android:layout_toLeftOf="@id/tv_comment_tip"
-	                android:background="@drawable/ac_comment"/>
+	                android:src="@drawable/ac_comment"/>
 	            
 	            <TextView 
 	                android:id="@+id/tv_statement_comment_num"

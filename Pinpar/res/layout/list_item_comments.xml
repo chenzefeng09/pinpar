@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.ipinpar.app">
+    android:orientation="horizontal" 
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res/com.ipinpar.app">
     
     <com.ipinpar.app.view.CircleImageView
         android:id="@+id/iv_icon"
@@ -56,8 +58,8 @@
     
        <Button 
         android:id="@+id/btn_refuse"
-        android:layout_width="60dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/agree_friend_request_width"
+        android:layout_height="@dimen/agree_friend_request_height"
         android:text="拒绝"
         android:gravity="center"
         android:layout_centerVertical="true"
@@ -70,8 +72,8 @@
     
     <Button 
         android:id="@+id/btn_accept"
-        android:layout_width="60dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/agree_friend_request_width"
+        android:layout_height="@dimen/agree_friend_request_height"
         android:text="接受"
         android:gravity="center"
         android:layout_centerVertical="true"
