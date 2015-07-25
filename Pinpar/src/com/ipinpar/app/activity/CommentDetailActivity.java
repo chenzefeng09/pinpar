@@ -319,6 +319,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 														InputMethodManager.HIDE_NOT_ALWAYS);
 												et_input.setText("");
 												refreshData();
+												
 											} else {
 												Toast.makeText(mContext,
 														"发送失败", 1000).show();
@@ -397,6 +398,18 @@ public class CommentDetailActivity extends PPBaseActivity {
 												Toast.makeText(mContext,
 														"评论成功", 1000).show();
 												refreshData();
+												
+												//刷新评论
+//												refreshStatement();
+//												commentcount++;
+//												comment.setText(commentcount + "");
+												
+												if ("enrollid".equals(fromidtype)) {
+													refreshStatement();
+												} else if ("sid".equals(fromidtype)) {
+													refreshExperienceDiary();
+												}
+												
 											} else {
 												Toast.makeText(mContext,
 														"发送失败", 1000).show();

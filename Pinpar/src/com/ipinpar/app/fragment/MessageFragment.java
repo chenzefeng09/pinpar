@@ -397,7 +397,8 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 						}
 					});
 			apiQueue.add(request);
-			if (!EMChatManager.getInstance().areAllConversationsLoaded()) {
+			if (EMChatManager.getInstance().isConnected() 
+					&&!EMChatManager.getInstance().areAllConversationsLoaded()) {
 				EMChatManager.getInstance().asyncLoadAllConversations(new EMCallBack() {
 					
 					@Override

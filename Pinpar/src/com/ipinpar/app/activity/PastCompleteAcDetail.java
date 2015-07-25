@@ -127,6 +127,23 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 		handlerCompleteAcStatementListRequest.sendEmptyMessage(0);
 		
 	}
+	
+	
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		if(statementListAdapter != null){
+			handlerCompleteAcStatementListRequest.sendEmptyMessage(0);
+		}
+		if(memberExperiListAdapter != null){
+			handlerCompleteAcMemberExperiListRequest.sendEmptyMessage(0);
+		}
+		
+		super.onResume();
+	}
+
+
 
 	@Override
 	protected void onDestroy() {
@@ -524,9 +541,12 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			break;
 			
 			case 1:
-				
-				memberExperiListAdapter = new MemberExperiListAdapter(mContext,acMemberExperiList,apiQueue);
-				memberExperiListView.setAdapter(memberExperiListAdapter);
+				if(memberExperiListAdapter == null){
+					memberExperiListAdapter = new MemberExperiListAdapter(mContext,acMemberExperiList,apiQueue);
+					memberExperiListView.setAdapter(memberExperiListAdapter);
+				}else{
+					memberExperiListAdapter.notifyDataSetChanged();
+				}
 				
 				setListViewHeightBasedOnChildren(memberExperiListView);
 				break;
@@ -590,9 +610,12 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			break;
 			
 			case 1:
-				
-				statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
-				statementListView.setAdapter(statementListAdapter);
+				if(statementListAdapter == null){
+					statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
+					statementListView.setAdapter(statementListAdapter);
+				}else{
+					statementListAdapter.notifyDataSetChanged();
+				}
 				
 				setListViewHeightBasedOnChildren(statementListView);
 				handlerScrollTop.sendEmptyMessageDelayed(0,500);
@@ -616,6 +639,7 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
+				tempAcStatementList.clear();
 				tempAcStatementList.addAll((ArrayList<AcStatementEntity>)msg.obj);
 				acStatementList.clear();
 				acStatementList.add(tempAcStatementList.get(0));

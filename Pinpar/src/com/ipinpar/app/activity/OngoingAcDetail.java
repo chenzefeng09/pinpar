@@ -129,6 +129,20 @@ public class OngoingAcDetail extends PPBaseActivity {
 		handlerOngoingAcStatementListRequest.sendEmptyMessage(0);
 		
 	}
+	
+	
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		
+		if(statementListAdapter != null){
+			handlerOngoingAcStatementListRequest.sendEmptyMessage(0);
+		}
+		super.onResume();
+	}
+
+
 
 	@Override
 	protected void onDestroy() {
@@ -617,13 +631,17 @@ public class OngoingAcDetail extends PPBaseActivity {
 			break;
 			
 			case 1:
-				
-				statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
-				statementListView.setAdapter(statementListAdapter);
+				if(statementListAdapter == null){
+					statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
+					statementListView.setAdapter(statementListAdapter);
+				}else{
+					statementListAdapter.notifyDataSetChanged();
+				}
 				
 				setListViewHeightBasedOnChildren(statementListView);
 				handlerScrollTop.sendEmptyMessageDelayed(0,500);
 				break;
+				
 			
 			default:
 				
@@ -643,6 +661,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
+				tempAcStatementList.clear();
 				tempAcStatementList.addAll((ArrayList<AcStatementEntity>)msg.obj);
 				acStatementList.clear();
 				acStatementList.add(tempAcStatementList.get(0));
