@@ -70,7 +70,7 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 			break;
 		case R.id.btn_regist:
 			//
-			startActivity(new Intent(mContext, RegistActivity.class));
+			startActivity(new Intent(mContext, RegistActivityStep2.class));
 			break;
 		case R.id.btn_login:
 			showProgressDialog();
