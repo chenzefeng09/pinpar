@@ -96,14 +96,14 @@ public class LoginActivity extends PPBaseActivity implements OnClickListener{
 												new EMCallBack() {// 回调
 													@Override
 													public void onSuccess() {
+														try {
+															EMChatManager.getInstance().updateCurrentUserNick(response.getString("username"));
+														} catch (JSONException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
 														runOnUiThread(new Runnable() {
 															public void run() {
-																try {
-																	EMChatManager.getInstance().updateCurrentUserNick(response.getString("username"));
-																} catch (JSONException e) {
-																	// TODO Auto-generated catch block
-																	e.printStackTrace();
-																}
 																EMChatManager
 																		.getInstance()
 																		.loadAllConversations();

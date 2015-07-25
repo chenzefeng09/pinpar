@@ -159,16 +159,25 @@
             android:layout_toRightOf="@id/ci_notification"
             android:text="通知" />
 
+        <ImageView
+            android:id="@+id/iv_arrow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/arrow_right" />
+        
         <TextView
             android:id="@+id/tv_newsup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/iv_arrow3"
             android:text=""
-            android:textColor="@color/lightgrey"
-            android:textSize="12sp" />
+            android:textColor="@color/goldenrod" />
     </RelativeLayout>
 
     <ImageView

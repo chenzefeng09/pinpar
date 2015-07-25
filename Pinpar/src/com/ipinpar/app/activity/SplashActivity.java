@@ -57,7 +57,6 @@ public class SplashActivity extends PPBaseActivity {
 				
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					try {
 				         // 调用sdk注册方法
 				         EMChatManager.getInstance().createAccountOnServer(entity.getUid()+"", MD5Util.MD5(entity.getUid()+"pinpa"));

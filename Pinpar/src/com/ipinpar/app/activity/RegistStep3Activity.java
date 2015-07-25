@@ -106,16 +106,23 @@ public class RegistStep3Activity extends PPBaseActivity implements OnClickListen
 						// TODO Auto-generated method stub
 						dissmissProgressDialog();
 						Gson gson = new Gson();
-						UserEntity userEntity = gson.fromJson(response.toString(), UserEntity.class);
+						final UserEntity userEntity = gson.fromJson(response.toString(), UserEntity.class);
 						if (userEntity != null && userEntity.getResult() == 1) {
 							Toast.makeText(mContext, "注册成功，欢迎来到品趴！", 1000).show();
-						      try {
-						         // 调用sdk注册方法
-						         EMChatManager.getInstance().createAccountOnServer(userEntity.getUid()+"", MD5Util.MD5(userEntity.getUid()+"pinpa"));
-						      } catch (final Exception e) {
-									e.printStackTrace();
+							
+							new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									try {
+								         // 调用sdk注册方法
+								         EMChatManager.getInstance().createAccountOnServer(userEntity.getUid()+"", MD5Util.MD5(userEntity.getUid()+"pinpa"));
+								      } catch (final Exception e) {
+											e.printStackTrace();
 
-						      }
+								      }
+								}
+							}).start();;
 							UserManager.getInstance().setUserInfo(userEntity);
 							startActivity(new Intent(mContext, MainActivity.class));
 							finish();
