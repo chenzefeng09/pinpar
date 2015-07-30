@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,12 +59,9 @@ public class PartyLaunchActivity extends PPBaseActivity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ivPartyLaunchRocket.startAnimation(AnimationUtils.loadAnimation(PartyLaunchActivity.this,R.anim.push_up_out));
-				
-				Intent intent = new Intent();
-				intent.setClass(mContext, PartyReadyToGetIdentityActivity.class);
-				startActivity(intent);
-				finish();
+				Message message=new Message();  
+	            message.what=0;  
+	            handlerStatrActivity.sendMessage(message);
 			}
 		});
 		
@@ -75,6 +74,35 @@ public class PartyLaunchActivity extends PPBaseActivity{
         animationDrawable.start();  
         
 	}
+	
+	
+	Handler handlerStatrActivity = new Handler(){
+
+		@Override
+		public void dispatchMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.dispatchMessage(msg);
+			switch (msg.what) {
+			case 0:
+				
+				ivPartyLaunchRocket.startAnimation(AnimationUtils.loadAnimation(PartyLaunchActivity.this,R.anim.push_up_out));
+				ivPartyLaunchRocket.setVisibility(View.INVISIBLE);
+				handlerStatrActivity.sendEmptyMessageDelayed(1, 1500);
+				
+				break;
+			case 1:
+				
+				Intent intent = new Intent();
+				intent.setClass(mContext, PartyReadyToGetIdentityActivity.class);
+				startActivity(intent);
+				finish();
+				break;
+			default:
+				break;
+			}
+		}
+		
+	};
 	
 	
 	

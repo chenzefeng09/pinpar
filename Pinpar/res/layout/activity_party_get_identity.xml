@@ -37,11 +37,21 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/party_get_identity_selector">
             <ImageView 
-                android:id="@+id/iv_party_get_identith_role1"
+                android:id="@+id/iv_party_get_identity_role1"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/party_identity_coffee"/>
+            <TextView 
+                android:id="@+id/tv_party_get_identity_role1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_party_get_identity_role1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="咖啡"
+                android:textColor="#4ee7fe"
+        		android:textSize="14sp"/>
         </RelativeLayout>
         
         <RelativeLayout 
@@ -53,11 +63,21 @@
 			android:layout_marginLeft="10dp"       
             android:background="@drawable/party_get_identity_selector">
             <ImageView 
-                android:id="@+id/iv_party_get_identith_role2"
+                android:id="@+id/iv_party_get_identity_role2"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/party_identity_flower"/>
+            <TextView 
+                android:id="@+id/tv_party_get_identity_role2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_party_get_identity_role2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="插花"
+                android:textColor="#4ee7fe"
+        		android:textSize="14sp"/>
         </RelativeLayout>
         
         <RelativeLayout 
@@ -69,11 +89,21 @@
             android:layout_below="@id/RL_party_get_identity_role1" 
             android:background="@drawable/party_get_identity_selector">
             <ImageView 
-                android:id="@+id/iv_party_get_identith_role3"
+                android:id="@+id/iv_party_get_identity_role3"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/party_identity_ceramics"/>
+            <TextView 
+                android:id="@+id/tv_party_get_identity_role3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_party_get_identity_role3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="陶艺"
+                android:textColor="#4ee7fe"
+        		android:textSize="14sp"/>
         </RelativeLayout>
     </RelativeLayout>
     
@@ -84,7 +114,7 @@
         android:layout_below="@id/RL_party_get_identity_roles"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="已选择咖啡师，将获得咖啡师游戏的双倍积分技能"
+        android:text=""
         android:textColor="#4ee7fe"
         android:textSize="14sp"/>
     
