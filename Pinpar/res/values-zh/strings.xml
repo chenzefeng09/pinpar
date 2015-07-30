@@ -79,9 +79,9 @@
     <string name="experience_list_comment"><![CDATA[评论 %1$s]]></string>
     <string name="activity_invite_letter_name"><![CDATA[亲爱的 <font color="#f47857"> %1$s：</font>]]></string>
     <string name="activity_invite_letter_tips">
-<![CDATA[活动说明<br/>
-	 	 	 	     1、请您在收到邀请信的48小时内选择接受，否则视为放弃此次的体验机会。<br/>2、如果在确认后另有安排，请至少在活动体验日的前一天联系我们告知原因，电话：<font color="#f47857"> 150 1150 5625 <font>。
-	 	 	 	     <br/>3、如果确认后另有安培，并且没有及时联系我们，我们会在一定时间内忽略该用户的体验申请；如果相同情况达到两次以上，我们将永久剥夺该用户的体验资格。]]>
+<![CDATA[活动说明:<br/>
+	 	 	 	     1、请您在收到邀请信的48小时内选择接受,否则视为放弃此次的体验机会。<br/>2、如果在确认后另有安排,请至少在活动体验日的前一天联系我们告知原因,电话：<font color="#f47857"> 150 1150 5625 </font>。
+	 	 	 	     <br/>3、如果确认后另有安排,并且没有及时联系我们,我们会在一定时间内忽略该用户的体验申请;如果相同情况达到两次以上,我们将永久剥夺该用户的体验资格。]]>
     </string>
     <string name="activity_invite_letter_chance"><![CDATA[&#160;&#160;恭喜您获得 <font color="#f47857"> %1$s </font> 的体验机会！]]></string>
     <string name="ongoing_activity_comment_time">评论时间</string>

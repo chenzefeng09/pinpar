@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/party_launch_bg">
+    <Button 
+        android:id="@+id/btn_party_launch_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/party_back"/>
+    
+    <RelativeLayout 
+        android:id="@+id/RL_party_launch_invition"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/btn_party_launch_back"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/party_launch_window">
+        <TextView
+            android:id="@+id/tv_party_launch_invition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_party_invition"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+            android:lineSpacingExtra="2dp"
+            android:textColor="#4ee7fe"
+            android:textSize="14sp"/>
+        
+        <TextView
+            android:id="@+id/tv_party_launch_invition_xiaopashang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小趴上"
+            android:layout_below="@id/tv_party_launch_invition"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:lineSpacingExtra="2dp"
+            android:textColor="#4ee7fe"
+            android:textSize="14sp"/>
+        
+    </RelativeLayout>
+    
+    <Button 
+        android:id="@+id/btn_party_launch"
+        android:layout_width="240dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/RL_party_launch_invition"
+        android:background="@drawable/btn_back_launch_selector"/>
+    
+    <ImageView 
+        android:id="@+id/iv_party_launch_rocket"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/btn_party_launch"
+        android:src="@drawable/party_launch_rocket1"/>
+
+</RelativeLayout>

@@ -28,6 +28,7 @@ import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.activity.OngoingAcDetail;
+import com.ipinpar.app.activity.PartyLaunchActivity;
 import com.ipinpar.app.adapter.OngoingActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
@@ -161,7 +162,11 @@ public class DiscoverFragment extends PPBaseFragment{
 			// TODO Auto-generated method stub
 			Intent intent = new Intent();
 			intent.putExtra("activityID", activityList.get(position-1).getAcid());
-			intent.setClass(mContext, OngoingAcDetail.class);
+			if(position == 1){
+				intent.setClass(mContext, PartyLaunchActivity.class);
+			}else{
+				intent.setClass(mContext, OngoingAcDetail.class);
+			}
 			startActivity(intent);
 		}
 	};

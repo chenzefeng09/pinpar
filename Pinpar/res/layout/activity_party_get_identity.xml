@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/party_get_identity_bg">
+    <Button 
+        android:id="@+id/btn_party_get_identity_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/party_back"/>
+    
+    <TextView 
+        android:id="@+id/tv_party_get_identity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请选择一个作为你的高分职业"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_alignBottom="@id/btn_party_get_identity_back"
+        android:textColor="#4ee7fe"
+        android:textSize="16sp"/>
+    
+    <RelativeLayout 
+        android:id="@+id/RL_party_get_identity_roles"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_party_get_identity"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+        <RelativeLayout 
+            android:id="@+id/RL_party_get_identity_role1"
+            android:layout_width="144dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/party_get_identity_selector">
+            <ImageView 
+                android:id="@+id/iv_party_get_identith_role1"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/party_identity_coffee"/>
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/RL_party_get_identity_role2"
+            android:layout_width="144dp"
+            android:layout_height="160dp"
+			android:layout_below="@id/RL_party_get_identity_role1"     
+			android:layout_alignParentLeft="true"
+			android:layout_marginLeft="10dp"       
+            android:background="@drawable/party_get_identity_selector">
+            <ImageView 
+                android:id="@+id/iv_party_get_identith_role2"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/party_identity_flower"/>
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/RL_party_get_identity_role3"
+            android:layout_width="144dp"
+            android:layout_height="160dp"
+            android:layout_alignParentRight="true"
+			android:layout_marginRight="10dp"    
+            android:layout_below="@id/RL_party_get_identity_role1" 
+            android:background="@drawable/party_get_identity_selector">
+            <ImageView 
+                android:id="@+id/iv_party_get_identith_role3"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/party_identity_ceramics"/>
+        </RelativeLayout>
+    </RelativeLayout>
+    
+    <TextView 
+        android:id="@+id/tv_get_identity_role_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RL_party_get_identity_roles"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="已选择咖啡师，将获得咖啡师游戏的双倍积分技能"
+        android:textColor="#4ee7fe"
+        android:textSize="14sp"/>
+    
+    <Button 
+        android:id="@+id/btn_get_identity_ok"
+        android:layout_width="236dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/tv_get_identity_role_tip"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_party_get_identity_ok_selector"/>
+    
+
+</RelativeLayout>

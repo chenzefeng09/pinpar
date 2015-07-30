@@ -1,6 +1,8 @@
 package com.ipinpar.app.entity;
 
-public class AcImageEntity {
+import java.io.Serializable;
+
+public class AcImageEntity implements Serializable{
 	private String img;
 
 	public String getImg() {

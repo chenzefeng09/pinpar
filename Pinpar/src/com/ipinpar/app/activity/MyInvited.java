@@ -67,6 +67,9 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if(activityListAdapter != null){
+			handlerMyInvitedAcsRequest.sendEmptyMessage(0);
+		}
 	}
 
 	@Override
@@ -141,9 +144,12 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 			Intent intent = new Intent();
 			intent.putExtra("activityID", activityList.get(position-1).getAcid());
 			if(activityList.get(position-1).getStatus2() == 2){
-				intent.putExtra("activity", activityList.get(position-1));
-				intent.setClass(mContext, InviteLetterActivity.class);
-				startActivity(intent);
+//				intent.putExtra("activity", activityList.get(position-1));
+//				intent.setClass(mContext, InviteLetterActivity.class);
+//				startActivity(intent);
+				startActivity(InviteLetterActivity.getIntent2Me(
+						mContext, 
+						activityList.get(position-1)));
 			}else if(activityList.get(position-1).getStatus2() == 3){
 				
 				startActivity(ExperienceDiaryEditActivity.getIntent2Me(

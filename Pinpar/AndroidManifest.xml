@@ -285,6 +285,22 @@
             android:screenOrientation="portrait" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyLaunchActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyReadyToGetIdentityActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyGetIdentityActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
     </application>
 
 </manifest>
