@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="11"
         android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -280,6 +280,32 @@
             android:name="com.ipinpar.app.activity.PPWebView"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.IntroActivity"
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyLaunchActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyReadyToGetIdentityActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyGetIdentityActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="com.ipinpar.app.activity.PartyHomeVenueActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
     </application>
 
 </manifest>

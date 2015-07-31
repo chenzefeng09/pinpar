@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -32,6 +33,8 @@ import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 public class MyInvited extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
+	
+	private RelativeLayout rlMyEnrolledNoTip;
 
 	//请求往期的活动
 	private MyActivityListRequest myInvitedAcsRequest;
@@ -64,6 +67,9 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if(activityListAdapter != null){
+			handlerMyInvitedAcsRequest.sendEmptyMessage(0);
+		}
 	}
 
 	@Override
@@ -73,6 +79,8 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 	}
 	
 	public void findView(){
+		
+		rlMyEnrolledNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyInvitedActivityListAdapter(mContext,activityList);
 		
@@ -136,9 +144,12 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 			Intent intent = new Intent();
 			intent.putExtra("activityID", activityList.get(position-1).getAcid());
 			if(activityList.get(position-1).getStatus2() == 2){
-				intent.putExtra("activity", activityList.get(position-1));
-				intent.setClass(mContext, InviteLetterActivity.class);
-				startActivity(intent);
+//				intent.putExtra("activity", activityList.get(position-1));
+//				intent.setClass(mContext, InviteLetterActivity.class);
+//				startActivity(intent);
+				startActivity(InviteLetterActivity.getIntent2Me(
+						mContext, 
+						activityList.get(position-1)));
 			}else if(activityList.get(position-1).getStatus2() == 3){
 				
 				startActivity(ExperienceDiaryEditActivity.getIntent2Me(
@@ -195,6 +206,10 @@ public class MyInvited extends PPBaseActivity implements OnScrollListener{
 						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
+						
+						if(activityList.size() == 0){
+							rlMyEnrolledNoTip.setVisibility(View.VISIBLE);
+						}
 					}
 					
 				});

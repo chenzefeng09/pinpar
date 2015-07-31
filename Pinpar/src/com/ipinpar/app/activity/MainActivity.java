@@ -172,10 +172,10 @@ public class MainActivity extends PPBaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				tabRadioGroup.check(R.id.btn_message);
 				if (messageFragment != null) {
 					messageFragment.refreshUnread();
 				}
+				tabRadioGroup.check(R.id.btn_message);
 			}
 		});
 		tabRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {

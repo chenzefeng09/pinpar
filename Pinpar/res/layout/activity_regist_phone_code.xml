@@ -114,15 +114,17 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:background="@null"
-                                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress"
                 android:drawablePadding="8dp"
-                android:hint="绑定邮箱" />
+                android:hint="绑定邮箱" 
+                android:visibility="gone"/>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="1dp"
-                android:src="#dcdcdc" />
+                android:src="#dcdcdc" 
+                android:visibility="gone"/>
         </LinearLayout>
 
         <Button
@@ -131,7 +133,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:background="#8f72e6"
             android:text="下一步"
             android:textColor="@color/white" />
@@ -145,7 +147,7 @@
             android:text="《阅读用户协议》"
             android:textColor="#8f72e6"
             android:textSize="14sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </LinearLayout>
 
 

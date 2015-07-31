@@ -35,11 +35,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class CheckDiaryListActivity extends PPBaseActivity {
 	private ListView lv_diary_list;
 	private ArrayList<ExperienceDiaryEntity> experiences;
+	private int acid;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_chek_exp_diary);
+		
+		acid = getIntent().getIntExtra("acid", 0);
+		
 		lv_diary_list = (ListView) findViewById(R.id.lv_diary_list);
 		lv_diary_list.setOnItemClickListener(new OnItemClickListener() {
 
@@ -52,7 +56,7 @@ public class CheckDiaryListActivity extends PPBaseActivity {
 			}
 		});
 		experiences = new ArrayList<ExperienceDiaryEntity>();
-		int acid = getIntent().getIntExtra("acid", 0);
+		
 		if (acid != 0) {
 			showProgressDialog();
 			ExperienceDiaryListRequest request = new ExperienceDiaryListRequest(acid, new Listener<JSONObject>() {
@@ -94,6 +98,56 @@ public class CheckDiaryListActivity extends PPBaseActivity {
 		}
 	}
 	
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		if (acid != 0) {
+			showProgressDialog();
+			ExperienceDiaryListRequest request = new ExperienceDiaryListRequest(acid, new Listener<JSONObject>() {
+
+				@Override
+				public void onResponse(JSONObject response) {
+					// TODO Auto-generated method stub
+					dissmissProgressDialog();
+					experiences.clear();
+					try {
+						if (response != null && response.getInt("result") == 1) {
+							JSONArray jsonArray = response.getJSONArray("summarys");
+							for(int i = 0;i<jsonArray.length();i++){
+								JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+								ExperienceDiaryEntity entity = new ExperienceDiaryEntity();
+								entity.setAcid(jsonObject.getInt("acid"));
+								entity.setAgreecount(jsonObject.getInt("agreecount"));
+								entity.setCommentcount(jsonObject.getInt("commentcount"));
+								entity.setCreatetime(jsonObject.getLong("createtime"));
+								entity.setDescription(jsonObject.getString("description"));
+								entity.setFlag(jsonObject.getInt("flag"));
+								entity.setImg(jsonObject.getString("img"));
+								entity.setSid(jsonObject.getInt("sid"));
+								entity.setTitle(jsonObject.getString("title"));
+								entity.setUid(jsonObject.getInt("uid"));
+								entity.setUsername(jsonObject.getString("username"));
+								experiences.add(entity);
+							}
+							ExperiencesAdapter adapter = new ExperiencesAdapter(experiences);
+							lv_diary_list.setAdapter(adapter);
+							
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+			apiQueue.add(request);
+		}
+		super.onResume();
+	}
+
+
+
 	private class ExperiencesAdapter extends BaseAdapter{
 		private ArrayList<ExperienceDiaryEntity> expEntities;
 		private ViewHolder holder;

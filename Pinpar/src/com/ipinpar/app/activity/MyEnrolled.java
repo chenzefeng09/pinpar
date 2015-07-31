@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -33,6 +34,8 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
 
+	private RelativeLayout rlMyEnrolledNoTip;
+	
 	//请求往期的活动
 	private MyActivityListRequest myEnrolledAcsRequest;
 	
@@ -73,6 +76,8 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 	}
 	
 	public void findView(){
+		
+		rlMyEnrolledNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyEnrolledActivityListAdapter(mContext,activityList);
 		
@@ -197,6 +202,10 @@ public class MyEnrolled extends PPBaseActivity implements OnScrollListener{
 						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
+						
+						if(activityList.size() == 0){
+							rlMyEnrolledNoTip.setVisibility(View.VISIBLE);
+						}
 					}
 					
 				});

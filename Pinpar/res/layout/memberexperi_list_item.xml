@@ -78,7 +78,7 @@
 	        android:layout_marginRight="5dp"
 	        android:orientation="horizontal">
 	        <RelativeLayout
-	            android:id="@+id/RL_support"
+	            android:id="@+id/RL_memberexperi_support"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
@@ -99,7 +99,7 @@
 	                android:layout_toLeftOf="@id/tv_support_tip"
 	                android:layout_marginTop="2dp"
 	                android:layout_marginBottom="2dp"
-	                android:background="@drawable/ac_support"/>
+	                android:src="@drawable/ac_support"/>
 	            
 	            <TextView 
 	                android:id="@+id/tv_memberexperi_support_num"
@@ -114,7 +114,7 @@
 	        </RelativeLayout>
 	        
 	       <RelativeLayout
-	            android:id="@+id/RL_comment"
+	            android:id="@+id/RL_memberexperi_comment"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
@@ -135,7 +135,7 @@
 	                android:layout_marginTop="2dp"
 	                android:layout_marginBottom="2dp"
 	                android:layout_toLeftOf="@id/tv_comment_tip"
-	                android:background="@drawable/ac_comment"/>
+	                android:src="@drawable/ac_comment"/>
 	            
 	            <TextView 
 	                android:id="@+id/tv_memberexperi_comment_num"
@@ -166,7 +166,7 @@
 		        android:layout_centerVertical="true"
 		        android:text="@string/past_activity_luck_reason_tip"
 		        android:textSize="14sp"
-		        android:textColor="#8c8c8c"/>
+		        android:textColor="@color/activity_detail"/>
 	        <TextView 
 	            android:id="@+id/tv_luck_reason"
 	            android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
 	            android:layout_centerVertical="true"
 	            android:text="@string/past_activity_luck_reason"
 	            android:textSize="16sp"
-	            android:textColor="#8c8c8c"/>
+	            android:textColor="@color/activity_detail"/>
 	    </RelativeLayout>
 	</RelativeLayout>
 </LinearLayout>

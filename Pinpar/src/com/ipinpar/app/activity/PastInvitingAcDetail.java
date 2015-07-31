@@ -73,6 +73,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 	private RelativeLayout rlActicityMap;
 	private String latitude;
 	private String longitude;
+	private String shopName;
 	
 	private TextView tvAcName;
 	private TextView tvAcShop;
@@ -115,6 +116,19 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 		handlerInvitingAcStatementListRequest.sendEmptyMessage(0);
 		
 	}
+	
+	
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		if(statementListAdapter != null){
+			handlerInvitingAcStatementListRequest.sendEmptyMessage(0);
+		}
+		super.onResume();
+	}
+
+
 
 	@Override
 	protected void onDestroy() {
@@ -162,6 +176,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 				Intent intent = new Intent();
 				intent.putExtra("latitude", latitude);
 				intent.putExtra("longitude", longitude);
+				intent.putExtra("shopname", shopName);
 				intent.setClass(mContext, MarkerActivity.class);
 				startActivity(intent);
 			}
@@ -291,6 +306,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 	public void initActicityDetail(ActivityEntity acticityEntity){
 		tvAcName.setText(acticityEntity.getAcname());
 		tvAcShop.setText(acticityEntity.getSname());
+		shopName = acticityEntity.getSname();
 		tvAcAddress.setText(acticityEntity.getAddressdetail());
 		tvAcAddressCity.setText(acticityEntity.getAddress2()+acticityEntity.getAddress3());
 		
@@ -501,9 +517,12 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 			
 			case 1:
 				
-				statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
-				statementListView.setAdapter(statementListAdapter);
-				
+				if(statementListAdapter == null){
+					statementListAdapter = new StatementListAdapter(mContext,acStatementList,apiQueue);
+					statementListView.setAdapter(statementListAdapter);
+				}else{
+					statementListAdapter.notifyDataSetChanged();
+				}				
 				setListViewHeightBasedOnChildren(statementListView);
 				handlerScrollTop.sendEmptyMessageDelayed(0,500);
 				break;
@@ -526,6 +545,7 @@ public class PastInvitingAcDetail extends PPBaseActivity {
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
+				tempAcStatementList.clear();
 				tempAcStatementList.addAll((ArrayList<AcStatementEntity>)msg.obj);
 				acStatementList.clear();
 				acStatementList.add(tempAcStatementList.get(0));

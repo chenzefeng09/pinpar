@@ -56,7 +56,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private ListView lv_infolist;
 	private EditText et_input;
 	private Button btn_add_new;
-	private View RL_support;
+	private View RL_support,RL_comment;
 	private View view_1;
 
 	private boolean isreply;
@@ -86,6 +86,8 @@ public class CommentDetailActivity extends PPBaseActivity {
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
 		iv_statement_support = (ImageView) findViewById(R.id.iv_statement_support);
 		RL_support = findViewById(R.id.RL_support);
+		RL_comment = findViewById(R.id.RL_comment);
+		
 		view_1 = findViewById(R.id.view_1);
 	}
 
@@ -262,6 +264,17 @@ public class CommentDetailActivity extends PPBaseActivity {
 				}
 			}
 		});
+		RL_comment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				isreply = false;
+				reply_to_uid = 0;
+				replyPrefix = "";
+				et_input.setText("");
+			}
+		});
 		if (UserManager.getInstance().isLogin()) {
 			if (AgreeManager.getInstance().isAgreed(fromid, fromidtype)) {
 				iv_statement_support.setImageResource(R.drawable.enroll_fist);
@@ -322,7 +335,46 @@ public class CommentDetailActivity extends PPBaseActivity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} else {
+				} else if(isreply){
+					ReplyCommentRequest replyCommentRequest2;
+					try {
+						replyCommentRequest2 = new ReplyCommentRequest(
+								reply_commentid, reply, UserManager
+										.getInstance().getUserInfo().getUid(),
+								reply_to_uid, new Listener<JSONObject>() {
+
+									@Override
+									public void onResponse(JSONObject response) {
+										dissmissProgressDialog();
+										try {
+											if (response != null
+													&& response
+															.getInt("result") == 1) {
+												Toast.makeText(mContext,
+														"回复评论成功", 1000).show();
+												InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+												imm.toggleSoftInput(
+														0,
+														InputMethodManager.HIDE_NOT_ALWAYS);
+												et_input.setText("");
+												refreshData();
+											} else {
+												Toast.makeText(mContext,
+														"发送失败", 1000).show();
+											}
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								});
+						apiQueue.add(replyCommentRequest2);
+
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else {
 					PublishCommentRequest request;
 					try {
 						request = new PublishCommentRequest(fromid, fromidtype,
@@ -345,6 +397,18 @@ public class CommentDetailActivity extends PPBaseActivity {
 												Toast.makeText(mContext,
 														"评论成功", 1000).show();
 												refreshData();
+												
+												//刷新评论
+//												refreshStatement();
+//												commentcount++;
+//												comment.setText(commentcount + "");
+												
+												if ("enrollid".equals(fromidtype)) {
+													refreshStatement();
+												} else if ("sid".equals(fromidtype)) {
+													refreshExperienceDiary();
+												}
+												
 											} else {
 												Toast.makeText(mContext,
 														"发送失败", 1000).show();

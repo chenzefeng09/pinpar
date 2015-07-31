@@ -21,6 +21,8 @@ import com.ipinpar.app.entity.UserEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.LoginRequest;
 import com.ipinpar.app.util.MD5Util;
+import com.ipinpar.app.util.PreferenceUtils;
+import com.ipinpar.app.util.VersionUtils;
 
 public class SplashActivity extends PPBaseActivity {
 	
@@ -29,6 +31,11 @@ public class SplashActivity extends PPBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_splash);
+		int lastversion = PreferenceUtils.getPrefInt(mContext, "curr_version_code", 0);
+		if (lastversion < VersionUtils.getCurrentVersionCode(mContext)) {
+			PreferenceUtils.setPrefBoolean(mContext, "show_intro", true);
+		}
+				
 		final UserEntity entity = UserDao.getInstance().getLogedUser();
 		ShareSDK.initSDK(mContext);
 
@@ -96,7 +103,7 @@ public class SplashActivity extends PPBaseActivity {
 		     
 		final Timer timer = new Timer();
 
-		TimerTask timerTask = new TimerTask() {
+		TimerTask timerTask = new TimerTask() {	
 			int time = 3;
 			
 			@Override
@@ -109,7 +116,12 @@ public class SplashActivity extends PPBaseActivity {
 					runOnUiThread(new Runnable() {
 						public void run() {
 							timer.cancel();
-							startActivity(new Intent(mContext,MainActivity.class));
+							if (PreferenceUtils.getPrefBoolean(mContext, "show_intro", true)) {
+								startActivity(new Intent(mContext, IntroActivity.class));
+							}
+							else{
+								startActivity(new Intent(mContext,MainActivity.class));
+							}
 							finish();
 						}
 					});

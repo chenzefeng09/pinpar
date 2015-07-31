@@ -1,6 +1,8 @@
 package com.ipinpar.app.entity;
 
-public class UserDynamicEntity {
+import java.io.Serializable;
+
+public class UserDynamicEntity implements Serializable{
 	private String description;
 	private String imgsrc;
 	private String title;

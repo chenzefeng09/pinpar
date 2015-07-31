@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/party_launch_rocket1" android:duration="150"></item>
+    <item android:drawable="@drawable/party_launch_rocket2" android:duration="150"></item>
+
+</animation-list>

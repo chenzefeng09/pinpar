@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,7 +23,7 @@ import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.AnserInviteLetterRequest;
 
 public class InviteLetterActivity extends PPBaseActivity implements OnClickListener{
-	private TextView tv_name,tv_chance,tv_time,tv_loc;
+	private TextView tv_name,tv_chance,tv_time,tv_loc,tv_specification;
 	private Button btn_giveup,btn_accepte;
 	private ActivityEntity currActivity;
 	
@@ -34,11 +35,14 @@ public class InviteLetterActivity extends PPBaseActivity implements OnClickListe
 		btn_accepte = (Button) findViewById(R.id.btn_accepte);
 		tv_name = (TextView) findViewById(R.id.tv_name);
 		tv_chance = (TextView) findViewById(R.id.tv_chance);
+		tv_time = (TextView) findViewById(R.id.tv_time);
 		tv_loc = (TextView) findViewById(R.id.tv_loc);
+		tv_specification = (TextView) findViewById(R.id.activity_specification);
 		btn_giveup.setOnClickListener(this);
 		btn_accepte.setOnClickListener(this);
 
 		currActivity = (ActivityEntity) getIntent().getSerializableExtra("activity");
+		
 		if (currActivity == null) {
 			Toast.makeText(mContext, "获取邀请信内容失败，请重试", 1000).show();
 		}
@@ -50,9 +54,21 @@ public class InviteLetterActivity extends PPBaseActivity implements OnClickListe
 			tv_chance.setText(Html.fromHtml(
 					PPApplication.getInstance().getFormatString(
 							R.string.activity_invite_letter_chance,
-							currActivity.getAcname())));
-			tv_loc.setText(currActivity.getAddress1());
+							currActivity.getSname()+currActivity.getAcname())));
+			tv_loc.setText(currActivity.getAddress2()
+					+currActivity.getAddress3()
+					+currActivity.getAddressdetail());
 			
+			
+			
+			long timeBegin = Long.parseLong(currActivity.getActivebegintime())*1000;
+			long timeEnd = Long.parseLong(currActivity.getActiveendtime())*1000;
+			
+			tv_time.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeBegin)+"~"+DateFormat.format("kk:mm", timeEnd));
+			
+			tv_specification.setText(Html.fromHtml(
+					PPApplication.getInstance().getFormatString(
+							R.string.activity_invite_letter_tips)));
 		}
 	}
 	
@@ -67,9 +83,9 @@ public class InviteLetterActivity extends PPBaseActivity implements OnClickListe
 		switch (v.getId()) {
 		case R.id.btn_accepte:
 			AnserInviteLetterRequest request = new AnserInviteLetterRequest(
-					UserManager.getInstance().getUserInfo().getUid(),
-					currActivity.getAcid(), 
-					1, 
+					UserManager.getInstance().getUserInfo().getUid()+"",
+					currActivity.getAcid()+"", 
+					"1", 
 					new Listener<JSONObject>() {
 
 						@Override
@@ -91,11 +107,11 @@ public class InviteLetterActivity extends PPBaseActivity implements OnClickListe
 					});
 			apiQueue.add(request);
 			break;
-		case R.id.btn_refuse:
+		case R.id.btn_giveup:
 			AnserInviteLetterRequest request2 = new AnserInviteLetterRequest(
-					UserManager.getInstance().getUserInfo().getUid(),
-					currActivity.getAcid(), 
-					2, 
+					UserManager.getInstance().getUserInfo().getUid()+"",
+					currActivity.getAcid()+"", 
+					"2", 
 					new Listener<JSONObject>() {
 
 						@Override

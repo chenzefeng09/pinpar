@@ -21,17 +21,25 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
+import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.activity.MainActivity;
+import com.ipinpar.app.activity.MyEnrolled;
 import com.ipinpar.app.activity.OngoingAcDetail;
+import com.ipinpar.app.activity.PartyGetIdentityActivity;
+import com.ipinpar.app.activity.PartyLaunchActivity;
 import com.ipinpar.app.adapter.OngoingActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
 import com.ipinpar.app.entity.ActivityListEntity;
+import com.ipinpar.app.entity.RoleIsSelectedEntity;
+import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityListRequest;
+import com.ipinpar.app.network.api.GetIdentityIsSelectedRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
@@ -48,6 +56,9 @@ public class DiscoverFragment extends PPBaseFragment{
 	
 	//请求进行中的活动
 	private ActivityListRequest ongoingAcsRequest;
+	//判断8.8的活动是否已选择角色
+	private GetIdentityIsSelectedRequest getIdentityIsSelectedRequest;
+	private String roleCount = "-1";
 	
 	//保存服务器返回的正在进行中的活动
 	private ArrayList<ActivityEntity> activityList = new ArrayList<ActivityEntity>();
@@ -91,6 +102,11 @@ public class DiscoverFragment extends PPBaseFragment{
 		
 		//请求进行中的活动
 		handlerOngoingAcsRequest.sendEmptyMessage(0);
+		
+		if (UserManager.getInstance().isLogin()) {
+			handlerRoleIsSelectedRequest.sendEmptyMessage(0);
+		}
+		
 	}
 	
 	public void initView(View view) {
@@ -161,8 +177,31 @@ public class DiscoverFragment extends PPBaseFragment{
 			// TODO Auto-generated method stub
 			Intent intent = new Intent();
 			intent.putExtra("activityID", activityList.get(position-1).getAcid());
-			intent.setClass(mContext, OngoingAcDetail.class);
-			startActivity(intent);
+			
+			if(activityList.get(position-1).getFlag() == 5){
+//			if(position == 1){
+				if (UserManager.getInstance().isLogin()) {
+					handlerRoleIsSelectedRequest.sendEmptyMessage(0);
+					
+					if(roleCount.equals("0")){
+						intent.setClass(mContext, PartyLaunchActivity.class);
+						startActivity(intent);
+					}else if(roleCount.equals("1")){
+						intent.setClass(mContext, PartyGetIdentityActivity.class);
+						startActivity(intent);
+					}else{
+						Toast.makeText(mContext, "获取角色信息失败！", 1000).show();
+					}
+				}
+				else {
+					intent.setClass(mContext, LoginActivity.class);
+					startActivity(intent);
+				}
+			}else{
+				intent.setClass(mContext, OngoingAcDetail.class);
+				startActivity(intent);
+			}
+			
 		}
 	};
 	
@@ -259,6 +298,10 @@ public class DiscoverFragment extends PPBaseFragment{
 	public void onResume() {
 	    super.onResume();
 	    MobclickAgent.onPageStart("PinparActivityListFragment"); //统计页面
+	    
+	    if (UserManager.getInstance().isLogin()) {
+			handlerRoleIsSelectedRequest.sendEmptyMessage(0);
+		}
 	}
 	public void onPause() {
 	    super.onPause();
@@ -286,6 +329,43 @@ public class DiscoverFragment extends PPBaseFragment{
 				break;
 			}
 		}
+	};
+	
+	
+	Handler handlerRoleIsSelectedRequest = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what){
+			case 0:
+				getIdentityIsSelectedRequest = new GetIdentityIsSelectedRequest(
+						UserManager.getInstance().getUserInfo().getUid()+"",
+						new Listener<JSONObject>() {
+					
+					@Override
+					public void onResponse(JSONObject response) {
+						// TODO Auto-generated method stub
+						
+						Gson gson = new Gson();
+						
+						RoleIsSelectedEntity roleEntity = gson.fromJson(response.toString(), RoleIsSelectedEntity.class);
+						
+						roleCount = roleEntity.getRolecount();
+					}
+					
+				});
+				getIdentityIsSelectedRequest.setTag(TAG);
+				apiQueue.add(getIdentityIsSelectedRequest);
+			break;
+			
+			default:
+				
+				break;
+			}
+		}
+		
 	};
 	
 }

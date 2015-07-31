@@ -12,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.RelativeLayout;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,6 +33,8 @@ import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 public class MyInterested extends PPBaseActivity implements OnScrollListener{
 
 	private Context mContext;
+	
+	private RelativeLayout rlMyEnrolledNoTip;
 
 	//请求往期的活动
 	private MyActivityListRequest myInterestedAcsRequest;
@@ -73,6 +76,8 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 	}
 	
 	public void findView(){
+		
+		rlMyEnrolledNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_tip);
 		
 		activityListAdapter = new MyInterestedActivityListAdapter(mContext,activityList);
 		
@@ -187,6 +192,10 @@ public class MyInterested extends PPBaseActivity implements OnScrollListener{
 						
 						handlerStateChanged.sendEmptyMessage(0);
 						handlerStateChanged.sendEmptyMessage(1);
+						
+						if(activityList.size() == 0){
+							rlMyEnrolledNoTip.setVisibility(View.VISIBLE);
+						}
 					}
 					
 				});
