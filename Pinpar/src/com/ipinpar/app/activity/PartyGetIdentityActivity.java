@@ -2,6 +2,7 @@ package com.ipinpar.app.activity;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -28,11 +29,14 @@ import com.google.gson.Gson;
 import com.ipinpar.app.PPApplication;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.db.dao.AgreeDao;
 import com.ipinpar.app.entity.ActivityListEntity;
 import com.ipinpar.app.entity.AvailableRolesListEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityListRequest;
 import com.ipinpar.app.network.api.RolesAvailableRequest;
+import com.ipinpar.app.network.api.SetRoleRequest;
+import com.ipinpar.app.widget.PartyHomeVenueDialog;
 
 public class PartyGetIdentityActivity extends PPBaseActivity{
 
@@ -50,8 +54,10 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 	
 	private ArrayList<Integer> availableRoles = new ArrayList<Integer>();
 	
-	//请求进行中的活动
+	//获取可选的角色（三个）
 	private RolesAvailableRequest rolesAvailableRequest;
+	
+	private SetRoleRequest setRoleRequest;
 	
 	private int[] images = new int[]{
 			 R.drawable.party_identity_ceramics,R.drawable.party_identity_porcelain,
@@ -64,6 +70,9 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 			"陶艺","画瓷","彩泥","茶饼","紫砂壶","剪纸",
 			"咖啡","寿司","插花","飞行棋","K歌","桌游"
 	};
+	
+	private PartyHomeVenueDialog partySelectRolesDialog;
+	private ImageView ivOut,ivIn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +83,28 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 		
 		uid = UserManager.getInstance().getUserInfo().getUid();
 		
+		startAnimaition();
+		
 		handlerRolesAvailableRequest.sendEmptyMessage(0);
 		
 		findView();
 		setView();
 		
+	}
+	
+	public void startAnimaition(){
+		//初始化等待进度条
+		partySelectRolesDialog = new PartyHomeVenueDialog(mContext,  
+                R.layout.dialog_party_select_random_roles_waitting, R.style.PartyDialogTheme); 
+		
+		ivOut = (ImageView) partySelectRolesDialog.findViewById(R.id.iv_party_select_random_roles_waitting_out);
+		ivIn = (ImageView) partySelectRolesDialog.findViewById(R.id.iv_party_select_random_roles_waitting_in);
+		
+		ivOut.startAnimation(AnimationUtils.loadAnimation(PartyGetIdentityActivity.this,R.anim.anti_clock_wise_out));
+		ivIn.startAnimation(AnimationUtils.loadAnimation(PartyGetIdentityActivity.this,R.anim.clock_wise_in));
+		partySelectRolesDialog.show();
+		handlerStatrAnimation.sendEmptyMessageDelayed(1, 5000);
+				
 	}
 	
 	public void findView(){
@@ -115,27 +141,30 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if(bRole1==false && bRole2 == false && bRole3 ==false){
-//					Toast.makeText(mContext, "请选择角色！", 1000).show();
 					tvRoleSelectedTip.setText("请选择角色！");
 				}else{
 					if(bRole1){
 						selectedRole = availableRoles.get(0);
 						
-						Intent intent = new Intent();
-						intent.setClass(mContext, PartyHomeVenueActivity.class);
-						startActivity(intent);
+						Message msg = new Message();
+						msg.what = 0;
+						msg.arg1 = selectedRole;
+						handlerSetRoleRequest.sendMessage(msg);
+						
 					}else if(bRole2){
 						selectedRole = availableRoles.get(1);
 						
-						Intent intent = new Intent();
-						intent.setClass(mContext, PartyHomeVenueActivity.class);
-						startActivity(intent);
+						Message msg = new Message();
+						msg.what = 0;
+						msg.arg1 = selectedRole;
+						handlerSetRoleRequest.sendMessage(msg);
 					}else if(bRole3){
 						selectedRole = availableRoles.get(2);
 						
-						Intent intent = new Intent();
-						intent.setClass(mContext, PartyHomeVenueActivity.class);
-						startActivity(intent);
+						Message msg = new Message();
+						msg.what = 0;
+						msg.arg1 = selectedRole;
+						handlerSetRoleRequest.sendMessage(msg);
 					}else{
 						tvRoleSelectedTip.setText("请选择角色！");
 					}
@@ -158,8 +187,10 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 				rlRole3.setBackgroundDrawable(
 						getResources().getDrawable(R.drawable.party_get_identity_normal));
 				
-				tvRoleSelectedTip.setText("已选择"+roleNames[availableRoles.get(0)]
-						+"，将获得"+roleNames[availableRoles.get(0)]+"游戏的双倍积分技能");
+				if(availableRoles!=null && availableRoles.size()>=3){
+					tvRoleSelectedTip.setText("已选择"+roleNames[availableRoles.get(0)-1]
+							+"，将获得"+roleNames[availableRoles.get(0)-1]+"游戏的双倍积分技能");
+				}
 			}
 		});
 		rlRole2.setOnClickListener(new OnClickListener() {
@@ -177,8 +208,10 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 				rlRole3.setBackgroundDrawable(
 						getResources().getDrawable(R.drawable.party_get_identity_normal));
 				
-				tvRoleSelectedTip.setText("已选择"+roleNames[availableRoles.get(1)]
-						+"，将获得"+roleNames[availableRoles.get(1)]+"游戏的双倍积分技能");
+				if(availableRoles!=null && availableRoles.size()>=3){
+					tvRoleSelectedTip.setText("已选择"+roleNames[availableRoles.get(1)-1]
+							+"，将获得"+roleNames[availableRoles.get(1)-1]+"游戏的双倍积分技能");
+				}
 			}
 		});
 		rlRole3.setOnClickListener(new OnClickListener() {
@@ -196,8 +229,10 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 				rlRole3.setBackgroundDrawable(
 						getResources().getDrawable(R.drawable.party_get_identity_pressed));
 				
-				tvRoleSelectedTip.setText("已选择"+roleNames[availableRoles.get(2)]
-						+"，将获得"+roleNames[availableRoles.get(2)]+"游戏的双倍积分技能");
+				if(availableRoles!=null && availableRoles.size()>=3){
+					tvRoleSelectedTip.setText("已选择"+roleNames[availableRoles.get(2)-1]
+							+"，将获得"+roleNames[availableRoles.get(2)-1]+"游戏的双倍积分技能");
+				}
 			}
 		});
 		
@@ -205,13 +240,13 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 	
 	public void setRoleCards(){
 		if(availableRoles!=null && availableRoles.size()>=3){
-			ivRole1.setImageResource(images[availableRoles.get(0)]);
-			ivRole2.setImageResource(images[availableRoles.get(1)]);
-			ivRole3.setImageResource(images[availableRoles.get(2)]);
+			ivRole1.setImageResource(images[availableRoles.get(0)-1]);
+			ivRole2.setImageResource(images[availableRoles.get(1)-1]);
+			ivRole3.setImageResource(images[availableRoles.get(2)-1]);
 			
-			tvRole1.setText(roleNames[availableRoles.get(0)]);
-			tvRole2.setText(roleNames[availableRoles.get(1)]);
-			tvRole3.setText(roleNames[availableRoles.get(2)]);
+			tvRole1.setText(roleNames[availableRoles.get(0)-1]);
+			tvRole2.setText(roleNames[availableRoles.get(1)-1]);
+			tvRole3.setText(roleNames[availableRoles.get(2)-1]);
 		}
 	}
 	
@@ -249,6 +284,78 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 			
 			default:
 				
+				break;
+			}
+		}
+		
+	};
+	
+	Handler handlerSetRoleRequest = new Handler(){
+
+		int roleid;
+		
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			
+			roleid = msg.arg1;
+			
+			switch(msg.what){
+			case 0:
+				setRoleRequest = new SetRoleRequest(
+						uid+"",roleid+"", new Listener<JSONObject>() {
+					
+					@Override
+					public void onResponse(JSONObject response) {
+						// TODO Auto-generated method stub
+						
+						try {
+							if (response !=null && response.getInt("result") == 1) {
+								Toast.makeText(mContext, "成功选定角色!", 1000).show();
+								Intent intent = new Intent();
+								intent.setClass(mContext, PartyHomeVenueActivity.class);
+								startActivity(intent);
+								finish();
+							}else if (response !=null && response.getInt("result") == 0) {
+								Toast.makeText(mContext, "已经选定角色!", 1000).show();
+							}else {
+								Toast.makeText(mContext, "角色设定异常,请稍后再试!", 1000).show();
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					
+				});
+				setRoleRequest.setTag(TAG);
+				apiQueue.add(setRoleRequest);
+			break;
+			
+			default:
+				
+				break;
+			}
+		}
+		
+	};
+	
+	Handler handlerStatrAnimation = new Handler(){
+
+		@Override
+		public void dispatchMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.dispatchMessage(msg);
+			switch (msg.what) {
+			case 0:
+				
+				break;
+			case 1:
+				partySelectRolesDialog.dismiss();
+				break;
+			default:
 				break;
 			}
 		}

@@ -5,11 +5,11 @@ import org.json.JSONObject;
 import com.android.volley.Response.Listener;
 import com.ipinpar.app.util.MD5Util;
 
-public class GetIdentityIsSelectedRequest extends BaseJsonRequest {
-	private static final String PROTOCOL ="40002";
+public class PartyGetUserInfoRequest extends BaseJsonRequest {
+	private static final String PROTOCOL ="40006";
 
 
-	public GetIdentityIsSelectedRequest(String uid, Listener<JSONObject> listener) {
+	public PartyGetUserInfoRequest(String uid, Listener<JSONObject> listener) {
 		super(Method.POST, String.format("api.pinpa?protocol=%s&a=%s&b=%s",
 				PROTOCOL,
 				uid,

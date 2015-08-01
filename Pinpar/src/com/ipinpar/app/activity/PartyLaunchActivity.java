@@ -27,7 +27,6 @@ public class PartyLaunchActivity extends PPBaseActivity{
 	private TextView tvPartyInvition;
 	private Button btnBack,btnLaunch;
 	private ImageView ivPartyLaunchRocket;
-	private AnimationDrawable AniDraw;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class PartyLaunchActivity extends PPBaseActivity{
 				
 				ivPartyLaunchRocket.startAnimation(AnimationUtils.loadAnimation(PartyLaunchActivity.this,R.anim.push_up_out));
 				ivPartyLaunchRocket.setVisibility(View.INVISIBLE);
-				handlerStatrActivity.sendEmptyMessageDelayed(1, 1500);
+				handlerStatrActivity.sendEmptyMessageDelayed(1, 800);
 				
 				break;
 			case 1:

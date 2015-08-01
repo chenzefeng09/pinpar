@@ -27,6 +27,14 @@
     <!-- 文字选中高亮颜色 本颜色为淡蓝色 -->
     <color name="text_highlight">#2983c1</color>
     <color name="transparent">#00000000</color>
+    
+    <!-- 节日界面中，分组对话框用到的颜色 -->
+    <color name="dialog_team_tomato">#fe7664</color>
+    <color name="dialog_team_yellow">#f6ae3c</color>
+    <color name="dialog_team_lemon">#5dce3f</color>
+    <color name="dialog_team_blueberry">#4e98fe</color>
+    <color name="dialog_team_border">#9d6ffe</color>
+    
     <!-- 白色 -->
     <color name="ivory">#fffff0</color>
     <!-- 象牙色 -->

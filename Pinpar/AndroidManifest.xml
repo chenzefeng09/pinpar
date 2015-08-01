@@ -305,7 +305,14 @@
             android:name="com.ipinpar.app.activity.PartyHomeVenueActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+        <activity
+            android:name="com.ipinpar.app.activity.PartyExperienceActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.PartyExperienceEditActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

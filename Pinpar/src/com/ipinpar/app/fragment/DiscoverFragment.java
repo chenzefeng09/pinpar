@@ -32,6 +32,7 @@ import com.ipinpar.app.activity.MainActivity;
 import com.ipinpar.app.activity.MyEnrolled;
 import com.ipinpar.app.activity.OngoingAcDetail;
 import com.ipinpar.app.activity.PartyGetIdentityActivity;
+import com.ipinpar.app.activity.PartyHomeVenueActivity;
 import com.ipinpar.app.activity.PartyLaunchActivity;
 import com.ipinpar.app.adapter.OngoingActivityListAdapter;
 import com.ipinpar.app.entity.ActivityEntity;
@@ -39,7 +40,7 @@ import com.ipinpar.app.entity.ActivityListEntity;
 import com.ipinpar.app.entity.RoleIsSelectedEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.ActivityListRequest;
-import com.ipinpar.app.network.api.GetIdentityIsSelectedRequest;
+import com.ipinpar.app.network.api.PartyGetIdentityIsSelectedRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.widget.PullToRefreshListView;
 import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
@@ -57,7 +58,7 @@ public class DiscoverFragment extends PPBaseFragment{
 	//请求进行中的活动
 	private ActivityListRequest ongoingAcsRequest;
 	//判断8.8的活动是否已选择角色
-	private GetIdentityIsSelectedRequest getIdentityIsSelectedRequest;
+	private PartyGetIdentityIsSelectedRequest getIdentityIsSelectedRequest;
 	private String roleCount = "-1";
 	
 	//保存服务器返回的正在进行中的活动
@@ -187,7 +188,7 @@ public class DiscoverFragment extends PPBaseFragment{
 						intent.setClass(mContext, PartyLaunchActivity.class);
 						startActivity(intent);
 					}else if(roleCount.equals("1")){
-						intent.setClass(mContext, PartyGetIdentityActivity.class);
+						intent.setClass(mContext, PartyHomeVenueActivity.class);
 						startActivity(intent);
 					}else{
 						Toast.makeText(mContext, "获取角色信息失败！", 1000).show();
@@ -340,7 +341,7 @@ public class DiscoverFragment extends PPBaseFragment{
 			super.handleMessage(msg);
 			switch(msg.what){
 			case 0:
-				getIdentityIsSelectedRequest = new GetIdentityIsSelectedRequest(
+				getIdentityIsSelectedRequest = new PartyGetIdentityIsSelectedRequest(
 						UserManager.getInstance().getUserInfo().getUid()+"",
 						new Listener<JSONObject>() {
 					
