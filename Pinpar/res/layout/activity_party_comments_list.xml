@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/title_theme" >
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="评论"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/ib_left"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/return1" />
+        
+        <ImageView
+            android:id="@+id/tv_header_right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:src="@drawable/more"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:visibility="invisible"
+            />
+    </RelativeLayout>
+    
+    
+    <LinearLayout 
+        android:id="@+id/ll_input"
+        android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+        android:layout_height="50dp"
+        android:background="#dcdcdc"
+        android:orientation="horizontal">
+        
+        <EditText 
+            android:id="@+id/et_input"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rounded_button_light_white"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_margin="12dp"
+            android:hint="说点什么吧～"/>
+        <Button 
+        android:id="@+id/btn_add_new"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="发送"
+        android:background="@drawable/roundedbutton_lightpurple"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/white"/>
+        
+        
+    </LinearLayout>
+    
+    <include 
+        android:id="@+id/view_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_top"
+        layout="@layout/party_experiences_list_item"/>
+    
+    <ImageView 
+        android:id="@+id/iv_1"
+                android:layout_below="@id/view_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="#dcdcdc"/>
+    
+    
+    <ListView 
+        android:id="@+id/lv_infolist"
+        android:layout_below="@id/iv_1"
+        android:layout_above="@id/ll_input"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp">
+    </ListView>
+    
+    
+    
+
+</RelativeLayout>

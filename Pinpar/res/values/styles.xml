@@ -11,6 +11,8 @@
             backward-compatibility can go here.
         -->
     </style>
+    
+    
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
@@ -48,4 +50,9 @@
         <item name="android:focusable">true</item>
         <item name="android:background">#bfbfbf</item>
     </style>
+    
+    <style name="PartyDialogTheme" parent="@android:style/Theme.Dialog">  
+       <item name="android:windowBackground">@android:color/transparent</item>  
+       <item name="android:windowNoTitle">true</item>  
+   </style> 
 </resources>

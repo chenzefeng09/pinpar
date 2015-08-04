@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/party_get_identity_bg">
+    <!--  
+    <RelativeLayout 
+        android:id="@+id/RL_party_select_random_roles_waitting"
+        android:layout_width="129dp"
+        android:layout_height="129dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/party_select_random_roles_bg">
+        <ProgressBar 
+          android:id="@+id/pb_party_select_random_roles_waitting_out"
+	      android:layout_width="129dp"
+	      android:layout_height="129dp"
+	      android:layout_centerInParent="true"
+	      android:indeterminateDrawable="@drawable/party_select_random_roles_wattingbar_out"/>
+        <ProgressBar 
+          android:id="@+id/pb_party_select_random_roles_waitting_in"
+	      android:layout_width="78dp"
+	      android:layout_height="78dp"
+	      android:layout_centerInParent="true"
+	      android:indeterminateDrawable="@drawable/party_select_random_roles_wattingbar_in"/>
+	 </RelativeLayout>
+	 -->
+	 
+    <RelativeLayout 
+        android:id="@+id/RL_party_select_random_roles_waitting"
+        android:layout_width="129dp"
+        android:layout_height="129dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/party_select_random_roles_bg">
+        <ImageView
+          android:id="@+id/iv_party_select_random_roles_waitting_out"
+	      android:layout_width="129dp"
+	      android:layout_height="129dp"
+	      android:layout_centerInParent="true"
+	      android:src="@drawable/party_select_random_roles_out"/>
+        <ImageView
+          android:id="@+id/iv_party_select_random_roles_waitting_in"
+	      android:layout_width="78dp"
+	      android:layout_height="78dp"
+	      android:layout_centerInParent="true"
+	      android:src="@drawable/party_select_random_roles_in"/>
+	 </RelativeLayout>
+	 
+    <TextView 
+        android:id="@+id/tv_party_select_random_roles_waitting_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/RL_party_select_random_roles_waitting"
+        android:layout_marginTop="30dp"
+        android:text="正在抽取身份"
+        android:textColor="#9d6ffe"
+        android:textSize="22sp"/>
+
+</RelativeLayout>

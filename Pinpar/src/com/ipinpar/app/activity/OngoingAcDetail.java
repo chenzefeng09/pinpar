@@ -416,7 +416,7 @@ public class OngoingAcDetail extends PPBaseActivity {
 		tvAcTimeBegin.setText(DateFormat.format("yyyy.MM.dd kk:mm", timeBegin));
 		tvAcTimeEnd.setText(DateFormat.format("kk:mm", timeEnd));
 		
-		long timeRegistedEnd = Long.parseLong(acticityEntity.getCreatetime())*1000;
+		long timeRegistedEnd = Long.parseLong(acticityEntity.getEndtime())*1000;
 		tvAcRegistEnd.setText(DateFormat.format("yyyy.MM.dd", timeRegistedEnd));
 		
 		tvAcAllowedNum.setText(acticityEntity.getExperiencecount()+"");

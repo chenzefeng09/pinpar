@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:pivotX="50%"
+	android:pivotY="50%"
+	android:fromDegrees="0"
+	android:toDegrees="359"
+	android:duration="500"
+	android:interpolator="@android:anim/cycle_interpolator">
+	<bitmap 
+		android:antialias="true"
+		android:filter="true"
+		android:src="@drawable/party_select_random_roles_out"/>
+
+</rotate>

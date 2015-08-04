@@ -13,7 +13,7 @@ public class RegistRequest extends BaseJsonRequest {
 
 	public RegistRequest(String phone,String pwd,String nickName,
 			Listener<JSONObject> listener) throws UnsupportedEncodingException {
-		super(Method.POST, String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&e=%s",
+		super(Method.POST, String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&e=%s&platform=android",
 				PROTOCOL,
 				phone,
 				MD5Util.MD5(pwd),
@@ -25,7 +25,7 @@ public class RegistRequest extends BaseJsonRequest {
 	
 	public RegistRequest(String phone,String pwd,String nickName,String email,
 			Listener<JSONObject> listener) throws UnsupportedEncodingException {
-		super(Method.POST, String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&d=%s&e=%s",
+		super(Method.POST, String.format("api.pinpa?protocol=%s&a=%s&b=%s&c=%s&d=%s&e=%s&platform=android",
 				PROTOCOL,
 				phone,
 				MD5Util.MD5(pwd),
