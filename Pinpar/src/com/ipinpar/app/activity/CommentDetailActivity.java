@@ -11,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ import com.ipinpar.app.entity.ReplyEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.DreamShowDetailRequest;
 import com.ipinpar.app.network.api.ExperienceDiaryRequest;
 import com.ipinpar.app.network.api.PublishCommentRequest;
 import com.ipinpar.app.network.api.ReplyCommentRequest;
@@ -49,7 +52,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class CommentDetailActivity extends PPBaseActivity {
 
 	private TextView name, time, content, support, comment;
-	private ImageView userImage, iv_statement_support;
+	private ImageView userImage, iv_statement_support,iv_img;
 	private AcStatementEntity currStatement;
 	private ArrayList<CommentEntity> comments = new ArrayList<CommentEntity>();
 	private CommentDetailAdapter adapter;
@@ -68,6 +71,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private String nameString, contentString, peer_uidString;
 	private long timeLong;
 	private int agreecount, commentcount;
+	private String imgurl;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -75,6 +79,10 @@ public class CommentDetailActivity extends PPBaseActivity {
 		setContentView(R.layout.activity_comments_list);
 		fromid = getIntent().getIntExtra("fromid", 0);
 		fromidtype = getIntent().getStringExtra("fromidtype");
+		String title = getIntent().getStringExtra("title");
+		if (!TextUtils.isEmpty(title)) {
+			setTitleText(title);
+		}
 		userImage = (CircularImageView) findViewById(R.id.statement_image);
 		name = (TextView) findViewById(R.id.statement_user_name);
 		time = (TextView) findViewById(R.id.statement_time);
@@ -85,6 +93,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 		et_input = (EditText) findViewById(R.id.et_input);
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
 		iv_statement_support = (ImageView) findViewById(R.id.iv_statement_support);
+		iv_img = (ImageView) findViewById(R.id.iv_img);
 		RL_support = findViewById(R.id.RL_support);
 		RL_comment = findViewById(R.id.RL_comment);
 		
@@ -99,6 +108,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 			refreshStatement();
 		} else if ("sid".equals(fromidtype)) {
 			refreshExperienceDiary();
+		}
+		else if ("dreamid".equals(fromidtype)) {
+			refreshDreamshow();
 		}
 	}
 
@@ -167,6 +179,38 @@ public class CommentDetailActivity extends PPBaseActivity {
 				});
 		apiQueue.add(request);
 	}
+	
+	private void refreshDreamshow(){
+		showProgressDialog();
+		DreamShowDetailRequest request = new DreamShowDetailRequest(fromid, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				dissmissProgressDialog();
+				try {
+					if (response != null && response.getInt("result") == 1) {
+						Log.e("dreamshow comment", response.toString());
+						contentString = response.getString("title");
+						agreecount = response.getInt("agreecount");
+						commentcount = response.getInt("commentcount");
+						nameString = response.getString("username");
+						peer_uidString = response.getInt("uid") + "";
+						timeLong = response.getLong("createtime");
+						imgurl = response.getString("author_img");
+						setupViews();
+						refreshData();
+						if (TextUtils.isEmpty(response.getString("author_img"))) {
+							
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		apiQueue.add(request);
+	}
 
 	private void refreshData() {
 		showProgressDialog();
@@ -216,6 +260,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 		content.setText(contentString);
 		support.setText(agreecount + "");
 		comment.setText(commentcount + "");
+		if (!TextUtils.isEmpty(imgurl)) {
+			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+		}
 		view_1.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -563,6 +610,16 @@ public class CommentDetailActivity extends PPBaseActivity {
 		intent.putExtra("fromid", fromid);
 		intent.putExtra("fromidtype", fromidtype);
 
+		return intent;
+	}
+	
+	public static Intent getIntent2Me(Context context, int fromid,
+			String fromidtype,String title) {
+		Intent intent = new Intent(context, CommentDetailActivity.class);
+		intent.putExtra("fromid", fromid);
+		intent.putExtra("fromidtype", fromidtype);
+		
+		intent.putExtra("title", title);
 		return intent;
 	}
 }

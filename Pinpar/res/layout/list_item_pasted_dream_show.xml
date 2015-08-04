@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp" >
+
+    <RelativeLayout
+        android:id="@+id/RL_activity_description"
+        android:layout_width="fill_parent"
+        android:layout_height="220dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/transparent" >
+
+        <ImageView
+            android:id="@+id/iv_activity_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop" />
+        
+        <TextView 
+            android:id="@+id/tv_past_dream_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="第一期"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/label_past_dream_show"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RL_activity_description"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/activity_list_item_bottom_corner_round" >
+
+
+        <com.ipinpar.app.view.CircleImageView
+            android:id="@+id/iv_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/tv_dream_curr"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/default_avatar" />
+
+        <TextView
+            android:id="@+id/tv_name_curr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_img"
+            android:layout_alignTop="@id/iv_img"
+            android:layout_below="@id/tv_dream_curr"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/iv_img"
+            android:drawablePadding="8dp"
+            android:drawableRight="@drawable/dream_come_ture"
+            android:gravity="center"
+            android:text="@string/dream_show_who_says"
+            android:textColor="#dcdcdc" />
+
+        <TextView
+            android:id="@+id/tv_time_curr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_img"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/iv_img"
+            android:layout_below="@id/tv_dream_curr"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:text="2015-07-09"
+            android:textColor="#dcdcdc" />
+
+        <LinearLayout
+            android:id="@+id/ll_dream_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_img"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="8dp"
+                android:text="这是一个大航海的时代，成为海贼王是我最大的梦想！" />
+
+            <TextView
+                android:id="@+id/tv_dream_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_text_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="8dp"
+                android:text="现在我即将踏上旅程"
+                android:textColor="#dcdcdc" />
+
+            <ImageView
+                android:id="@+id/iv_dream"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="12dp"
+                android:minHeight="100dp"
+                android:scaleType="centerCrop"
+                android:src="#dcdcdc" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -305,6 +305,18 @@
             android:name="com.ipinpar.app.activity.PartyHomeVenueActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.DreamShowPublishActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.PastedDreamShowActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.ipinpar.app.activity.MyDreamsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         
     </application>
 

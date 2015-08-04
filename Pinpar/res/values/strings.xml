@@ -9,6 +9,8 @@
     <string name="main_tab_home">品趴</string>
     <string name="main_tab_message">消息</string>
     <string name="main_tab_me">我</string>
+        <string name="main_tab_dream_show">梦想秀</string>
+    
 
     <!-- 下拉刷新相关字符资源 -->
     <string name="pull_to_refresh_pull_label">下拉刷新</string>
@@ -135,6 +137,7 @@
     <string name="enroll_success_message">我们将在报名日期截止后1-2个工作日筛选出幸运的趴友，确认名单后将为您寄出邀请函，请您耐心等待哦！</string>
     <string name="enroll_success_ok">确认</string>
     <string name="enroll_success_ok_time">5s</string>
+
     
     <!-- "我"相关的活动界面 -->
     
@@ -178,4 +181,9 @@
 		<br/>您即将进入趴星球,需要抽取您的身份,
 		<br/>完成身份任务可以获得高额积分哦。]]>
     </string>
+    
+ 	    
+    <!-- 梦想秀  -->
+    <string name="dream_show_who_says">%1$s 说</string>
+    
 </resources>

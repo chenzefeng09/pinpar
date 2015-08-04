@@ -21,6 +21,7 @@ import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.FriendActivity;
 import com.ipinpar.app.activity.LoginActivity;
+import com.ipinpar.app.activity.MyDreamsActivity;
 import com.ipinpar.app.activity.MyEnrolled;
 import com.ipinpar.app.activity.MyInterested;
 import com.ipinpar.app.activity.MyInvited;
@@ -40,7 +41,7 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 	
 	private Context mContext;
 	private View view;
-	private TextView tv_header_title,tv_uname,tv_qianming,tv_my_activity,tv_my_invited_activity,tv_my_faverite_activity,tv_my_friend,tv_edit;
+	private TextView tv_my_dream_show,tv_header_title,tv_uname,tv_qianming,tv_my_activity,tv_my_invited_activity,tv_my_faverite_activity,tv_my_friend,tv_edit;
 	private ImageView ib_right,iv_icon,iv_blur_icon,iv_sex;
 	private DisplayImageOptions options;
 	@Override
@@ -79,12 +80,15 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 		iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
 		iv_blur_icon = (ImageView) view.findViewById(R.id.iv_blur_icon);
 		iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
+		tv_my_dream_show = (TextView) view.findViewById(R.id.tv_my_dream_show);
+		
 		
 		tv_edit.setOnClickListener(this);
 		tv_my_activity.setOnClickListener(this);
 		tv_my_invited_activity.setOnClickListener(this);
 		tv_my_faverite_activity.setOnClickListener(this);
 		tv_my_friend.setOnClickListener(this);
+		tv_my_dream_show.setOnClickListener(this);
 		iv_icon.setOnClickListener(this);
 		ib_right.setOnClickListener(this);
 			}
@@ -240,6 +244,16 @@ public class MeFragment extends PPBaseFragment implements OnClickListener{
 			else {
 				startActivity(new Intent(getActivity(), LoginActivity.class));
 			}
+			break;
+			
+		case R.id.tv_my_dream_show:
+			if (UserManager.getInstance().isLogin()) {
+				startActivity(new Intent(getActivity(), MyDreamsActivity.class));
+			}
+			else {
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+			}
+			
 			break;
 
 		default:

@@ -66,12 +66,22 @@
 	        android:textSize="16sp"
 	        android:textColor="@color/activity_statement_content"/>
 	    
+	    <ImageView 
+	        android:id="@+id/iv_img"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/statement_image"
+	        android:layout_below="@id/statement_content"
+	        android:layout_marginRight="5dp"
+	        android:scaleType="centerCrop"
+	        />
+	    
 	    <LinearLayout 
 	        android:id="@+id/LL_support_and_comment"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:baselineAligned="false"
-	        android:layout_below="@id/statement_content"
+	        android:layout_below="@id/iv_img"
 	        android:layout_toRightOf="@id/statement_image"
 	        android:paddingBottom="5dp"
 	        android:layout_marginTop="5dp"
