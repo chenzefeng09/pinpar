@@ -101,8 +101,9 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 			iv_dream.setVisibility(View.GONE);
 		}
 		else {
-			iv_dream.setVisibility(View.VISIBLE);
-			ImageLoader.getInstance().displayImage(currDream.mainimg, iv_dream);
+//			iv_dream.setVisibility(View.VISIBLE);
+//			ImageLoader.getInstance().displayImage(currDream.mainimg, iv_dream);
+			iv_dream.setVisibility(View.GONE);
 		}
 	}
 	
