@@ -31,10 +31,12 @@ import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.PartyExperiencesListRequest;
 import com.ipinpar.app.network.api.PartyGetUserInfoRequest;
 import com.ipinpar.app.network.api.SetTeamRequest;
+import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.view.CircularImageView;
 import com.ipinpar.app.widget.PartyAgreeDialog;
 import com.ipinpar.app.widget.PartyHomeVenueDialog;
 import com.ipinpar.app.widget.PullToRefreshListView;
+import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -156,6 +158,7 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		if(partyExperiencesListAdapter!=null){
 			partyExperiencesListView.setAdapter(partyExperiencesListAdapter);
 		}
+		partyExperiencesListView.setOnRefreshListener(onRefreshListener);
 		
 	}
 	
@@ -430,6 +433,17 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		}
 		
 	}
+	
+	private OnRefreshListener onRefreshListener = new OnRefreshListener() {
+		public void onRefresh() {
+			// Do work to refresh the list here.
+			
+			if(NetWorkState.isConnectingToInternet()){
+				handlerPartyExperiencesRequest.sendEmptyMessage(0);
+			}
+			
+		}
+	};
 	
 	Handler handlerPartyUserInfoRequest = new Handler(){
 

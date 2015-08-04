@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.webkit.WebSettings.RenderPriority;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -34,7 +34,6 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.entity.PartyUserInfoEntity;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.PartyGetUserInfoRequest;
-import com.ipinpar.app.network.api.SetRoleRequest;
 import com.ipinpar.app.network.api.SetTeamRequest;
 import com.ipinpar.app.view.CircularImageView;
 import com.ipinpar.app.widget.PartyHomeVenueDialog;
@@ -524,6 +523,7 @@ public class PartyHomeVenueActivity extends PPBaseActivity{
 		wvPartyHomeVenueTask.getSettings().setRenderPriority(RenderPriority.HIGH);
 		wvPartyHomeVenueTask.getSettings().setUseWideViewPort(true);
 		wvPartyHomeVenueTask.getSettings().setLoadWithOverviewMode(true);
+		Log.e("WebView width:", wvPartyHomeVenueTask.getWidth()+"");
 		
 	}
 	

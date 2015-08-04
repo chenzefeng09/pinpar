@@ -47,7 +47,6 @@ public class AgreeManager {
 	public void agree(final int fromid,final String fromidtype,final AgreeResultListener listener,RequestQueue queue){
 		final AgreeEntity entity = new AgreeEntity(fromid,fromidtype);
 		if (UserManager.getInstance().isLogin()) {
-
 			if (userAgrees.contains(entity)) {
 				AgreeRequest request = new AgreeRequest(UserManager.getInstance().getUserInfo().getUid(),
 						fromidtype, fromid, "disagree", new Listener<JSONObject>() {
@@ -146,60 +145,13 @@ public class AgreeManager {
 		}
 	}
 	
-	public void partyAgree(final int fromid,final String fromidtype,final AgreeResultListener listener,RequestQueue queue){
-		final AgreeEntity entity = new AgreeEntity(fromid,fromidtype);
+	public void partyAgree(final int fromid,final String fromidtype,String weight,int experiencingid,final AgreeResultListener listener,RequestQueue queue){
+		final AgreeEntity entity = new AgreeEntity(experiencingid,fromidtype);
 		if (UserManager.getInstance().isLogin()) {
 
-			if (userAgrees.contains(entity)) {
+			if (!userAgrees.contains(entity)) {
 				PartyAgreeRequest request = new PartyAgreeRequest(UserManager.getInstance().getUserInfo().getUid()+"",
-						fromidtype, fromid+"", new Listener<JSONObject>() {
-	
-							@Override
-							public void onResponse(JSONObject response) {
-								try {
-									if (response !=null && response.getInt("result") == 1) {
-										userAgrees.remove(entity);
-										AgreeDao.getInstance().disagree(
-												UserManager.getInstance().getUserInfo().getUid(), 
-												fromid, fromidtype);
-										if (listener != null) {
-											listener.onAgreeResult(false);
-										}
-									}
-									else if (response !=null && response.getInt("result") == 0) {
-										if (listener != null) {
-											listener.onAgreeResult(true);
-										}
-									}
-									else if (response !=null && response.getInt("result") == 102) {
-										userAgrees.remove(entity);
-										AgreeDao.getInstance().disagree(
-												UserManager.getInstance().getUserInfo().getUid(), 
-												fromid, fromidtype);
-										if (listener != null) {
-											listener.onAgreeResult(false);
-										}
-									}
-									else {
-										userAgrees.remove(entity);
-										AgreeDao.getInstance().disagree(
-												UserManager.getInstance().getUserInfo().getUid(), 
-												fromid, fromidtype);
-										if (listener != null) {
-											listener.onAgreeResult(false);
-										}
-									}
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-						});
-				queue.add(request);
-			}
-			else {
-				PartyAgreeRequest request = new PartyAgreeRequest(UserManager.getInstance().getUserInfo().getUid()+"",
-						fromidtype, fromid+"", new Listener<JSONObject>() {
+						fromidtype, fromid+"",weight, new Listener<JSONObject>() {
 	
 							@Override
 							public void onResponse(JSONObject response) {
@@ -247,6 +199,7 @@ public class AgreeManager {
 			}
 		}
 	}
+
 	
 	public boolean isAgreed(int fromid,String fromidtype){
 		if (UserManager.getInstance().isLogin()) {

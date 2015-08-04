@@ -9,6 +9,8 @@
     <string name="main_tab_home">品趴</string>
     <string name="main_tab_message">消息</string>
     <string name="main_tab_me">我</string>
+        <string name="main_tab_dream_show">梦想秀</string>
+    
 
     <!-- 下拉刷新相关字符资源 -->
     <string name="pull_to_refresh_pull_label">下拉刷新</string>
@@ -178,6 +180,10 @@
 		<br/>您即将进入趴星球,需要抽取您的身份,
 		<br/>完成身份任务可以获得高额积分哦。]]>
     </string>
+    
+ 	    
+    <!-- 梦想秀  -->
+    <string name="dream_show_who_says">%1$s 说</string>
     
  	<string name="party_experiences_no">该活动暂未添加任何经历~</string>
 </resources>

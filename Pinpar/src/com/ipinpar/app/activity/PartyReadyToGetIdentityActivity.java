@@ -9,10 +9,7 @@ import android.os.Message;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import com.ipinpar.app.PPApplication;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
-import com.ipinpar.app.widget.PartyHomeVenueDialog;
 
 public class PartyReadyToGetIdentityActivity extends PPBaseActivity{
 

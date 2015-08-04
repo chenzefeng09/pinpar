@@ -12,10 +12,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.RelativeLayout;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;

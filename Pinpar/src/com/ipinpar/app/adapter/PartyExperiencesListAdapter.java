@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,23 +22,16 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
 import com.ipinpar.app.Constant;
 import com.ipinpar.app.R;
 import com.ipinpar.app.activity.CommentDetailActivity;
-import com.ipinpar.app.activity.ExperienceDiaryActivity;
 import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.activity.NameCardActivity;
-import com.ipinpar.app.activity.PartyCommentDetailActivity;
-import com.ipinpar.app.entity.AcStatementEntity;
 import com.ipinpar.app.entity.PartyExperienceEntity;
-import com.ipinpar.app.entity.PartyExperiencesListEntity;
-import com.ipinpar.app.entity.PartyUserInfoEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.PartyAgreeRequest;
-import com.ipinpar.app.network.api.PartyGetUserInfoRequest;
 import com.ipinpar.app.view.CircularImageView;
 import com.ipinpar.app.widget.PartyAgreeDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -118,7 +110,6 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 			viewHolder.RL_comment = convertView.findViewById(R.id.RL_party_experiences_comment);
 			viewHolder.iv_party_experiences_support = (ImageView) convertView.findViewById(R.id.iv_party_experiences_support);
 			
-//			viewHolder.tvPartyAgreeTip = (TextView) convertView.findViewById(R.id.tv_party_agree_tip);
 			viewHolder.RL_creative = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_creative);
 			viewHolder.RL_funny = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_funny);
 			viewHolder.RL_practical = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_practical);
@@ -155,7 +146,7 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				mContext.startActivity(PartyCommentDetailActivity.getIntent2Me(mContext, partyExperienceEntity.getExperiencingid(), "experiencingid"));
+				mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, partyExperienceEntity.getExperiencingid(), "experiencingid"));
 			}
 		});
 		
@@ -166,33 +157,9 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				if (UserManager.getInstance().isLogin()) {
 					//已经点过赞
 					if (AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
-//						AgreeManager.getInstance().agree(
-//								partyExperienceEntity.getExperiencingid(), 
-//								"experiencingid", new AgreeResultListener() {
-//									
-//									@Override
-//									public void onAgreeResult(boolean agree) {
-//										if (!agree) {
-//											partyExperienceEntity.setAgreecount(partyExperienceEntity.getAgreecount() - 1);
-//										}
-//										notifyDataSetChanged();
-//									}
-//								}, queue);
 						Toast.makeText(mContext, "请不要重复点赞哦～", 1000).show();
 					}
 					else {
-//						AgreeManager.getInstance().partyAgree(
-//								partyExperienceEntity.getExperiencingid(), 
-//								"experiencingid", new AgreeResultListener() {
-//									
-//									@Override
-//									public void onAgreeResult(boolean agree) {
-//										if (agree) {
-//											partyExperienceEntity.setAgreecount(partyExperienceEntity.getAgreecount() + 1);
-//										}
-//										notifyDataSetChanged();
-//									}
-//								}, queue);
 						partyAgreeDialog.show();
 					}
 				}
@@ -208,11 +175,37 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				// TODO Auto-generated method stub
 				partyAgreeDialog.dismiss();
 //				viewHolder.tvPartyAgreeTip.setText("创意值 ＋1");
-				Message msg = new Message();
-				msg.arg1 = 1;
-				msg.arg2 = partyExperienceEntity.getAuthorid();
-				msg.what = 0;
-				handlerAgreeRequest.sendMessage(msg);
+//				Message msg = new Message();
+//				msg.arg1 = 1;
+//				msg.arg2 = partyExperienceEntity.getAuthorid();
+//				msg.what = 0;
+//				handlerAgreeRequest.sendMessage(msg);
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								partyExperienceEntity.getAuthorid(), 
+								"experiencingid",
+								"1",
+								partyExperienceEntity.getExperiencingid(),
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											partyExperienceEntity.setAgreecount(partyExperienceEntity.getAgreecount() + 1);
+											Toast.makeText(mContext, "创意值 ＋1", 1000).show();
+										}
+										notifyDataSetChanged();
+									}
+								}, queue);
+					} else {
+						viewHolder.iv_party_experiences_support.setImageResource(R.drawable.enroll_fist);
+						Toast.makeText(mContext, "亲已经点赞了哦～3－1", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
 				
 			}
 		});
@@ -224,12 +217,36 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				partyAgreeDialog.dismiss();
 				
 //				viewHolder.tvPartyAgreeTip.setText("搞笑值 ＋1");
-				Message msg = new Message();
-				msg.arg1 = 2;
-				msg.arg2 = partyExperienceEntity.getAuthorid();
-				msg.what = 0;
-				handlerAgreeRequest.sendMessage(msg);
-				
+//				Message msg = new Message();
+//				msg.arg1 = 2;
+//				msg.arg2 = partyExperienceEntity.getAuthorid();
+//				msg.what = 0;
+//				handlerAgreeRequest.sendMessage(msg);
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								partyExperienceEntity.getAuthorid(), 
+								"experiencingid",
+								"2",
+								partyExperienceEntity.getExperiencingid(),
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											partyExperienceEntity.setAgreecount(partyExperienceEntity.getAgreecount() + 1);
+											Toast.makeText(mContext, "搞笑值 ＋1", 1000).show();
+										}
+										notifyDataSetChanged();
+									}
+								}, queue);
+					} else {
+						Toast.makeText(mContext, "亲已经点赞了哦～3－2", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
 			}
 		});
 		viewHolder.RL_practical.setOnClickListener(new OnClickListener() {
@@ -240,11 +257,37 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				partyAgreeDialog.dismiss();
 				
 //				viewHolder.tvPartyAgreeTip.setText("实用值 ＋1");
-				Message msg = new Message();
-				msg.arg1 = 3;
-				msg.arg2 = partyExperienceEntity.getAuthorid();
-				msg.what = 0;
-				handlerAgreeRequest.sendMessage(msg);
+//				Message msg = new Message();
+//				msg.arg1 = 3;
+//				msg.arg2 = partyExperienceEntity.getAuthorid();
+//				msg.what = 0;
+//				handlerAgreeRequest.sendMessage(msg);
+				
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								partyExperienceEntity.getAuthorid(), 
+								"experiencingid",
+								"3",
+								partyExperienceEntity.getExperiencingid(),
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											partyExperienceEntity.setAgreecount(partyExperienceEntity.getAgreecount() + 1);
+											Toast.makeText(mContext, "实用值 ＋1", 1000).show();
+										}
+										notifyDataSetChanged();
+									}
+								}, queue);
+					} else {
+						Toast.makeText(mContext, "亲已经点赞了哦～3－3", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
 			}
 		});
 		viewHolder.RL_confused.setOnClickListener(new OnClickListener() {
@@ -255,11 +298,37 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				partyAgreeDialog.dismiss();
 				
 //				viewHolder.tvPartyAgreeTip.setText("太囧值 ＋1");
-				Message msg = new Message();
-				msg.arg1 = 4;
-				msg.arg2 = partyExperienceEntity.getAuthorid();
-				msg.what = 0;
-				handlerAgreeRequest.sendMessage(msg);
+//				Message msg = new Message();
+//				msg.arg1 = 4;
+//				msg.arg2 = partyExperienceEntity.getAuthorid();
+//				msg.what = 0;
+//				handlerAgreeRequest.sendMessage(msg);
+				
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								partyExperienceEntity.getAuthorid(), 
+								"experiencingid",
+								"4",
+								partyExperienceEntity.getExperiencingid(),
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											partyExperienceEntity.setAgreecount(partyExperienceEntity.getAgreecount() + 1);
+											Toast.makeText(mContext, "太囧值 ＋1", 1000).show();
+										}
+										notifyDataSetChanged();
+									}
+								}, queue);
+					} else {
+						Toast.makeText(mContext, "亲已经点赞了哦～3－4", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
 			}
 		});
 

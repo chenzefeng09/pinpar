@@ -11,12 +11,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,9 @@ import com.ipinpar.app.entity.ReplyEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.DreamShowDetailRequest;
 import com.ipinpar.app.network.api.ExperienceDiaryRequest;
+import com.ipinpar.app.network.api.PartyExperienceDetailRequest;
 import com.ipinpar.app.network.api.PublishCommentRequest;
 import com.ipinpar.app.network.api.ReplyCommentRequest;
 import com.ipinpar.app.network.api.StatementCommentListRequest;
@@ -49,7 +52,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class CommentDetailActivity extends PPBaseActivity {
 
 	private TextView name, time, content, support, comment;
-	private ImageView userImage, iv_statement_support;
+	private ImageView userImage, iv_statement_support,iv_img;
 	private AcStatementEntity currStatement;
 	private ArrayList<CommentEntity> comments = new ArrayList<CommentEntity>();
 	private CommentDetailAdapter adapter;
@@ -68,6 +71,8 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private String nameString, contentString, peer_uidString;
 	private long timeLong;
 	private int agreecount, commentcount;
+	private String imgurl;
+	private int experienceingd;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -75,6 +80,10 @@ public class CommentDetailActivity extends PPBaseActivity {
 		setContentView(R.layout.activity_comments_list);
 		fromid = getIntent().getIntExtra("fromid", 0);
 		fromidtype = getIntent().getStringExtra("fromidtype");
+		String title = getIntent().getStringExtra("title");
+		if (!TextUtils.isEmpty(title)) {
+			setTitleText(title);
+		}
 		userImage = (CircularImageView) findViewById(R.id.statement_image);
 		name = (TextView) findViewById(R.id.statement_user_name);
 		time = (TextView) findViewById(R.id.statement_time);
@@ -85,6 +94,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 		et_input = (EditText) findViewById(R.id.et_input);
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
 		iv_statement_support = (ImageView) findViewById(R.id.iv_statement_support);
+		iv_img = (ImageView) findViewById(R.id.iv_img);
 		RL_support = findViewById(R.id.RL_support);
 		RL_comment = findViewById(R.id.RL_comment);
 		
@@ -99,6 +109,11 @@ public class CommentDetailActivity extends PPBaseActivity {
 			refreshStatement();
 		} else if ("sid".equals(fromidtype)) {
 			refreshExperienceDiary();
+		}
+		else if ("dreamid".equals(fromidtype)) {
+			refreshDreamshow();
+		}else if("experiencingid".equals(fromidtype)){
+			refreshPartyExperience();
 		}
 	}
 
@@ -126,7 +141,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 								agreecount = currStatement.getAgreecount();
 								commentcount = currStatement.getCommentcount();
 								peer_uidString = currStatement.getUid() + "";
-								setupViews();
+								setupPartyExperienceViews();
 								refreshData();
 							}
 						} catch (JSONException e) {
@@ -165,6 +180,70 @@ public class CommentDetailActivity extends PPBaseActivity {
 						}
 					}
 				});
+		apiQueue.add(request);
+	}
+	
+	private void refreshDreamshow(){
+		showProgressDialog();
+		DreamShowDetailRequest request = new DreamShowDetailRequest(fromid, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				dissmissProgressDialog();
+				try {
+					if (response != null && response.getInt("result") == 1) {
+						Log.e("dreamshow comment", response.toString());
+						contentString = response.getString("title");
+						agreecount = response.getInt("agreecount");
+						commentcount = response.getInt("commentcount");
+						nameString = response.getString("username");
+						peer_uidString = response.getInt("uid") + "";
+						timeLong = response.getLong("createtime");
+						imgurl = response.getString("author_img");
+						setupViews();
+						refreshData();
+						if (TextUtils.isEmpty(response.getString("author_img"))) {
+							
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		apiQueue.add(request);
+	}
+	
+	private void refreshPartyExperience(){
+		showProgressDialog();
+		PartyExperienceDetailRequest request = new PartyExperienceDetailRequest(fromid, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				dissmissProgressDialog();
+				try {
+					if (response != null && response.getInt("result") == 1) {
+						Log.e("partyexperience comment", response.toString());
+						contentString = response.getString("content");
+						agreecount = response.getInt("agreecount");
+						commentcount = response.getInt("commentcount");
+						nameString = response.getString("username");
+						peer_uidString = response.getInt("authorid") + "";
+						timeLong = response.getLong("createtime");
+						imgurl = response.getString("img");
+						setupViews();
+						refreshData();
+						if (TextUtils.isEmpty(response.getString("author_img"))) {
+							
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		apiQueue.add(request);
 	}
 
@@ -216,6 +295,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 		content.setText(contentString);
 		support.setText(agreecount + "");
 		comment.setText(commentcount + "");
+		if (!TextUtils.isEmpty(imgurl)) {
+			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+		}
 		view_1.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -319,7 +401,236 @@ public class CommentDetailActivity extends PPBaseActivity {
 														InputMethodManager.HIDE_NOT_ALWAYS);
 												et_input.setText("");
 												refreshData();
+											} else {
+												Toast.makeText(mContext,
+														"发送失败", 1000).show();
+											}
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								});
+						apiQueue.add(replyCommentRequest);
+
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else if(isreply){
+					ReplyCommentRequest replyCommentRequest2;
+					try {
+						replyCommentRequest2 = new ReplyCommentRequest(
+								reply_commentid, reply, UserManager
+										.getInstance().getUserInfo().getUid(),
+								reply_to_uid, new Listener<JSONObject>() {
+
+									@Override
+									public void onResponse(JSONObject response) {
+										dissmissProgressDialog();
+										try {
+											if (response != null
+													&& response
+															.getInt("result") == 1) {
+												Toast.makeText(mContext,
+														"回复评论成功", 1000).show();
+												InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+												imm.toggleSoftInput(
+														0,
+														InputMethodManager.HIDE_NOT_ALWAYS);
+												et_input.setText("");
+												refreshData();
+											} else {
+												Toast.makeText(mContext,
+														"发送失败", 1000).show();
+											}
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								});
+						apiQueue.add(replyCommentRequest2);
+
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else {
+					PublishCommentRequest request;
+					try {
+						request = new PublishCommentRequest(fromid, fromidtype,
+								UserManager.getInstance().getUserInfo()
+										.getUid(), reply,
+								new Listener<JSONObject>() {
+
+									@Override
+									public void onResponse(JSONObject response) {
+										dissmissProgressDialog();
+										try {
+											if (response != null
+													&& response
+															.getInt("result") == 1) {
+												InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+												imm.toggleSoftInput(
+														0,
+														InputMethodManager.HIDE_NOT_ALWAYS);
+												et_input.setText("");
+												Toast.makeText(mContext,
+														"评论成功", 1000).show();
+												refreshData();
 												
+												//刷新评论
+//												refreshStatement();
+//												commentcount++;
+//												comment.setText(commentcount + "");
+												
+												if ("enrollid".equals(fromidtype)) {
+													refreshStatement();
+												} else if ("sid".equals(fromidtype)) {
+													refreshExperienceDiary();
+												}
+												
+											} else {
+												Toast.makeText(mContext,
+														"发送失败", 1000).show();
+
+											}
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								});
+						apiQueue.add(request);
+
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+	}
+	
+	private void setupPartyExperienceViews() {
+		ImageLoader.getInstance().displayImage(
+				"http://api.ipinpar.com/pinpaV2/api.pinpa?protocol=10008&a="
+						+ peer_uidString, userImage);
+		name.setText(nameString);
+
+		long timel = timeLong * 1000;
+		time.setText(DateFormat.format("yyyy/MM/dd    kk:mm", timel));
+		content.setText(contentString);
+		support.setText(agreecount + "");
+		comment.setText(commentcount + "");
+		if (!TextUtils.isEmpty(imgurl)) {
+			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+		}
+		view_1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				isreply = false;
+				reply_to_uid = 0;
+				replyPrefix = "";
+				et_input.setText("");
+			}
+		});
+		RL_support.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (UserManager.getInstance().isLogin()) {
+					if (AgreeManager.getInstance().isAgreed(fromid, fromidtype)) {
+						AgreeManager.getInstance().agree(fromid, fromidtype,
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (!agree) {
+											support.setText((--agreecount) + "");
+											iv_statement_support
+													.setImageResource(R.drawable.ac_support);
+										}
+									}
+								}, apiQueue);
+					} else {
+						AgreeManager.getInstance().agree(fromid, fromidtype,
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											support.setText((++agreecount) + "");
+											iv_statement_support
+													.setImageResource(R.drawable.enroll_fist);
+										}
+									}
+								}, apiQueue);
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
+			}
+		});
+		RL_comment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				isreply = false;
+				reply_to_uid = 0;
+				replyPrefix = "";
+				et_input.setText("");
+			}
+		});
+		if (UserManager.getInstance().isLogin()) {
+			if (AgreeManager.getInstance().isAgreed(fromid, fromidtype)) {
+				iv_statement_support.setImageResource(R.drawable.enroll_fist);
+			}
+		}
+		btn_add_new.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (!UserManager.getInstance().isLogin()) {
+					startActivity(new Intent(mContext, LoginActivity.class));
+					return;
+				}
+				String reply = et_input.getText().toString().trim();
+				if (reply.length() == 0) {
+					Toast.makeText(mContext, "请输入评论内容~", 1000).show();
+					return;
+				}
+				showProgressDialog();
+				if (isreply && reply.startsWith(replyPrefix)) {
+					String replycontent = (String) reply.subSequence(
+							replyPrefix.length(), reply.length());
+					ReplyCommentRequest replyCommentRequest;
+					try {
+						replyCommentRequest = new ReplyCommentRequest(
+								reply_commentid, replycontent, UserManager
+										.getInstance().getUserInfo().getUid(),
+								reply_to_uid, new Listener<JSONObject>() {
+
+									@Override
+									public void onResponse(JSONObject response) {
+										dissmissProgressDialog();
+										try {
+											if (response != null
+													&& response
+															.getInt("result") == 1) {
+												Toast.makeText(mContext,
+														"回复评论成功", 1000).show();
+												InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+												imm.toggleSoftInput(
+														0,
+														InputMethodManager.HIDE_NOT_ALWAYS);
+												et_input.setText("");
+												refreshData();
 											} else {
 												Toast.makeText(mContext,
 														"发送失败", 1000).show();
@@ -564,6 +875,16 @@ public class CommentDetailActivity extends PPBaseActivity {
 		intent.putExtra("fromid", fromid);
 		intent.putExtra("fromidtype", fromidtype);
 
+		return intent;
+	}
+	
+	public static Intent getIntent2Me(Context context, int fromid,
+			String fromidtype,String title) {
+		Intent intent = new Intent(context, CommentDetailActivity.class);
+		intent.putExtra("fromid", fromid);
+		intent.putExtra("fromidtype", fromidtype);
+		
+		intent.putExtra("title", title);
 		return intent;
 	}
 }

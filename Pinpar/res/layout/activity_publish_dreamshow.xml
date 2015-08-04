@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/title_theme" >
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="发布梦想"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/ib_left"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/return1" />
+        
+        <Button 
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/white"
+            android:text="发表"
+            android:background="@color/title_theme"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"/>
+    </RelativeLayout>
+    
+    <EditText
+        android:id="@+id/et_add_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:hint="我想...2~30字" />
+    
+    
+    <EditText
+        android:id="@+id/et_add_detail" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ababab"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:hint="具体说说你的理由吧~"/>
+    
+
+    <ImageView
+        android:id="@+id/iv_add_img"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_margin="35dp"
+        android:background="#dcdcdc"
+        android:scaleType="centerInside"
+        android:src="@drawable/experience_edit_select_pic" />
+
+    
+
+</LinearLayout>

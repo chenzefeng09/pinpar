@@ -547,7 +547,6 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 				}else{
 					memberExperiListAdapter.notifyDataSetChanged();
 				}
-				
 				setListViewHeightBasedOnChildren(memberExperiListView);
 				break;
 			
@@ -616,7 +615,6 @@ public class PastCompleteAcDetail extends PPBaseActivity {
 				}else{
 					statementListAdapter.notifyDataSetChanged();
 				}
-				
 				setListViewHeightBasedOnChildren(statementListView);
 				handlerScrollTop.sendEmptyMessageDelayed(0,500);
 				break;

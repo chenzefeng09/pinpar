@@ -37,6 +37,7 @@ import com.ipinpar.app.PPBaseFragment;
 import com.ipinpar.app.R;
 import com.ipinpar.app.adapter.MainPagerAdapter;
 import com.ipinpar.app.fragment.DiscoverFragment;
+import com.ipinpar.app.fragment.DreamShowFragment;
 import com.ipinpar.app.fragment.MeFragment;
 import com.ipinpar.app.fragment.MessageFragment;
 import com.ipinpar.app.fragment.PastFragment;
@@ -59,6 +60,7 @@ public class MainActivity extends PPBaseActivity {
 	private MessageFragment messageFragment;
 	public PastFragment pastFragment;
 	public PastFragment pastFragment2;
+	public DreamShowFragment dreamShowFragment;
 
 	private List<PPBaseFragment> fragments;
 	private View backView;
@@ -185,10 +187,14 @@ public class MainActivity extends PPBaseActivity {
 					rdBtnMessage.setChecked(false);
 					container.setCurrentItem(0, true);
 				} else if (checkedId == R.id.btn_message) {
-					container.setCurrentItem(1, true);
+					container.setCurrentItem(2, true);
 				} else if (checkedId == R.id.btn_me) {
 					rdBtnMessage.setChecked(false);
-					container.setCurrentItem(2, true);
+					container.setCurrentItem(3, true);
+				}
+				else if (checkedId == R.id.btn_dream_show) {
+					rdBtnMessage.setChecked(false);
+					container.setCurrentItem(1, true);
 				}
 			}
 		});
@@ -196,7 +202,8 @@ public class MainActivity extends PPBaseActivity {
 		fragments = new ArrayList<PPBaseFragment>();
 
 		discoverFragment = new DiscoverFragment();
-		//
+
+		dreamShowFragment = new DreamShowFragment();
 		//
 		messageFragment = new MessageFragment();
 		meFragment = new MeFragment();
@@ -205,6 +212,7 @@ public class MainActivity extends PPBaseActivity {
 		pastFragment2 = new PastFragment();
 
 		fragments.add(discoverFragment);
+		fragments.add(dreamShowFragment);
 		fragments.add(messageFragment);
 		fragments.add(meFragment);
 		fragments.add(pastFragment);
@@ -224,9 +232,12 @@ public class MainActivity extends PPBaseActivity {
 					tabRadioGroup.check(R.id.btn_discover);
 					break;
 				case 1:
-					tabRadioGroup.check(R.id.btn_message);
+					tabRadioGroup.check(R.id.btn_dream_show);
 					break;
 				case 2:
+					tabRadioGroup.check(R.id.btn_message);
+					break;
+				case 3:
 					tabRadioGroup.check(R.id.btn_me);
 					break;
 

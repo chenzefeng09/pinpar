@@ -51,7 +51,6 @@ public class ExperienceDiaryEditActivity extends PPBaseActivity implements OnCli
 	private TextView tv_name,tv_publish;
 	private Button btn_add_pic;
 	private ArrayList<ExperienceDiaryDetailEntity> experienceDetials;
-	
 	private DiaryDetailAdapter adapter;
 	private int activityid,uid,sid;
 	private File imgFile;
