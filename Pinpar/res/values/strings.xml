@@ -178,4 +178,6 @@
 		<br/>您即将进入趴星球,需要抽取您的身份,
 		<br/>完成身份任务可以获得高额积分哦。]]>
     </string>
+    
+ 	<string name="party_experiences_no">该活动暂未添加任何经历~</string>
 </resources>

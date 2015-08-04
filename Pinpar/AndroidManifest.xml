@@ -277,6 +277,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.ipinpar.app.activity.PartyCommentDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.ipinpar.app.activity.PPWebView"
             android:screenOrientation="portrait" >
         </activity>

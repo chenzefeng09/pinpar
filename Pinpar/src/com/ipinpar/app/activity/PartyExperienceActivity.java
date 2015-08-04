@@ -1,5 +1,7 @@
 package com.ipinpar.app.activity;
 
+import java.util.ArrayList;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,12 +23,18 @@ import com.google.gson.Gson;
 import com.ipinpar.app.Constant;
 import com.ipinpar.app.PPBaseActivity;
 import com.ipinpar.app.R;
+import com.ipinpar.app.adapter.PartyExperiencesListAdapter;
+import com.ipinpar.app.entity.PartyExperienceEntity;
+import com.ipinpar.app.entity.PartyExperiencesListEntity;
 import com.ipinpar.app.entity.PartyUserInfoEntity;
 import com.ipinpar.app.manager.UserManager;
+import com.ipinpar.app.network.api.PartyExperiencesListRequest;
 import com.ipinpar.app.network.api.PartyGetUserInfoRequest;
 import com.ipinpar.app.network.api.SetTeamRequest;
 import com.ipinpar.app.view.CircularImageView;
+import com.ipinpar.app.widget.PartyAgreeDialog;
 import com.ipinpar.app.widget.PartyHomeVenueDialog;
+import com.ipinpar.app.widget.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -76,6 +84,14 @@ public class PartyExperienceActivity extends PPBaseActivity{
 	
 	private ImageView ivExperiEdit;
 	
+	//party体验列表相关
+	private PullToRefreshListView partyExperiencesListView;
+	private RelativeLayout rlPartyExperiencesNoTip;
+	
+	private PartyExperiencesListRequest partyExperiencesListRequest;
+	private PartyExperiencesListAdapter partyExperiencesListAdapter;
+	private ArrayList<PartyExperienceEntity> partyExperiencesList = new ArrayList<PartyExperienceEntity>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -102,9 +118,22 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		setUserInfoView();
 		
 		handlerPartyUserInfoRequest.sendEmptyMessage(0);
+		handlerPartyExperiencesRequest.sendEmptyMessage(0);
+		
 		
 	}
 	
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		handlerPartyExperiencesRequest.sendEmptyMessage(0);
+	}
+
+
+
 	public void findView(){
 		btnBack = (Button) findViewById(R.id.btn_party_experiences_back);
 		tvExperienceName = (TextView) findViewById(R.id.tv_party_experience_name);
@@ -119,6 +148,14 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		tvUserName = (TextView) findViewById(R.id.tv_party_experiences_user_name);
 		
 		ivExperiEdit = (ImageView) findViewById(R.id.iv_party_experiences_edit);
+		
+		partyExperiencesListAdapter = new PartyExperiencesListAdapter(mContext,partyExperiencesList,apiQueue);
+		partyExperiencesListView = (PullToRefreshListView) findViewById(R.id.party_experiences_list);
+		rlPartyExperiencesNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_experiences_tip);
+		
+		if(partyExperiencesListAdapter!=null){
+			partyExperiencesListView.setAdapter(partyExperiencesListAdapter);
+		}
 		
 	}
 	
@@ -174,7 +211,7 @@ public class PartyExperienceActivity extends PPBaseActivity{
 				onBackPressed();
 			}
 		});
-		tvExperienceName.setText(roleNames[experienceId]);
+		tvExperienceName.setText(roleNames[experienceId-1]);
 		
 		ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE
 				+UserManager.getInstance().getUserInfo().getUid(), userImage,options);
@@ -194,7 +231,10 @@ public class PartyExperienceActivity extends PPBaseActivity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				//这里的experienceId是从0-11，所以传roleid的时候要加个1
 				Intent intent = new Intent();
+				intent.putExtra("RoleId",experienceId);
 				intent.setClass(mContext, PartyExperienceEditActivity.class);
 				startActivity(intent);
 			}
@@ -484,5 +524,77 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		
 	};
 	
+	
+	Handler handlerPartyExperiencesRequest = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what){
+			case 0:
+				partyExperiencesListRequest = new PartyExperiencesListRequest(
+						experienceId+"",
+						new Listener<JSONObject>() {
+					
+					@Override
+					public void onResponse(JSONObject response) {
+						// TODO Auto-generated method stub
+						
+						Gson gson = new Gson();
+						
+						PartyExperiencesListEntity experiencesListEntity = gson.fromJson(response.toString(), PartyExperiencesListEntity.class);
+						
+						partyExperiencesList.clear();
+						partyExperiencesList.addAll(experiencesListEntity.getExperiencing());
+						
+						handlerStateChanged.sendEmptyMessage(0);
+						handlerStateChanged.sendEmptyMessage(1);
+						
+						if(partyExperiencesList.size() == 0){
+							rlPartyExperiencesNoTip.setVisibility(View.VISIBLE);
+						}
+					}
+					
+				});
+				partyExperiencesListRequest.setTag(TAG);
+				apiQueue.add(partyExperiencesListRequest);
+			break;
+			
+			
+			default:
+				
+				break;
+			}
+		}
+		
+	};
+	
+	Handler handlerStateChanged = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what){
+			case 0:
+				
+				if(partyExperiencesListAdapter == null){
+					partyExperiencesListAdapter = new PartyExperiencesListAdapter(mContext,partyExperiencesList,apiQueue);
+					partyExperiencesListView.setAdapter(partyExperiencesListAdapter);
+					
+				}else{
+					partyExperiencesListAdapter.notifyDataSetChanged();
+				}
+				
+				break;
+			case 1:
+				partyExperiencesListView.onRefreshComplete();
+				break;
+			default:
+				break;
+			}
+		}
+	};
 	
 }

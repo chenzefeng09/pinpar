@@ -274,8 +274,9 @@ public class PartyHomeVenueActivity extends PPBaseActivity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
+				//position是从0-11，角色id是从1-12，所以这里arg2要加1
 				Intent intent = new Intent();
-				intent.putExtra("ExperienceId", arg2);
+				intent.putExtra("ExperienceId", arg2+1);
 				intent.setClass(mContext, PartyExperienceActivity.class);
 				startActivity(intent);
 			}

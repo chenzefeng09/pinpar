@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <RelativeLayout 
+        android:id="@+id/RL_party_experiences_list_item_format"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <RelativeLayout 
+            android:id="@+id/RL_party_experiences_list_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <com.ipinpar.app.view.CircularImageView
+		       android:id="@+id/party_experiences_image"
+		       android:layout_width="@dimen/statement_imagesize"
+		       android:layout_height="@dimen/statement_imagesize"
+		       app:border_thickness="2dp"
+		       app:border_outside_color="#dcdcdc"
+		       app:border_inside_color="#ffffff"
+		       android:src="@drawable/friend"
+		       android:layout_centerVertical="true"
+		       android:scaleType="centerCrop"
+		       android:layout_marginLeft="10dp">
+		   	</com.ipinpar.app.view.CircularImageView>
+		    
+		    <TextView
+		        android:id="@+id/party_experiences_user_name"
+		        android:layout_width="120dp"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="8dp"
+		        android:layout_centerVertical="true"
+		        android:layout_toRightOf="@+id/party_experiences_image"
+		        android:ellipsize="end"
+		        android:singleLine="true"
+		        android:text="@string/activity_user_name"
+		        android:textColor="@color/activity_statement_username"
+		        android:textSize="18sp"/>
+		    
+		    <TextView
+		        android:id="@+id/party_experiences_time"
+		        android:layout_width="wrap_content"
+		        android:layout_height="20dp"
+		        android:layout_toRightOf="@id/party_experiences_user_name"
+		        android:layout_centerVertical="true"
+		        android:layout_alignParentRight="true"
+		        android:layout_marginRight="6dp"
+		        android:text="@string/ongoing_activity_comment_time"
+		        android:textSize="14sp"
+				android:textColor="@color/activity_statement_time"
+		        android:gravity="right"/>
+        </RelativeLayout>
+        
+	    
+	    <TextView 
+	        android:id="@+id/tv_party_experiences_content"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/RL_party_experiences_list_user_info"
+	        android:layout_marginLeft="8dp"
+	        android:layout_marginTop="4dp"
+	        android:lines="2"           
+			android:ellipsize="end"
+	        android:text="@string/ongoing_activity_comment_content"
+	        android:textSize="16sp"
+	        android:textColor="@color/activity_statement_content"/>
+	    
+	    <ImageView 
+	        android:id="@+id/iv_party_experiences_content_image"
+	        android:layout_width="fill_parent"
+	        android:layout_height="200dp"
+	        android:layout_below="@id/tv_party_experiences_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="5dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:src="@drawable/slideshow_loading"
+	        android:scaleType="fitXY"/>
+	    
+	    <LinearLayout 
+	        android:id="@+id/LL_support_and_comment"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:baselineAligned="false"
+	        android:layout_below="@id/iv_party_experiences_content_image"
+	        android:paddingBottom="5dp"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="3dp"
+	        android:layout_marginRight="5dp"
+	        android:orientation="horizontal">
+	        <RelativeLayout
+	            android:id="@+id/RL_party_experiences_support"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="horizontal">
+	            <TextView 
+	                android:id="@+id/tv_support_tip"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:text="@string/activity_support_tip"
+	                android:layout_centerInParent="true"
+	                android:textColor="@color/title_theme"/>
+	            
+	            <ImageView 
+	                android:id="@+id/iv_party_experiences_support"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:layout_toLeftOf="@id/tv_support_tip"
+	                android:layout_marginTop="2dp"
+	                android:layout_marginBottom="2dp"
+	                android:src="@drawable/ac_support"/>
+	            
+	            <TextView 
+	                android:id="@+id/tv_party_experiences_support_num"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_toRightOf="@id/tv_support_tip"
+	                android:layout_marginLeft="5dp"
+	                android:layout_centerVertical="true"
+	                android:text="@string/activity_regist_num"
+	                android:textColor="@color/title_theme"/>
+	            
+	        </RelativeLayout>
+	        
+	       <RelativeLayout
+	            android:id="@+id/RL_party_experiences_comment"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="horizontal">
+	           <TextView 
+	                android:id="@+id/tv_comment_tip"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:layout_centerInParent="true"
+	                android:text="@string/activity_comment_tip"
+	                android:textColor="@color/title_theme"/> 
+	           
+	            <ImageView 
+	                android:id="@+id/iv_party_experiences_comment"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:layout_marginTop="2dp"
+	                android:layout_marginBottom="2dp"
+	                android:layout_toLeftOf="@id/tv_comment_tip"
+	                android:src="@drawable/ac_comment"/>
+	            
+	            <TextView 
+	                android:id="@+id/tv_party_experiences_comment_num"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:layout_toRightOf="@id/tv_comment_tip"
+	                android:layout_centerVertical="true"
+	                android:text="@string/activity_regist_num"
+	                android:textColor="@color/title_theme"/>
+	            
+	        </RelativeLayout>
+	    </LinearLayout>
+    </RelativeLayout>
+    
+    <!-- <TextView 
+        android:id="@+id/tv_party_agree_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="创意值 ＋1"
+        android:textColor="#ffe542"
+        android:textSize="16sp"/> -->
+    
+</RelativeLayout>
