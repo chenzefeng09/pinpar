@@ -145,8 +145,9 @@ public class AgreeManager {
 		}
 	}
 	
-	public void partyAgree(final int fromid,final String fromidtype,String weight,int experiencingid,final AgreeResultListener listener,RequestQueue queue){
-		final AgreeEntity entity = new AgreeEntity(experiencingid,fromidtype);
+	//这里的fromID就是experienceingid
+	public void partyAgree(final int fromid,final String fromidtype,String weight,final AgreeResultListener listener,RequestQueue queue){
+		final AgreeEntity entity = new AgreeEntity(fromid,fromidtype);
 		if (UserManager.getInstance().isLogin()) {
 
 			if (!userAgrees.contains(entity)) {

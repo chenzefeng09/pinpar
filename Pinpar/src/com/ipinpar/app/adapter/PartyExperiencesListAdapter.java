@@ -160,7 +160,8 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 						Toast.makeText(mContext, "请不要重复点赞哦～", 1000).show();
 					}
 					else {
-						partyAgreeDialog.show();
+//						partyAgreeDialog.show();
+						mContext.startActivity(CommentDetailActivity.getIntent2Me(mContext, partyExperienceEntity.getExperiencingid(), "experiencingid"));
 					}
 				}
 				else {
@@ -174,19 +175,12 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				partyAgreeDialog.dismiss();
-//				viewHolder.tvPartyAgreeTip.setText("创意值 ＋1");
-//				Message msg = new Message();
-//				msg.arg1 = 1;
-//				msg.arg2 = partyExperienceEntity.getAuthorid();
-//				msg.what = 0;
-//				handlerAgreeRequest.sendMessage(msg);
 				if (UserManager.getInstance().isLogin()) {
 					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
 						AgreeManager.getInstance().partyAgree(
-								partyExperienceEntity.getAuthorid(), 
+								partyExperienceEntity.getExperiencingid(), 
 								"experiencingid",
 								"1",
-								partyExperienceEntity.getExperiencingid(),
 								new AgreeResultListener() {
 
 									@Override
@@ -216,19 +210,12 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				// TODO Auto-generated method stub
 				partyAgreeDialog.dismiss();
 				
-//				viewHolder.tvPartyAgreeTip.setText("搞笑值 ＋1");
-//				Message msg = new Message();
-//				msg.arg1 = 2;
-//				msg.arg2 = partyExperienceEntity.getAuthorid();
-//				msg.what = 0;
-//				handlerAgreeRequest.sendMessage(msg);
 				if (UserManager.getInstance().isLogin()) {
 					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
 						AgreeManager.getInstance().partyAgree(
-								partyExperienceEntity.getAuthorid(), 
+								partyExperienceEntity.getExperiencingid(), 
 								"experiencingid",
 								"2",
-								partyExperienceEntity.getExperiencingid(),
 								new AgreeResultListener() {
 
 									@Override
@@ -256,20 +243,12 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				// TODO Auto-generated method stub
 				partyAgreeDialog.dismiss();
 				
-//				viewHolder.tvPartyAgreeTip.setText("实用值 ＋1");
-//				Message msg = new Message();
-//				msg.arg1 = 3;
-//				msg.arg2 = partyExperienceEntity.getAuthorid();
-//				msg.what = 0;
-//				handlerAgreeRequest.sendMessage(msg);
-				
 				if (UserManager.getInstance().isLogin()) {
 					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
 						AgreeManager.getInstance().partyAgree(
-								partyExperienceEntity.getAuthorid(), 
+								partyExperienceEntity.getExperiencingid(), 
 								"experiencingid",
 								"3",
-								partyExperienceEntity.getExperiencingid(),
 								new AgreeResultListener() {
 
 									@Override
@@ -297,20 +276,12 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 				// TODO Auto-generated method stub
 				partyAgreeDialog.dismiss();
 				
-//				viewHolder.tvPartyAgreeTip.setText("太囧值 ＋1");
-//				Message msg = new Message();
-//				msg.arg1 = 4;
-//				msg.arg2 = partyExperienceEntity.getAuthorid();
-//				msg.what = 0;
-//				handlerAgreeRequest.sendMessage(msg);
-				
 				if (UserManager.getInstance().isLogin()) {
 					if (!AgreeManager.getInstance().isAgreed(partyExperienceEntity.getExperiencingid(), "experiencingid")) {
 						AgreeManager.getInstance().partyAgree(
-								partyExperienceEntity.getAuthorid(), 
+								partyExperienceEntity.getExperiencingid(), 
 								"experiencingid",
 								"4",
-								partyExperienceEntity.getExperiencingid(),
 								new AgreeResultListener() {
 
 									@Override

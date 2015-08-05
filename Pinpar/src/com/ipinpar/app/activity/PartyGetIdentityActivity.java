@@ -93,6 +93,7 @@ public class PartyGetIdentityActivity extends PPBaseActivity{
 		
 		ivOut.startAnimation(AnimationUtils.loadAnimation(PartyGetIdentityActivity.this,R.anim.anti_clock_wise_out));
 		ivIn.startAnimation(AnimationUtils.loadAnimation(PartyGetIdentityActivity.this,R.anim.clock_wise_in));
+		
 		partySelectRolesDialog.show();
 		handlerStatrAnimation.sendEmptyMessageDelayed(1, 5000);
 				

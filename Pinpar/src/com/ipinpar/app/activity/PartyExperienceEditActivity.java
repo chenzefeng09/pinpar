@@ -48,7 +48,6 @@ public class PartyExperienceEditActivity extends PPBaseActivity{
 	
 	private int roleId;
 	private String contentText;
-	private String contentImage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,42 +125,43 @@ public class PartyExperienceEditActivity extends PPBaseActivity{
 				// TODO Auto-generated method stub
 				
 				contentText = etPartyExperiText.getText().toString().trim();
-//				contentImage = "file://"+imgFile.getAbsolutePath();
-				UpdatePartyExperienceRequest updatePartyExperienceRequest = null;
-				try {
-					updatePartyExperienceRequest = new UpdatePartyExperienceRequest(
-							UserManager.getInstance().getUserInfo().getUid()+"", 
-							contentText,
-							uploadUrl,
-							roleId+"", new Listener<JSONObject>() {
+				if((contentText == null ||contentText.equals(""))
+						&&(uploadUrl == null ||uploadUrl.equals(""))){
+					Toast.makeText(mContext, "填写一下您的体验经历吧~", Toast.LENGTH_SHORT).show();
+				}else{
+					UpdatePartyExperienceRequest updatePartyExperienceRequest = null;
+					try {
+						updatePartyExperienceRequest = new UpdatePartyExperienceRequest(
+								UserManager.getInstance().getUserInfo().getUid()+"", 
+								contentText,
+								uploadUrl,
+								roleId+"", new Listener<JSONObject>() {
 
-								@Override
-								public void onResponse(JSONObject response) {
-									dissmissProgressDialog();
-									try {
-										if (response != null && response.getInt("result") == 1) {
-											Toast.makeText(mContext, "编辑Party体验成功！", 1000).show();
-//											Intent intent = new Intent();
-//											intent.putExtra("ExperienceId",roleId);
-//											intent.setClass(mContext, PartyExperienceActivity.class);
-//											startActivity(intent);
-											finish();
+									@Override
+									public void onResponse(JSONObject response) {
+										dissmissProgressDialog();
+										try {
+											if (response != null && response.getInt("result") == 1) {
+												Toast.makeText(mContext, "编辑Party体验成功！", 1000).show();
+												finish();
+											}
+											else {
+												Toast.makeText(mContext, "编辑体验失败，请重试", 1000).show();
+												finish();
+											}
+										} catch (JSONException e) {
+											e.printStackTrace();
 										}
-										else {
-											Toast.makeText(mContext, "编辑体验失败，请重试", 1000).show();
-											finish();
-										}
-									} catch (JSONException e) {
-										e.printStackTrace();
+										
 									}
-									
-								}
-							});
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+								});
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					apiQueue.add(updatePartyExperienceRequest);
 				}
-				apiQueue.add(updatePartyExperienceRequest);
+				
 			}
 		});
 		
