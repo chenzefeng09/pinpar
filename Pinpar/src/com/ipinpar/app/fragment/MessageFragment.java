@@ -278,7 +278,9 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	
 	private void refreshNotification(){
 		if (UserManager.getInstance().isLogin()) {
-			lv_message.setVisibility(View.VISIBLE);
+			if (lv_message != null) {
+				lv_message.setVisibility(View.VISIBLE);
+			}
 			
 			NotificationRequest request = new NotificationRequest(UserManager
 					.getInstance().getUserInfo().getUid(), 1, 100,

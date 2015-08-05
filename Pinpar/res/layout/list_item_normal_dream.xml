@@ -28,7 +28,7 @@
             android:drawablePadding="8dp"
             android:gravity="center"
             android:text="@string/dream_show_who_says"
-            android:textColor="#dcdcdc" />
+            android:textColor="#8c8c8c" />
 
         <TextView
             android:id="@+id/tv_time_curr"
@@ -73,7 +73,7 @@
             <ImageView
                 android:id="@+id/iv_dream"
                 android:layout_width="wrap_content"
-                android:layout_height="125dp"
+                android:layout_height="150dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="12dp"

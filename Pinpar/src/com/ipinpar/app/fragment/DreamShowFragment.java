@@ -32,6 +32,7 @@ import com.ipinpar.app.activity.DreamShowPublishActivity;
 import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.activity.NameCardActivity;
 import com.ipinpar.app.activity.PastedDreamShowActivity;
+import com.ipinpar.app.activity.ShowBigImage;
 import com.ipinpar.app.entity.CurrDreamShowEntity;
 import com.ipinpar.app.entity.DreamShowEntity;
 import com.ipinpar.app.manager.AgreeManager;
@@ -314,6 +315,15 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 			else {
 				holder.iv_dream.setVisibility(View.VISIBLE);
 				ImageLoader.getInstance().displayImage(dreamShowEntity.author_img, holder.iv_dream);
+				holder.iv_dream.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(mContext, ShowBigImage.class);
+						intent.putExtra("remotepath", dreamShowEntity.author_img);
+						mContext.startActivity(intent);
+					}
+				});
 			}
 			holder.RL_support.setOnClickListener(new OnClickListener() {
 				
