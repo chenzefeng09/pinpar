@@ -144,6 +144,17 @@ public class PartyHomeVenueActivity extends PPBaseActivity{
 		
 	}
 	
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		handlerPartyUserInfoRequest.sendEmptyMessage(0);
+	}
+
+
+
 	public void findView(){
 		btnBack = (Button) findViewById(R.id.btn_party_home_venue_back);
 		rlPartyHomeVenueUserInfo = (RelativeLayout) findViewById(R.id.RL_party_home_venue_personal);

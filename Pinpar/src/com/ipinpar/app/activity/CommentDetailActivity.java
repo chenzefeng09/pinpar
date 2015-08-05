@@ -47,6 +47,7 @@ import com.ipinpar.app.network.api.ReplyCommentRequest;
 import com.ipinpar.app.network.api.StatementCommentListRequest;
 import com.ipinpar.app.network.api.StatementDetailRequest;
 import com.ipinpar.app.view.CircularImageView;
+import com.ipinpar.app.widget.PartyAgreeDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CommentDetailActivity extends PPBaseActivity {
@@ -73,12 +74,16 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private int agreecount, commentcount;
 	private String imgurl;
 	private int experienceingd;
+	private PartyAgreeDialog partyAgreeDialog;
+	private View RL_creative,RL_funny,RL_practical,RL_confused;
+	private int authorid;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_comments_list);
 		fromid = getIntent().getIntExtra("fromid", 0);
+//		authorid = getIntent().getIntExtra("authorid", 0);
 		fromidtype = getIntent().getStringExtra("fromidtype");
 		String title = getIntent().getStringExtra("title");
 		if (!TextUtils.isEmpty(title)) {
@@ -99,6 +104,15 @@ public class CommentDetailActivity extends PPBaseActivity {
 		RL_comment = findViewById(R.id.RL_comment);
 		
 		view_1 = findViewById(R.id.view_1);
+		
+		partyAgreeDialog = new PartyAgreeDialog(mContext,  
+                R.layout.dialog_party_agree, R.style.PartyDialogTheme);  
+		
+		RL_creative = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_creative);
+		RL_funny = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_funny);
+		RL_practical = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_practical);
+		RL_confused = partyAgreeDialog.findViewById(R.id.RL_dialog_party_agree_confused);
+		
 	}
 
 	@Override
@@ -141,7 +155,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 								agreecount = currStatement.getAgreecount();
 								commentcount = currStatement.getCommentcount();
 								peer_uidString = currStatement.getUid() + "";
-								setupPartyExperienceViews();
+								setupViews();
 								refreshData();
 							}
 						} catch (JSONException e) {
@@ -230,9 +244,11 @@ public class CommentDetailActivity extends PPBaseActivity {
 						commentcount = response.getInt("commentcount");
 						nameString = response.getString("username");
 						peer_uidString = response.getInt("authorid") + "";
+						authorid = response.getInt("authorid");
 						timeLong = response.getLong("createtime");
 						imgurl = response.getString("img");
-						setupViews();
+//						setupViews();
+						setupPartyExperienceViews();
 						refreshData();
 						if (TextUtils.isEmpty(response.getString("author_img"))) {
 							
@@ -542,22 +558,34 @@ public class CommentDetailActivity extends PPBaseActivity {
 
 			@Override
 			public void onClick(View v) {
+				
 				if (UserManager.getInstance().isLogin()) {
-					if (AgreeManager.getInstance().isAgreed(fromid, fromidtype)) {
-						AgreeManager.getInstance().agree(fromid, fromidtype,
-								new AgreeResultListener() {
-
-									@Override
-									public void onAgreeResult(boolean agree) {
-										if (!agree) {
-											support.setText((--agreecount) + "");
-											iv_statement_support
-													.setImageResource(R.drawable.ac_support);
-										}
-									}
-								}, apiQueue);
-					} else {
-						AgreeManager.getInstance().agree(fromid, fromidtype,
+					//已经点过赞
+					if (AgreeManager.getInstance().isAgreed(fromid, "experiencingid")) {
+						Toast.makeText(mContext, "请不要重复点赞哦～", 1000).show();
+					}
+					else {
+						partyAgreeDialog.show();
+					}
+				}
+				else {
+					mContext.startActivity(new Intent(mContext, LoginActivity.class));
+				}
+				
+			}
+		});
+		RL_creative.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				partyAgreeDialog.dismiss();
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(fromid, "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								fromid, 
+								"experiencingid",
+								"1",
 								new AgreeResultListener() {
 
 									@Override
@@ -566,9 +594,123 @@ public class CommentDetailActivity extends PPBaseActivity {
 											support.setText((++agreecount) + "");
 											iv_statement_support
 													.setImageResource(R.drawable.enroll_fist);
+											Toast.makeText(mContext, "创意值 ＋1", 1000).show();
 										}
 									}
 								}, apiQueue);
+					} else {
+						iv_statement_support
+						.setImageResource(R.drawable.enroll_fist);
+						Toast.makeText(mContext, "亲已经点赞了哦～4－1", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
+				
+			}
+		});
+		RL_funny.setOnClickListener(new OnClickListener() {
+					
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				partyAgreeDialog.dismiss();
+				
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(fromid, "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								fromid, 
+								"experiencingid",
+								"2",
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											support.setText((++agreecount) + "");
+											iv_statement_support
+													.setImageResource(R.drawable.enroll_fist);
+											Toast.makeText(mContext, "搞笑值 ＋1", 1000).show();
+										}
+									}
+								}, apiQueue);
+					} else {
+						iv_statement_support
+						.setImageResource(R.drawable.enroll_fist);
+						Toast.makeText(mContext, "亲已经点赞了哦～4－2", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
+			}
+		});
+		RL_practical.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				partyAgreeDialog.dismiss();
+				
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(fromid, "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								fromid, 
+								"experiencingid",
+								"3",
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											support.setText((++agreecount) + "");
+											iv_statement_support
+													.setImageResource(R.drawable.enroll_fist);
+											Toast.makeText(mContext, "实用值 ＋1", 1000).show();
+										}
+									}
+								}, apiQueue);
+					} else {
+						iv_statement_support
+						.setImageResource(R.drawable.enroll_fist);
+						Toast.makeText(mContext, "亲已经点赞了哦～4－3", 1000).show();
+					}
+				} else {
+					mContext.startActivity(new Intent(mContext,
+							LoginActivity.class));
+				}
+			}
+		});
+		RL_confused.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				partyAgreeDialog.dismiss();
+				
+				if (UserManager.getInstance().isLogin()) {
+					if (!AgreeManager.getInstance().isAgreed(fromid, "experiencingid")) {
+						AgreeManager.getInstance().partyAgree(
+								fromid, 
+								"experiencingid",
+								"4",
+								new AgreeResultListener() {
+
+									@Override
+									public void onAgreeResult(boolean agree) {
+										if (agree) {
+											support.setText((++agreecount) + "");
+											iv_statement_support
+													.setImageResource(R.drawable.enroll_fist);
+											Toast.makeText(mContext, "太囧值 ＋1", 1000).show();
+										}
+									}
+								}, apiQueue);
+					} else {
+						iv_statement_support
+						.setImageResource(R.drawable.enroll_fist);
+						Toast.makeText(mContext, "亲已经点赞了哦～4－4", 1000).show();
 					}
 				} else {
 					mContext.startActivity(new Intent(mContext,
@@ -873,6 +1015,16 @@ public class CommentDetailActivity extends PPBaseActivity {
 			String fromidtype) {
 		Intent intent = new Intent(context, CommentDetailActivity.class);
 		intent.putExtra("fromid", fromid);
+		intent.putExtra("fromidtype", fromidtype);
+
+		return intent;
+	}
+	
+	public static Intent getIntent2Me(Context context, int fromid,int authorid,
+			String fromidtype) {
+		Intent intent = new Intent(context, CommentDetailActivity.class);
+		intent.putExtra("fromid", fromid);
+		intent.putExtra("authorid", authorid);
 		intent.putExtra("fromidtype", fromidtype);
 
 		return intent;

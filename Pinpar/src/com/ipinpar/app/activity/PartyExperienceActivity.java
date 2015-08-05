@@ -33,10 +33,9 @@ import com.ipinpar.app.network.api.PartyGetUserInfoRequest;
 import com.ipinpar.app.network.api.SetTeamRequest;
 import com.ipinpar.app.util.NetWorkState;
 import com.ipinpar.app.view.CircularImageView;
-import com.ipinpar.app.widget.PartyAgreeDialog;
 import com.ipinpar.app.widget.PartyHomeVenueDialog;
-import com.ipinpar.app.widget.PullToRefreshListView;
-import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView.OnRefreshListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -87,7 +86,7 @@ public class PartyExperienceActivity extends PPBaseActivity{
 	private ImageView ivExperiEdit;
 	
 	//party体验列表相关
-	private PullToRefreshListView partyExperiencesListView;
+	private PullToRefreshWhiteHeaderListView partyExperiencesListView;
 	private RelativeLayout rlPartyExperiencesNoTip;
 	
 	private PartyExperiencesListRequest partyExperiencesListRequest;
@@ -152,7 +151,7 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		ivExperiEdit = (ImageView) findViewById(R.id.iv_party_experiences_edit);
 		
 		partyExperiencesListAdapter = new PartyExperiencesListAdapter(mContext,partyExperiencesList,apiQueue);
-		partyExperiencesListView = (PullToRefreshListView) findViewById(R.id.party_experiences_list);
+		partyExperiencesListView = (PullToRefreshWhiteHeaderListView) findViewById(R.id.party_experiences_list);
 		rlPartyExperiencesNoTip = (RelativeLayout) findViewById(R.id.RL_has_no_experiences_tip);
 		
 		if(partyExperiencesListAdapter!=null){
@@ -567,6 +566,8 @@ public class PartyExperienceActivity extends PPBaseActivity{
 						
 						if(partyExperiencesList.size() == 0){
 							rlPartyExperiencesNoTip.setVisibility(View.VISIBLE);
+						}else{
+							rlPartyExperiencesNoTip.setVisibility(View.INVISIBLE);
 						}
 					}
 					

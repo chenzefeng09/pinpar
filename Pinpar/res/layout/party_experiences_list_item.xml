@@ -3,7 +3,8 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto" 
     xmlns:app="http://schemas.android.com/apk/res-auto" 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
     
     <RelativeLayout 
         android:id="@+id/RL_party_experiences_list_item_format"
@@ -71,14 +72,14 @@
 	    <ImageView 
 	        android:id="@+id/iv_party_experiences_content_image"
 	        android:layout_width="fill_parent"
-	        android:layout_height="200dp"
+	        android:layout_height="wrap_content"
 	        android:layout_below="@id/tv_party_experiences_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginBottom="5dp"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:src="@drawable/slideshow_loading"
-	        android:scaleType="fitXY"/>
+	        android:layout_marginLeft="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:minHeight="160dp"
+            android:scaleType="centerInside"
+	        android:src="@drawable/slideshow_loading"/>
 	    
 	    <LinearLayout 
 	        android:id="@+id/LL_support_and_comment"
