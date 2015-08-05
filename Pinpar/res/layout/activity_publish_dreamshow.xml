@@ -51,17 +51,28 @@
         android:layout_height="40dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:hint="我想...2~30字" />
+        android:background="@color/transparent"
+        android:hint="我想...2~30字" 
+        android:textColor="#8c8c8c"/>
+    
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="#dcdcdc"
+         android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
     
     
     <EditText
         android:id="@+id/et_add_detail" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ababab"
+        android:textColor="#8c8c8c"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:textSize="12sp"
+        android:background="@color/transparent"
         android:layout_marginTop="8dp"
         android:hint="具体说说你的理由吧~"/>
     

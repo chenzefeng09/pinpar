@@ -29,4 +29,9 @@
     <dimen name="si_default_radius_max">24dp</dimen>
     <dimen name="si_default_radius_min">8dp</dimen>
     
+
+    <dimen name="header_height">60dp</dimen>
+    <dimen name="footer_height">90dp</dimen>
+    <dimen name="footer_padding">10dp</dimen>
+    
 </resources>

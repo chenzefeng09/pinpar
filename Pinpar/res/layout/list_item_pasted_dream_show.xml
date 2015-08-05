@@ -46,7 +46,6 @@
             android:id="@+id/iv_img"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_below="@id/tv_dream_curr"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/default_avatar" />
@@ -57,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_img"
             android:layout_alignTop="@id/iv_img"
-            android:layout_below="@id/tv_dream_curr"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/iv_img"
             android:drawablePadding="8dp"
@@ -73,7 +71,6 @@
             android:layout_alignBottom="@id/iv_img"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@id/iv_img"
-            android:layout_below="@id/tv_dream_curr"
             android:layout_marginRight="8dp"
             android:gravity="center"
             android:text="2015-07-09"

@@ -19,7 +19,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
@@ -40,7 +39,8 @@ import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.CurrDreamShowRequest;
 import com.ipinpar.app.network.api.DreamShowListRequest;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.ipinpar.app.widget.PullToRefreshListView;
+import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class DreamShowFragment extends PPBaseFragment implements OnClickListener{
@@ -48,40 +48,63 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 
 	private ImageView iv_write_dream,iv_img,iv_dream;
 	private TextView tv_name_curr,tv_time_curr,tv_text_content,tv_dream_state,tv_see_more;
-	private ListView el_other_dream;
+	private PullToRefreshListView el_other_dream;
 	
 	private CurrDreamShowEntity currDream;
 	private ArrayList<DreamShowEntity> dreamShows = new ArrayList<DreamShowEntity>();
 
+	private View rl_curr_dream;
 	private DreamShowListAdapter adapter;
+	private View listHeader;
+	
+	@Override
+	public void onCreate(Bundle arg0) {
+		// TODO Auto-generated method stub
+		super.onCreate(arg0);
+		view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dream_show, null);
+		listHeader = getActivity().getLayoutInflater().inflate(R.layout.view_dream_show_header, null);
+		initView();
+		refreshDreamList();
+
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_dream_show, null);
-		
-		initView(view);
+		if (view.getParent() != null) {
+			((ViewGroup) view.getParent()).removeView(view);
+		}
 		return view;
-	}
+		}
 
-	private void initView(View view2) {
+	private void initView() {
+		el_other_dream = (PullToRefreshListView) view.findViewById(R.id.el_other_dream);
+		el_other_dream.setonRefreshListener(new OnRefreshListener() {
+			
+			@Override
+			public void onRefresh() {
+				refreshDreamList();
+			}
+		});
 		iv_write_dream = (ImageView) view.findViewById(R.id.iv_write_dream);
-		iv_img = (ImageView) view.findViewById(R.id.iv_img);
-		iv_dream = (ImageView) view.findViewById(R.id.iv_dream);
-		tv_name_curr = (TextView) view.findViewById(R.id.tv_name_curr);
-		tv_time_curr = (TextView) view.findViewById(R.id.tv_time_curr);
-		tv_text_content = (TextView) view.findViewById(R.id.tv_text_content);
-		tv_dream_state = (TextView) view.findViewById(R.id.tv_dream_state);
-		tv_see_more = (TextView) view.findViewById(R.id.tv_see_more);
-		el_other_dream = (ListView) view.findViewById(R.id.el_other_dream);
+		iv_img = (ImageView) listHeader.findViewById(R.id.iv_img);
+		iv_dream = (ImageView) listHeader.findViewById(R.id.iv_dream);
+		tv_name_curr = (TextView) listHeader.findViewById(R.id.tv_name_curr);
+		tv_time_curr = (TextView) listHeader.findViewById(R.id.tv_time_curr);
+		tv_text_content = (TextView) listHeader.findViewById(R.id.tv_text_content);
+		tv_dream_state = (TextView) listHeader.findViewById(R.id.tv_dream_state);
+		tv_see_more = (TextView) listHeader.findViewById(R.id.tv_see_more);
+		
+		rl_curr_dream = listHeader.findViewById(R.id.rl_curr_dream);
 		tv_see_more.setOnClickListener(this);
 		iv_write_dream.setOnClickListener(this);
 		iv_img.setOnClickListener(this);
+		rl_curr_dream.setOnClickListener(this);
+		el_other_dream.addHeaderView(listHeader);
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		refreshDreamList();
 
 	}
 	
@@ -135,8 +158,6 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 	
 	private void refreshDreamList(){
 		CurrDreamShowRequest request = new CurrDreamShowRequest( new Listener<JSONObject>() {
-
-
 			@Override
 			public void onResponse(JSONObject response) {
 				// TODO Auto-generated method stub
@@ -164,22 +185,19 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 
 			@Override
 			public void onResponse(JSONObject response) {
+				if (el_other_dream!=null) {
+					el_other_dream.onRefreshComplete();
+				}
 				try {
 					if (response!= null && response.getInt("result") == 1) {
+						
 						Gson gson = new Gson();
 						Type type = new TypeToken<ArrayList<DreamShowEntity>>() {
 						}.getType();
 						ArrayList<DreamShowEntity> dreams = gson.fromJson(response.getJSONArray("dreams").toString(),type);
 						if (dreams != null && dreams.size()!=0) {
-							dreamShows.clear();
-							dreamShows.addAll(dreams);
-							if (adapter == null) {
-								adapter = new DreamShowListAdapter(dreamShows);
+								adapter = new DreamShowListAdapter(dreams);
 								el_other_dream.setAdapter(adapter);
-							}
-							else {
-								adapter.notifyDataSetChanged();
-							}
 						}
 					}
 				} catch (JSONException e) {
@@ -196,6 +214,7 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.rl_curr_dream:
 		case R.id.tv_see_more:
 			startActivity(new Intent(mContext, PastedDreamShowActivity.class));
 			break;
@@ -269,7 +288,15 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 				holder = (ViewHolder) convertView.getTag();
 			}
 			ImageLoader.getInstance().displayImage(dreamShowEntity.imgsrc, holder.iv_img);
-			holder.tv_dream_state.setText(dreamShowEntity.detail);
+			if (!TextUtils.isEmpty(dreamShowEntity.detail)) {
+				holder.tv_dream_state.setText(dreamShowEntity.detail);
+				holder.tv_dream_state.setVisibility(View.VISIBLE);
+			}
+			else {
+				holder.tv_dream_state.setVisibility(View.GONE);
+
+			}
+			
 			holder.tv_name.setText(PPApplication.getInstance().getFormatString(R.string.dream_show_who_says, dreamShowEntity.username));
 			holder.tv_text_content.setText(dreamShowEntity.title);
 			holder.tv_time.setText(formatTime(dreamShowEntity.createtime*1000));
