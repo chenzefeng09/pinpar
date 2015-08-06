@@ -44,7 +44,7 @@ public class PartyExperienceEditActivity extends PPBaseActivity{
 	
 	private static final int REQUEST_CODE_ADD_IMAGE = 1;
 	private File imgFile;
-	private String uploadUrl;
+	private String uploadUrl="";
 	
 	private int roleId;
 	private String contentText;
@@ -142,11 +142,11 @@ public class PartyExperienceEditActivity extends PPBaseActivity{
 										dissmissProgressDialog();
 										try {
 											if (response != null && response.getInt("result") == 1) {
-												Toast.makeText(mContext, "编辑Party体验成功！", 1000).show();
+												Toast.makeText(mContext, "发表成功！", 1000).show();
 												finish();
 											}
 											else {
-												Toast.makeText(mContext, "编辑体验失败，请重试", 1000).show();
+												Toast.makeText(mContext, "发表失败，请重试", 1000).show();
 												finish();
 											}
 										} catch (JSONException e) {

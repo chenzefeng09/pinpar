@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +47,8 @@ import com.ipinpar.app.network.api.StatementCommentListRequest;
 import com.ipinpar.app.network.api.StatementDetailRequest;
 import com.ipinpar.app.view.CircularImageView;
 import com.ipinpar.app.widget.PartyAgreeDialog;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView.OnRefreshListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CommentDetailActivity extends PPBaseActivity {
@@ -57,7 +58,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private AcStatementEntity currStatement;
 	private ArrayList<CommentEntity> comments = new ArrayList<CommentEntity>();
 	private CommentDetailAdapter adapter;
-	private ListView lv_infolist;
+	private PullToRefreshWhiteHeaderListView lv_infolist;
 	private EditText et_input;
 	private Button btn_add_new;
 	private View RL_support,RL_comment;
@@ -83,27 +84,46 @@ public class CommentDetailActivity extends PPBaseActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_comments_list);
 		fromid = getIntent().getIntExtra("fromid", 0);
-//		authorid = getIntent().getIntExtra("authorid", 0);
+		authorid = getIntent().getIntExtra("authorid", 0);
 		fromidtype = getIntent().getStringExtra("fromidtype");
 		String title = getIntent().getStringExtra("title");
 		if (!TextUtils.isEmpty(title)) {
 			setTitleText(title);
 		}
-		userImage = (CircularImageView) findViewById(R.id.statement_image);
-		name = (TextView) findViewById(R.id.statement_user_name);
-		time = (TextView) findViewById(R.id.statement_time);
-		content = (TextView) findViewById(R.id.statement_content);
-		support = (TextView) findViewById(R.id.tv_statement_support_num);
-		comment = (TextView) findViewById(R.id.tv_statement_comment_num);
-		lv_infolist = (ListView) findViewById(R.id.lv_infolist);
+		view_1 = getLayoutInflater().inflate(R.layout.statement_list_item, null);
+//		view_2 = getLayoutInflater().inflate(R.layout.statement_list_item_2, null);
+		lv_infolist = (PullToRefreshWhiteHeaderListView) findViewById(R.id.lv_infolist);
+		lv_infolist.setonRefreshListener(new OnRefreshListener() {
+			
+			@Override
+			public void onRefresh() {
+				
+				if ("enrollid".equals(fromidtype)) {
+					refreshStatement();
+				} else if ("sid".equals(fromidtype)) {
+					refreshExperienceDiary();
+				}else if ("dreamid".equals(fromidtype)) {
+					refreshDreamshow();
+				}else if("experiencingid".equals(fromidtype)){
+					refreshPartyExperience();
+				}
+			}
+		});
+		userImage = (CircularImageView) view_1.findViewById(R.id.statement_image);
+		name = (TextView) view_1.findViewById(R.id.statement_user_name);
+		time = (TextView) view_1.findViewById(R.id.statement_time);
+		content = (TextView) view_1.findViewById(R.id.statement_content);
+		support = (TextView) view_1.findViewById(R.id.tv_statement_support_num);
+		comment = (TextView) view_1.findViewById(R.id.tv_statement_comment_num);
+		iv_statement_support = (ImageView) view_1.findViewById(R.id.iv_statement_support);
+		iv_img = (ImageView) view_1.findViewById(R.id.iv_img);
+		RL_support = view_1.findViewById(R.id.RL_support);
+		RL_comment = view_1.findViewById(R.id.RL_comment);
+		
+		lv_infolist.addHeaderView(view_1);
+		
 		et_input = (EditText) findViewById(R.id.et_input);
 		btn_add_new = (Button) findViewById(R.id.btn_add_new);
-		iv_statement_support = (ImageView) findViewById(R.id.iv_statement_support);
-		iv_img = (ImageView) findViewById(R.id.iv_img);
-		RL_support = findViewById(R.id.RL_support);
-		RL_comment = findViewById(R.id.RL_comment);
-		
-		view_1 = findViewById(R.id.view_1);
 		
 		partyAgreeDialog = new PartyAgreeDialog(mContext,  
                 R.layout.dialog_party_agree, R.style.PartyDialogTheme);  
@@ -139,6 +159,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 					@Override
 					public void onResponse(JSONObject response) {
 						dissmissProgressDialog();
+						if (lv_infolist != null) {
+							lv_infolist.onRefreshComplete();
+						}
 						try {
 							if (response != null
 									&& response.getInt("result") == 1) {
@@ -156,6 +179,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 								commentcount = currStatement.getCommentcount();
 								peer_uidString = currStatement.getUid() + "";
 								setupViews();
+								iv_img.setVisibility(View.GONE);
 								refreshData();
 							}
 						} catch (JSONException e) {
@@ -175,6 +199,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 					public void onResponse(JSONObject response) {
 						// TODO Auto-generated method stub
 						dissmissProgressDialog();
+						if (lv_infolist != null) {
+							lv_infolist.onRefreshComplete();
+						}
 						try {
 							if (response != null
 									&& response.getInt("result") == 1) {
@@ -204,6 +231,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 			@Override
 			public void onResponse(JSONObject response) {
 				dissmissProgressDialog();
+				if (lv_infolist != null) {
+					lv_infolist.onRefreshComplete();
+				}
 				try {
 					if (response != null && response.getInt("result") == 1) {
 						Log.e("dreamshow comment", response.toString());
@@ -236,6 +266,9 @@ public class CommentDetailActivity extends PPBaseActivity {
 			@Override
 			public void onResponse(JSONObject response) {
 				dissmissProgressDialog();
+				if (lv_infolist != null) {
+					lv_infolist.onRefreshComplete();
+				}
 				try {
 					if (response != null && response.getInt("result") == 1) {
 						Log.e("partyexperience comment", response.toString());
@@ -312,7 +345,21 @@ public class CommentDetailActivity extends PPBaseActivity {
 		support.setText(agreecount + "");
 		comment.setText(commentcount + "");
 		if (!TextUtils.isEmpty(imgurl)) {
+			iv_img.setVisibility(View.VISIBLE);
 			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+			iv_img.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ShowBigImage.class);
+					intent.putExtra("remotepath", imgurl);
+					mContext.startActivity(intent);
+				}
+			});
+			
+		}
+		else {
+			iv_img.setVisibility(View.GONE);
 		}
 		view_1.setOnClickListener(new OnClickListener() {
 
@@ -416,6 +463,8 @@ public class CommentDetailActivity extends PPBaseActivity {
 														0,
 														InputMethodManager.HIDE_NOT_ALWAYS);
 												et_input.setText("");
+												agreecount++;
+												setupViews();
 												refreshData();
 											} else {
 												Toast.makeText(mContext,
@@ -542,7 +591,21 @@ public class CommentDetailActivity extends PPBaseActivity {
 		support.setText(agreecount + "");
 		comment.setText(commentcount + "");
 		if (!TextUtils.isEmpty(imgurl)) {
+			iv_img.setVisibility(View.VISIBLE);
 			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+			iv_img.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ShowBigImage.class);
+					intent.putExtra("remotepath", imgurl);
+					mContext.startActivity(intent);
+				}
+			});
+			
+		}
+		else {
+			iv_img.setVisibility(View.GONE);
 		}
 		view_1.setOnClickListener(new OnClickListener() {
 

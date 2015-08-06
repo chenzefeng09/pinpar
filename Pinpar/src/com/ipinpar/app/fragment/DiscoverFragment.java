@@ -140,7 +140,7 @@ public class DiscoverFragment extends PPBaseFragment{
 			// TODO Auto-generated method stub
 			MainActivity activity = (MainActivity) getActivity();
 			FragmentManager fm = activity.getSupportFragmentManager();
-			activity.container.setCurrentItem(3, false);
+			activity.container.setCurrentItem(4, false);
 		}
 	};
 	

@@ -189,21 +189,9 @@
     
     <com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView
         android:id="@+id/party_experiences_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/RL_party_experiences"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/transparent"
-        android:dividerHeight="1dp"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="true"
-        android:listSelector="#00000000"
-        app:effect="tilt"
-        app:only_animate_new_items="flase"
-        app:only_animate_fling="false"
-        app:max_velocity="0">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:layout_below="@id/RL_party_experiences">
         
     </com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView>
     

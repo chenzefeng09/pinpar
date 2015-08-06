@@ -70,28 +70,14 @@
         android:layout_gravity="center_vertical"
         android:layout_marginRight="12dp"
         android:textColor="@color/white"/>
-        
-        
     </LinearLayout>
     
-    <include 
-        android:id="@+id/view_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_top"
-        layout="@layout/statement_list_item"/>
-    
-    <ImageView 
-        android:id="@+id/iv_1"
-                android:layout_below="@id/view_1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:src="#dcdcdc"/>
+   
     
     
-    <ListView 
+    <com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView
+                android:layout_below="@id/rl_top"
         android:id="@+id/lv_infolist"
-        android:layout_below="@id/iv_1"
         android:layout_above="@id/ll_input"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -99,7 +85,7 @@
         android:background="@color/white"
         android:divider="@null"
         android:dividerHeight="0dp">
-    </ListView>
+    </com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView>
     
     
     

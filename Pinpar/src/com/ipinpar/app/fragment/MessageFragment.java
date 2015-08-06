@@ -212,25 +212,48 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	}
 	
 	public void refreshUnread(){
-		refreshNotification();
-		updateMessageList();
+		if(lv_message != null){
+			refreshNotification();
+			updateMessageList();
+		}
 	}
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		// TODO Auto-generated method stub
 		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
+		if (lv_message != null) {
 			refreshNotification();
 		}
 	}
 	
 	private void updateMessageList(){
-		getActivity().runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				if (adapter == null) {
+		if(getActivity()!=null){
+			getActivity().runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+//					if (adapter == null) {
+//						Hashtable<String, EMConversation> maps = EMChatManager
+//								.getInstance().getAllConversations();
+//						conversations.clear();;
+//						for (Entry<String, EMConversation> entry : maps.entrySet()) {
+//							conversations.add(entry.getValue());
+//						}
+//						adapter = new MessageAdapter(conversations);
+//						lv_message.setAdapter(adapter);
+//					} else {
+//						Hashtable<String, EMConversation> maps = EMChatManager
+//								.getInstance().getAllConversations();
+//						conversations.clear();;
+//						for (Entry<String, EMConversation> entry : maps.entrySet()) {
+//							conversations.add(entry.getValue());
+//						}
+//						adapter.notifyDataSetChanged();
+//					}
+//					MainActivity mainActivity = (MainActivity) getActivity();
+//					mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+				
 					Hashtable<String, EMConversation> maps = EMChatManager
 							.getInstance().getAllConversations();
 					conversations.clear();;
@@ -239,19 +262,13 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 					}
 					adapter = new MessageAdapter(conversations);
 					lv_message.setAdapter(adapter);
-				} else {
-					Hashtable<String, EMConversation> maps = EMChatManager
-							.getInstance().getAllConversations();
-					conversations.clear();;
-					for (Entry<String, EMConversation> entry : maps.entrySet()) {
-						conversations.add(entry.getValue());
-					}
-					adapter.notifyDataSetChanged();
+					MainActivity mainActivity = (MainActivity) getActivity();
+					mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
+
+					
 				}
-				MainActivity mainActivity = (MainActivity) getActivity();
-				mainActivity.setUnreadCount(EMChatManager.getInstance().getUnreadMsgsCount()+unreadNotification);
-			}
-		});
+			});
+		}
 		
 	}
 
@@ -278,7 +295,9 @@ public class MessageFragment extends PPBaseFragment implements OnClickListener {
 	
 	private void refreshNotification(){
 		if (UserManager.getInstance().isLogin()) {
-			lv_message.setVisibility(View.VISIBLE);
+			if (lv_message != null) {
+				lv_message.setVisibility(View.VISIBLE);
+			}
 			
 			NotificationRequest request = new NotificationRequest(UserManager
 					.getInstance().getUserInfo().getUid(), 1, 100,

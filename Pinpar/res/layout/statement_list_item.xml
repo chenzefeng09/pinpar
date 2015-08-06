@@ -69,12 +69,12 @@
 	    <ImageView 
 	        android:id="@+id/iv_img"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_height="125dp"
 	        android:layout_toRightOf="@id/statement_image"
 	        android:layout_below="@id/statement_content"
 	        android:layout_marginRight="5dp"
-	        android:scaleType="centerCrop"
-	        />
+	        android:scaleType="centerInside"
+	        android:adjustViewBounds="true"/>
 	    
 	    <LinearLayout 
 	        android:id="@+id/LL_support_and_comment"

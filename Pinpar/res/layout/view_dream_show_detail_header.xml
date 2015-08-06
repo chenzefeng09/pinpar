@@ -1,66 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto" 
     xmlns:app="http://schemas.android.com/apk/res-auto" 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:orientation="horizontal">
     
     <RelativeLayout 
-        android:id="@+id/RL_party_experiences_list_item_format"
+        android:id="@+id/RL_statement_list_item_format"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
-        <RelativeLayout 
-            android:id="@+id/RL_party_experiences_list_user_info"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-            <com.ipinpar.app.view.CircularImageView
-		       android:id="@+id/party_experiences_image"
-		       android:layout_width="@dimen/statement_imagesize"
-		       android:layout_height="@dimen/statement_imagesize"
-		       app:border_thickness="2dp"
-		       app:border_outside_color="#dcdcdc"
-		       app:border_inside_color="#ffffff"
-		       android:src="@drawable/friend"
-		       android:layout_centerVertical="true"
-		       android:scaleType="centerCrop"
-		       android:layout_marginLeft="10dp">
-		   	</com.ipinpar.app.view.CircularImageView>
-		    
-		    <TextView
-		        android:id="@+id/party_experiences_user_name"
-		        android:layout_width="120dp"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="8dp"
-		        android:layout_centerVertical="true"
-		        android:layout_toRightOf="@+id/party_experiences_image"
-		        android:ellipsize="end"
-		        android:singleLine="true"
-		        android:text="@string/activity_user_name"
-		        android:textColor="@color/activity_statement_username"
-		        android:textSize="18sp"/>
-		    
-		    <TextView
-		        android:id="@+id/party_experiences_time"
-		        android:layout_width="wrap_content"
-		        android:layout_height="20dp"
-		        android:layout_toRightOf="@id/party_experiences_user_name"
-		        android:layout_centerVertical="true"
-		        android:layout_alignParentRight="true"
-		        android:layout_marginRight="6dp"
-		        android:text="@string/ongoing_activity_comment_time"
-		        android:textSize="14sp"
-				android:textColor="@color/activity_statement_time"
-		        android:gravity="right"/>
-        </RelativeLayout>
-        
+        <com.ipinpar.app.view.CircularImageView
+	       android:id="@+id/statement_image"
+	       android:layout_width="@dimen/statement_imagesize"
+	       android:layout_height="@dimen/statement_imagesize"
+	       app:border_thickness="2dp"
+	       app:border_outside_color="#dcdcdc"
+	       app:border_inside_color="#ffffff"
+	       android:src="@drawable/friend"
+	       android:scaleType="centerCrop"
+	       android:layout_marginLeft="10dp"
+	       android:layout_marginBottom="5dp"
+	       android:layout_marginTop="5dp">
+	   	</com.ipinpar.app.view.CircularImageView>
+	    
+	    <TextView
+	        android:id="@+id/statement_user_name"
+	        android:layout_width="120dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="8dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_toRightOf="@+id/statement_image"
+	        android:ellipsize="end"
+	        android:singleLine="true"
+	        android:text="@string/activity_user_name"
+	        android:textColor="@color/activity_statement_username"
+	        android:textSize="18sp"/>
+	    
+	    <TextView
+	        android:id="@+id/statement_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="20dp"
+	        android:layout_toRightOf="@id/statement_user_name"
+	        android:layout_alignParentTop="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginRight="6dp"
+	        android:text="@string/ongoing_activity_comment_time"
+	        android:textSize="14sp"
+			android:textColor="@color/activity_statement_time"
+	        android:gravity="right"/>
 	    
 	    <TextView 
-	        android:id="@+id/tv_party_experiences_content"
+	        android:id="@+id/statement_content"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/RL_party_experiences_list_user_info"
+	        android:layout_below="@id/statement_user_name"
+	        android:layout_toRightOf="@id/statement_image"
 	        android:layout_marginLeft="8dp"
 	        android:layout_marginTop="4dp"
 	        android:lines="2"           
@@ -69,30 +66,44 @@
 	        android:textSize="16sp"
 	        android:textColor="@color/activity_statement_content"/>
 	    
+	    	    <TextView 
+	        android:id="@+id/statement_detail"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/statement_content"
+	        android:layout_toRightOf="@id/statement_image"
+	        android:layout_marginLeft="8dp"
+	        android:layout_marginTop="4dp"
+	        android:text="@string/ongoing_activity_comment_content"
+	        android:textSize="14sp"
+	        android:textColor="@color/activity_statement_content"/>
+	    
 	    <ImageView 
-	        android:id="@+id/iv_party_experiences_content_image"
-	        android:layout_below="@id/tv_party_experiences_content"
+	        android:id="@+id/iv_img"
 	        android:layout_width="wrap_content"
 	        android:layout_height="125dp"
-	        android:layout_marginLeft="12dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="12dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"/>
+	        android:layout_toRightOf="@id/statement_image"
+	        android:layout_below="@id/statement_detail"
+	        android:layout_marginRight="5dp"
+	        android:scaleType="centerInside"
+	        android:adjustViewBounds="true"
+	        
+	        />
 	    
 	    <LinearLayout 
 	        android:id="@+id/LL_support_and_comment"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:baselineAligned="false"
-	        android:layout_below="@id/iv_party_experiences_content_image"
+	        android:layout_below="@id/iv_img"
+	        android:layout_toRightOf="@id/statement_image"
 	        android:paddingBottom="5dp"
 	        android:layout_marginTop="5dp"
 	        android:layout_marginBottom="3dp"
 	        android:layout_marginRight="5dp"
 	        android:orientation="horizontal">
 	        <RelativeLayout
-	            android:id="@+id/RL_party_experiences_support"
+	            android:id="@+id/RL_support"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
@@ -107,7 +118,7 @@
 	                android:textColor="@color/title_theme"/>
 	            
 	            <ImageView 
-	                android:id="@+id/iv_party_experiences_support"
+	                android:id="@+id/iv_statement_support"
 	                android:layout_width="30dp"
 	                android:layout_height="30dp"
 	                android:layout_toLeftOf="@id/tv_support_tip"
@@ -116,7 +127,7 @@
 	                android:src="@drawable/ac_support"/>
 	            
 	            <TextView 
-	                android:id="@+id/tv_party_experiences_support_num"
+	                android:id="@+id/tv_statement_support_num"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_toRightOf="@id/tv_support_tip"
@@ -128,7 +139,7 @@
 	        </RelativeLayout>
 	        
 	       <RelativeLayout
-	            android:id="@+id/RL_party_experiences_comment"
+	            android:id="@+id/RL_comment"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
@@ -143,7 +154,7 @@
 	                android:textColor="@color/title_theme"/> 
 	           
 	            <ImageView 
-	                android:id="@+id/iv_party_experiences_comment"
+	                android:id="@+id/iv_statement_comment"
 	                android:layout_width="30dp"
 	                android:layout_height="30dp"
 	                android:layout_marginTop="2dp"
@@ -152,7 +163,7 @@
 	                android:src="@drawable/ac_comment"/>
 	            
 	            <TextView 
-	                android:id="@+id/tv_party_experiences_comment_num"
+	                android:id="@+id/tv_statement_comment_num"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_marginLeft="5dp"
@@ -165,15 +176,4 @@
 	    </LinearLayout>
     </RelativeLayout>
     
-    <!-- <TextView 
-        android:id="@+id/tv_party_agree_tip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:text="创意值 ＋1"
-        android:textColor="#ffe542"
-        android:textSize="16sp"/> -->
-    
-</RelativeLayout>
+</LinearLayout>
