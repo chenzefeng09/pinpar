@@ -47,8 +47,8 @@ import com.ipinpar.app.network.api.StatementCommentListRequest;
 import com.ipinpar.app.network.api.StatementDetailRequest;
 import com.ipinpar.app.view.CircularImageView;
 import com.ipinpar.app.widget.PartyAgreeDialog;
-import com.ipinpar.app.widget.PullToRefreshListView;
-import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView.OnRefreshListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CommentDetailActivity extends PPBaseActivity {
@@ -58,7 +58,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 	private AcStatementEntity currStatement;
 	private ArrayList<CommentEntity> comments = new ArrayList<CommentEntity>();
 	private CommentDetailAdapter adapter;
-	private PullToRefreshListView lv_infolist;
+	private PullToRefreshWhiteHeaderListView lv_infolist;
 	private EditText et_input;
 	private Button btn_add_new;
 	private View RL_support,RL_comment;
@@ -84,14 +84,15 @@ public class CommentDetailActivity extends PPBaseActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_comments_list);
 		fromid = getIntent().getIntExtra("fromid", 0);
-//		authorid = getIntent().getIntExtra("authorid", 0);
+		authorid = getIntent().getIntExtra("authorid", 0);
 		fromidtype = getIntent().getStringExtra("fromidtype");
 		String title = getIntent().getStringExtra("title");
 		if (!TextUtils.isEmpty(title)) {
 			setTitleText(title);
 		}
 		view_1 = getLayoutInflater().inflate(R.layout.statement_list_item, null);
-		lv_infolist = (PullToRefreshListView) findViewById(R.id.lv_infolist);
+//		view_2 = getLayoutInflater().inflate(R.layout.statement_list_item_2, null);
+		lv_infolist = (PullToRefreshWhiteHeaderListView) findViewById(R.id.lv_infolist);
 		lv_infolist.setonRefreshListener(new OnRefreshListener() {
 			
 			@Override
@@ -101,8 +102,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 					refreshStatement();
 				} else if ("sid".equals(fromidtype)) {
 					refreshExperienceDiary();
-				}
-				else if ("dreamid".equals(fromidtype)) {
+				}else if ("dreamid".equals(fromidtype)) {
 					refreshDreamshow();
 				}else if("experiencingid".equals(fromidtype)){
 					refreshPartyExperience();
@@ -179,6 +179,7 @@ public class CommentDetailActivity extends PPBaseActivity {
 								commentcount = currStatement.getCommentcount();
 								peer_uidString = currStatement.getUid() + "";
 								setupViews();
+								iv_img.setVisibility(View.GONE);
 								refreshData();
 							}
 						} catch (JSONException e) {
@@ -344,7 +345,18 @@ public class CommentDetailActivity extends PPBaseActivity {
 		support.setText(agreecount + "");
 		comment.setText(commentcount + "");
 		if (!TextUtils.isEmpty(imgurl)) {
+			iv_img.setVisibility(View.VISIBLE);
 			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+			iv_img.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ShowBigImage.class);
+					intent.putExtra("remotepath", imgurl);
+					mContext.startActivity(intent);
+				}
+			});
+			
 		}
 		else {
 			iv_img.setVisibility(View.GONE);
@@ -579,7 +591,21 @@ public class CommentDetailActivity extends PPBaseActivity {
 		support.setText(agreecount + "");
 		comment.setText(commentcount + "");
 		if (!TextUtils.isEmpty(imgurl)) {
+			iv_img.setVisibility(View.VISIBLE);
 			ImageLoader.getInstance().displayImage(imgurl, iv_img);
+			iv_img.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ShowBigImage.class);
+					intent.putExtra("remotepath", imgurl);
+					mContext.startActivity(intent);
+				}
+			});
+			
+		}
+		else {
+			iv_img.setVisibility(View.GONE);
 		}
 		view_1.setOnClickListener(new OnClickListener() {
 

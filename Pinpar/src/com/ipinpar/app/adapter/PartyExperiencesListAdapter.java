@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +28,7 @@ import com.ipinpar.app.R;
 import com.ipinpar.app.activity.CommentDetailActivity;
 import com.ipinpar.app.activity.LoginActivity;
 import com.ipinpar.app.activity.NameCardActivity;
+import com.ipinpar.app.activity.ShowBigImage;
 import com.ipinpar.app.entity.PartyExperienceEntity;
 import com.ipinpar.app.manager.AgreeManager;
 import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
@@ -128,17 +130,29 @@ public class PartyExperiencesListAdapter extends BaseAdapter{
 		
 		viewHolder.time.setText(formatTime(time));
 		
-//		if(partyExperienceEntity.getContent() == ""){
-//			viewHolder.content.setVisibility(View.GONE);
-//		}else{
+		if(TextUtils.isEmpty(partyExperienceEntity.getContent())){
+			viewHolder.content.setVisibility(View.GONE);
+		}else{
+			viewHolder.content.setVisibility(View.VISIBLE);
 			viewHolder.content.setText(partyExperienceEntity.getContent());
-//		}
+		}
 		
-//		if(partyExperienceEntity.getImg() == ""){
-//			viewHolder.image.setVisibility(View.GONE);
-//		}else{
+		if(TextUtils.isEmpty(partyExperienceEntity.getImg())){
+			viewHolder.image.setVisibility(View.GONE);
+		}else{
+			viewHolder.image.setVisibility(View.VISIBLE);
 			ImageLoader.getInstance().displayImage(partyExperienceEntity.getImg(),viewHolder.image,options);
-//		}
+			
+			viewHolder.image.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ShowBigImage.class);
+					intent.putExtra("remotepath", partyExperienceEntity.getImg());
+					mContext.startActivity(intent);
+				}
+			});
+		}
 		
 		viewHolder.support.setText(partyExperienceEntity.getAgreecount()+"");
 		viewHolder.comment.setText(partyExperienceEntity.getCommentcount()+"");

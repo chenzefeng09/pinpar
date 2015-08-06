@@ -40,8 +40,8 @@ import com.ipinpar.app.manager.AgreeManager.AgreeResultListener;
 import com.ipinpar.app.manager.UserManager;
 import com.ipinpar.app.network.api.CurrDreamShowRequest;
 import com.ipinpar.app.network.api.DreamShowListRequest;
-import com.ipinpar.app.widget.PullToRefreshListView;
-import com.ipinpar.app.widget.PullToRefreshListView.OnRefreshListener;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView;
+import com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView.OnRefreshListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class DreamShowFragment extends PPBaseFragment implements OnClickListener{
@@ -49,7 +49,7 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 
 	private ImageView iv_write_dream,iv_img,iv_dream;
 	private TextView tv_name_curr,tv_time_curr,tv_text_content,tv_dream_state,tv_see_more;
-	private PullToRefreshListView el_other_dream;
+	private PullToRefreshWhiteHeaderListView el_other_dream;
 	
 	private CurrDreamShowEntity currDream;
 	private ArrayList<DreamShowEntity> dreamShows = new ArrayList<DreamShowEntity>();
@@ -78,7 +78,7 @@ public class DreamShowFragment extends PPBaseFragment implements OnClickListener
 		}
 
 	private void initView() {
-		el_other_dream = (PullToRefreshListView) view.findViewById(R.id.el_other_dream);
+		el_other_dream = (PullToRefreshWhiteHeaderListView) view.findViewById(R.id.el_other_dream);
 		el_other_dream.setonRefreshListener(new OnRefreshListener() {
 			
 			@Override

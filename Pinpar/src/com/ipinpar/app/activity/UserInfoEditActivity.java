@@ -63,7 +63,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 	private Button btn_save;
 	private DisplayImageOptions options;
 	private String nickName;
-	private int sex = 0;
+	private int sex = 1;
 	private String signature;
 	private ArrayList<String> hobbys;
 	private File imgFile;
@@ -425,7 +425,7 @@ public class UserInfoEditActivity extends PPBaseActivity implements
 										sex = 1;
 										tv_sex.setText("男");
 									} else {
-										sex = 0;
+										sex = 2;
 										tv_sex.setText("女");
 									}
 									dialog.dismiss();

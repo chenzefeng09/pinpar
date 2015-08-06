@@ -124,8 +124,6 @@ public class PartyExperienceActivity extends PPBaseActivity{
 		
 	}
 	
-	
-	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

@@ -29,10 +29,10 @@
             android:src="@drawable/write_dream" />
     </RelativeLayout>
 
-    <com.ipinpar.app.widget.PullToRefreshListView
+    <com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView
         android:id="@+id/el_other_dream"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    </com.ipinpar.app.widget.PullToRefreshListView>
+    </com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView>
 
 </LinearLayout>

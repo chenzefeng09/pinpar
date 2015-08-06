@@ -75,7 +75,7 @@
    
     
     
-    <com.ipinpar.app.widget.PullToRefreshListView 
+    <com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView
                 android:layout_below="@id/rl_top"
         android:id="@+id/lv_infolist"
         android:layout_above="@id/ll_input"
@@ -85,7 +85,7 @@
         android:background="@color/white"
         android:divider="@null"
         android:dividerHeight="0dp">
-    </com.ipinpar.app.widget.PullToRefreshListView>
+    </com.ipinpar.app.widget.PullToRefreshWhiteHeaderListView>
     
     
     

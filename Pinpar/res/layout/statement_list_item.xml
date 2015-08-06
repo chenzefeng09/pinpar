@@ -75,7 +75,6 @@
 	        android:layout_marginRight="5dp"
 	        android:scaleType="centerInside"
 	        android:adjustViewBounds="true"
-	        
 	        />
 	    
 	    <LinearLayout 

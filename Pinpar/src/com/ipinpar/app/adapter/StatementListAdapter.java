@@ -100,6 +100,7 @@ public class StatementListAdapter extends BaseAdapter{
 			viewHolder.content = (TextView) convertView.findViewById(R.id.statement_content);
 			viewHolder.support = (TextView) convertView.findViewById(R.id.tv_statement_support_num);
 			viewHolder.comment = (TextView) convertView.findViewById(R.id.tv_statement_comment_num);
+			viewHolder.ivImg = (ImageView) convertView.findViewById(R.id.iv_img);
 			viewHolder.RL_support = convertView.findViewById(R.id.RL_support);
 			viewHolder.RL_comment = convertView.findViewById(R.id.RL_comment);
 			viewHolder.iv_statement_support = (ImageView) convertView.findViewById(R.id.iv_statement_support);
@@ -107,6 +108,8 @@ public class StatementListAdapter extends BaseAdapter{
 		}else{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
+		
+		viewHolder.ivImg.setVisibility(View.GONE);
 		
 		ImageLoader.getInstance().displayImage(Constant.URL_GET_USERIMAGE+acStatementEntity.getUid(), viewHolder.userImage,options);
 		
@@ -190,6 +193,7 @@ public class StatementListAdapter extends BaseAdapter{
 		TextView content; // 评论体
 		TextView support; // 评论体
 		TextView comment; // 评论体
+		ImageView ivImg;
 		View RL_support,RL_comment;
 		ImageView iv_statement_support;
 	}

@@ -71,15 +71,14 @@
 	    
 	    <ImageView 
 	        android:id="@+id/iv_party_experiences_content_image"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
 	        android:layout_below="@id/tv_party_experiences_content"
+	        android:layout_width="wrap_content"
+	        android:layout_height="125dp"
 	        android:layout_marginLeft="12dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="12dp"
-            android:minHeight="160dp"
-            android:scaleType="centerInside"
-	        android:src="@drawable/slideshow_loading"/>
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"/>
 	    
 	    <LinearLayout 
 	        android:id="@+id/LL_support_and_comment"
